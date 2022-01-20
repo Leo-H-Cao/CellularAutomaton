@@ -1,13 +1,13 @@
 # Cell Society Design Final
-### Names
+### Nolan Gelinas, Leo Cao, Zach Schrage
 
 ## Team Roles and Responsibilities
 
- * Team Member #1
+ * Nolan Gelinas - 
 
- * Team Member #2
+ * Leo Cao - 
 
- * Team Member #3
+ * Zach Schrage - 
 
 
 
@@ -19,6 +19,28 @@
 ## High-level Design
 
 #### Core Classes
+* Main
+  * Creates window and calls GameController
+* GameController
+  * Maintains current game state
+  * Has a step function that can be
+* Cell
+  * Stores Shape object that can be drawn on screen
+  * Stores current state
+* CellGrid
+  * Stores 2D array of Blocks
+* UserInterface
+  * Stores UI elements
+  * Updates UI elements
+* DrawGame
+  * Called by Main
+  * Draws initial game state
+  * Calls GameController when finished
+* Input
+  * Handles mouse input
+  * Handles keyboard input
+* DataReader
+  * Reads in JSON or XML data and returns data structures to GameController
 
 
 ## Assumptions that Affect the Design
