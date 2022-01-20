@@ -14,7 +14,9 @@
 ## Design goals
 
 #### What Features are Easy to Add
-
+* Cells
+* Buttons
+* Basic update function
 
 ## High-level Design
 
@@ -41,12 +43,16 @@
   * Handles keyboard input
 * DataReader
   * Reads in JSON or XML data and returns data structures to GameController
+* (abstract) Rules
+  * Outlines the basic structure to check for a specific set of Rules
+  * Implemented by each specific games' Rules class
 
 
 ## Assumptions that Affect the Design
+* Fixed screen size
 
 #### Features Affected by Assumptions
-
+* Dynamic cell resizing
 
 ## Significant differences from Original Plan
 
