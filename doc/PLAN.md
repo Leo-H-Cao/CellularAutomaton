@@ -4,6 +4,7 @@
 
 
 ## Design Overview
+We will need to design an application that can read in data from a file that represents a game type and the games initial state. We will then need to display a GUI that allows the user to see the progress of the game, control the game speed, pause/play the game, and modify the current game state.
 
 
 ## Design Details
