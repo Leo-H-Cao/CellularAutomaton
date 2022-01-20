@@ -1,6 +1,6 @@
 # Cell Society Design Plan
-### Team Number
-### Names
+### Team 7
+### Nolan Gelinas, Leo Cao, Zach Schrage
 
 
 ## Design Overview
