@@ -6,5 +6,7 @@ module cellsociety_app {
     requires javafx.media;
 
     // allow other classes to access listed packages in your project
-    exports cellsociety;
+    exports cellsociety.cell;
+    exports cellsociety.io;
+    exports cellsociety.game;
 }
