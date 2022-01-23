@@ -9,8 +9,8 @@ We will need to design an application that can read in data from a file that rep
 Some of our core classes include a "cell" class, which keeps track of the state of the basic individual blocks displayed,
 a "cell grid" class that stores the 2d array of cells, and a "game controller" class that keeps track of the current game state.
 We also have a "draw game" class that renders the display based on which cells are supposed to be "on." This way, the display view is 
-separated from the logic regarding the cells. We are planning to have an abstract "rules" class, which outlines the different rules
-the games could have. The different games then implement their own rules methods while also allowing shared rules between games.
+separated from the logic regarding the cells. We are planning to have a super class "Cell" and it’s subclasses like GameOfLifeCell or FireCell have the correct methods that
+dictate its behavior.
 
 
 ## Design Details
@@ -60,7 +60,7 @@ if(neighborCount <= 1){
 * Set a simulation parameter: set the value of a parameter, probCatch, for a simulation, Fire, based on the value given in a data file
 ```java
 probCatch = x //read in from file
- Rule fireRule = new FireRule(probCatch);
+controller.setSimulationConfig(probCatch);
 ```
 
 * Switch simulations: load a new simulation from a data file, replacing the current running simulation with the newly loaded one
