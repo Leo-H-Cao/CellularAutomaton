@@ -1,9 +1,10 @@
 # Cell Society Design Plan
-### Team Number 7
-### Leo Cao, Nolan Gelinas, Zack Schrage
+### Team 7
+### Nolan Gelinas, Leo Cao, Zach Schrage
 
 
 ## Design Overview
+We will need to design an application that can read in data from a file that represents a game type and the games initial state. We will then need to display a GUI that allows the user to see the progress of the game, control the game speed, pause/play the game, and modify the current game state.
 
 Some of our core classes include a "cell" class, which keeps track of the state of the basic individual blocks displayed,
 a "cell grid" class that stores the 2d array of cells, and a "game controller" class that keeps track of the current game state.
@@ -13,24 +14,25 @@ the games could have. The different games then implement their own rules methods
 
 
 ## Design Details
+![](images/Initial_UML_Diagral.png)
 
 
 ## Use Cases
 
 * Apply the rules to a middle cell: set the next state of a cell to dead by counting its number of neighbors using the Game of Life rules for a cell in the middle (i.e., with all its neighbors)
 ```java
-Cell middleCell = grid[x][y];
-int neighborCount = 0;
-for(neighbor: middleCell.getNeighbors()){
-  if(neighbor.isAlive()){
-      neighborCount++;
+    Cell middleCell = grid[x][y];
+    int neighborCount = 0;
+    for(neighbor: middleCell.getNeighbors()){
+    if(neighbor.isAlive()){
+          neighborCount++;
+        }
     }
-}
-if(neighborCount <= 1){
-  middleCell.dies();
-}
-
+    if(neighborCount <= 1){
+      middleCell.dies();
+    }
 ```
+
 
 * Apply the rules to an edge cell: set the next state of a cell to live by counting its number of neighbors using the Game of Life rules for a cell on the edge (i.e., with some of its neighbors missing)
 ```java
