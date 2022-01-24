@@ -97,10 +97,14 @@ more feasible because the controller would not have to process all the logic for
 
 Here is our amazing UI:
 
-![This is cool, too bad you can't see it](images/29-sketched-ui-wireframe.jpg "An alternate design")
-
-taken from [Brilliant Examples of Sketched UI Wireframes and Mock-Ups](https://onextrapixel.com/40-brilliant-examples-of-sketched-ui-wireframes-and-mock-ups/).
-
+![This is cool, too bad you can't see it](images/wireframe.png "An alternate design")
+* Click a cell to toggle its state
+* Drag playback speed slider to changer the simulation speed
+* Click play button to toggle the simulation
+* Click the step button (right of play button) to step one cycle of the simulation
+* Import/export the current simulation state with import and export buttons
+* Load a new simulation configuration with the load file button
+* Click the i on the top right to view the simulation parameters and any errors
 
 ## Team Responsibilities
 
