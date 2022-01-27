@@ -1,11 +1,10 @@
 package cellsociety;
 
+import cellsociety.View.ViewController;
 import javafx.application.Application;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.scene.shape.Circle;
+
+import java.awt.*;
 
 
 /**
@@ -15,8 +14,8 @@ import javafx.scene.shape.Circle;
  */
 public class Main extends Application {
     // useful names for constant values used
-    public static final String TITLE = "Example JavaFX Animation";
-    public static final int SIZE = 400;
+    public static final String TITLE = "Society of Cells";
+    public static final Dimension DEFAULT_SIZE = new Dimension(800, 600);
 
 
     /**
@@ -24,14 +23,9 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage stage) {
-        Circle shape = new Circle(190, 190, 20);
-        shape.setFill(Color.LIGHTSTEELBLUE);
+        ViewController UI = new ViewController();
 
-        Group root = new Group();
-        root.getChildren().add(shape);
-
-        Scene scene = new Scene(root, SIZE, SIZE, Color.DARKBLUE);
-        stage.setScene(scene);
+        stage.setScene(UI.makeScene(DEFAULT_SIZE.width, DEFAULT_SIZE.height));
 
         stage.setTitle(TITLE);
         stage.show();
