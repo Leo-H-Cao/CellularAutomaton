@@ -1,8 +1,8 @@
 package cellsociety.cell;
 
 import cellsociety.cell.Type.CELLTYPE;
-import static cellsociety.cell.Type.CELLTYPE.ALIVE;
-import static cellsociety.cell.Type.CELLTYPE.DEAD;
+
+import static cellsociety.cell.Type.CELLTYPE.*;
 
 /**
  * This is the Cell type for Game of Life, its next generation method follows the rules that:
@@ -30,6 +30,11 @@ public class GameOfLifeCell extends Cell {
         else {
             if (liveNeighbors == 3) return ALIVE;
         }
+        return DEAD;
+    }
+
+    @Override
+    public CELLTYPE getDefault() {
         return DEAD;
     }
 

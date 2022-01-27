@@ -37,6 +37,11 @@ public class WaTorCell extends Cell {
     }
 
     @Override
+    public CELLTYPE getDefault() {
+        return EMPTY;
+    }
+
+    @Override
     public void updateType(CELLTYPE cType) {
         updateType(cType);
         if (cType == FISH) reproductionTimer = 0;

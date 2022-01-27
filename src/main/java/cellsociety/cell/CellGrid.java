@@ -30,17 +30,20 @@ public class CellGrid {
         grid = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                grid[i][j] = newGameCell(i, j, gType);
+                grid[i][j] = Cell.newGameCell(i, j, gType);
             }
         }
     }
 
+    /**
+     * Initializes the cells to start at certain cell type states
+     */
     public static void initializeCells() {
         //Something here about reading in cells from the parser and putting them on the grid
         //HARDCODED FOR TESTING PURPOSES
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j].updateType(DEAD);
+                grid[i][j].updateType(grid[i][j].getDefault());
             }
         }
         grid[5][5].updateType(ALIVE);
@@ -63,23 +66,11 @@ public class CellGrid {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //HARDCODED FOR TESTING PURPOSES
-                nextGrid[i][j] = newGameCell(i, j, GAMEOFLIFE);
+                nextGrid[i][j] = Cell.newGameCell(i, j, GAMEOFLIFE);
                 nextGrid[i][j].updateType(grid[i][j].nextGeneration(getNeighbors(i, j)));
             }
         }
         grid = nextGrid;
-    }
-
-    private static Cell newGameCell(int i, int j, GAMETYPE gType) {
-        switch(gType) {
-            case GAMEOFLIFE:
-                return new GameOfLifeCell(i, j, NULL);
-            case FIRE:
-                return new FireCell(i, j, NULL);
-            case WATOR:
-                return new WaTorCell(i, j, NULL);
-        }
-        return null;
     }
 
     private static CELLTYPE[][] getNeighbors(int x, int y) {

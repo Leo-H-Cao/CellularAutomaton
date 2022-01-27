@@ -31,6 +31,11 @@ public class FireCell extends Cell {
         return TREE;
     }
 
+    @Override
+    public CELLTYPE getDefault() {
+        return EMPTY;
+    }
+
     private boolean hasBurningNeighbor(CELLTYPE[][] neighborsType) {
         if (neighborsType[0][1] == BURNING) return true;
         if (neighborsType[1][0] == BURNING) return true;

@@ -2,6 +2,8 @@ package cellsociety.cell;
 
 import cellsociety.cell.Type.CELLTYPE;
 
+import static cellsociety.cell.Type.CELLTYPE.NULL;
+
 /**
  * This class outlines the primary attributes of a Cell: position (xy coordinate) and type (game specific)
  * Different games will have specialized cells that extend this class.
@@ -23,6 +25,25 @@ public abstract class Cell {
     }
 
     /**
+     * Constructs a cell subclass given a game type
+     * @param x coordinate of cell
+     * @param y coordinate of cell
+     * @param gType game type of cell
+     * @return
+     */
+    public static Cell newGameCell(int x, int y, Type.GAMETYPE gType) {
+        switch(gType) {
+            case GAMEOFLIFE:
+                return new GameOfLifeCell(x, y, NULL);
+            case FIRE:
+                return new FireCell(x, y, NULL);
+            case WATOR:
+                return new WaTorCell(x, y, NULL);
+        }
+        return null;
+    }
+
+    /**
      * Setter Method to update a type
      * Subclasses can override this to expand upon and change internal properties while changing a cells type
      *
@@ -40,6 +61,7 @@ public abstract class Cell {
         return cType;
     }
 
+
     /**
      * Each next generation is a function of the current generation and since the rules surrounding
      * what a cells type will be in the next generation is game dependent, each subclass will implement
@@ -49,5 +71,11 @@ public abstract class Cell {
      * @return the cell type in the next generation
      */
     public abstract CELLTYPE nextGeneration(CELLTYPE[][] neighborsType);
+
+    /**
+     * Getter method for a cells default type upon initialization
+     * @return a cells default type
+     */
+    public abstract CELLTYPE getDefault();
 
 }
