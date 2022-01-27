@@ -12,9 +12,9 @@ import cellsociety.cell.Type.CELLTYPE;
  */
 public abstract class Cell {
 
-    protected int x;
-    protected int y;
-    protected CELLTYPE cType;
+    private int x;
+    private int y;
+    private CELLTYPE cType;
 
     public Cell(int x, int y, CELLTYPE cType) {
         this.x = x;

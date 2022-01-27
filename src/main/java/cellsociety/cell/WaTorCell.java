@@ -27,10 +27,10 @@ public class WaTorCell extends Cell {
 
     @Override
     public CELLTYPE nextGeneration(CELLTYPE[][] neighborsType) {
-        if (cType == FISH) {
+        if (getType() == FISH) {
 
         }
-        else if (cType == SHARK) {
+        else if (getType() == SHARK) {
 
         }
         return EMPTY;
@@ -38,7 +38,7 @@ public class WaTorCell extends Cell {
 
     @Override
     public void updateType(CELLTYPE cType) {
-        this.cType = cType;
+        updateType(cType);
         if (cType == FISH) reproductionTimer = 0;
         else if (cType == SHARK) energy = 0;
     }

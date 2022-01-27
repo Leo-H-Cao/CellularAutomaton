@@ -24,10 +24,10 @@ public class FireCell extends Cell {
 
     @Override
     public CELLTYPE nextGeneration(CELLTYPE[][] neighborsType) {
-        if (cType == BURNING) return EMPTY;
+        if (getType() == BURNING) return EMPTY;
         if (hasBurningNeighbor(neighborsType)) return BURNING;
-        if (cType == TREE && (Math.random() < PropertiesLoader.fireF)) return BURNING;
-        if (cType == EMPTY && (Math.random() < PropertiesLoader.fireP)) return TREE;
+        if (getType() == TREE && (Math.random() < PropertiesLoader.fireF)) return BURNING;
+        if (getType() == EMPTY && (Math.random() < PropertiesLoader.fireP)) return TREE;
         return TREE;
     }
 

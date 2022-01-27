@@ -22,7 +22,7 @@ public class GameOfLifeCell extends Cell {
     @Override
     public CELLTYPE nextGeneration(CELLTYPE[][] neighborsType) {
         int liveNeighbors = countLiveNeighbors(neighborsType);
-        if (cType == ALIVE) {
+        if (getType() == ALIVE) {
             if (liveNeighbors < 2) return DEAD;
             if (liveNeighbors == 2 || liveNeighbors == 3) return ALIVE;
             if (liveNeighbors > 3) return DEAD;
