@@ -3,6 +3,7 @@ package cellsociety.game;
 import cellsociety.cell.Cell;
 import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.CellGrid;
+import cellsociety.io.FileReader;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
@@ -15,15 +16,19 @@ public class Game {
     private static CellGrid cellGrid;
 
     public Game(double SECOND_DELAY) {
-        //HARDCODED FOR TESTING PURPOSES
-        cellGrid = new CellGrid();
-        cellGrid.initializeGrid(20, 20, GAMETYPE.GAMEOFLIFE);
-        cellGrid.initializeCells();
-
+        init();
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY)));
         animation.play();
+    }
+
+    private void init() {
+        FileReader f = new FileReader();
+        f.parseFile("data/SampleComfig1.xml");
+        cellGrid = new CellGrid();
+        cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.GAMEOFLIFE);
+        cellGrid.initializeCells(f.getInitialState());
     }
 
     private void step(double second_delay) {

@@ -2,13 +2,9 @@ package cellsociety.cell;
 
 import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.Type.CELLTYPE;
-
 import java.util.ArrayList;
 
-import static cellsociety.cell.Type.CELLTYPE.ALIVE;
-import static cellsociety.cell.Type.CELLTYPE.DEAD;
 import static cellsociety.cell.Type.CELLTYPE.NULL;
-import static cellsociety.cell.Type.GAMETYPE.GAMEOFLIFE;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -52,16 +48,6 @@ public class CellGrid {
         for (Cell c : cells) {
             grid[c.getX()][c.getY()].updateType(c.getType());
         }
-        //HARDCODED FOR TESTING PURPOSES
-        //        grid[5][5].updateType(ALIVE);
-        //        grid[6][5].updateType(ALIVE);
-        //        grid[7][5].updateType(ALIVE);
-        //
-        //        grid[10][10].updateType(ALIVE);
-        //        grid[11][10].updateType(ALIVE);
-        //        grid[12][10].updateType(ALIVE);
-        //        grid[12][9].updateType(ALIVE);
-        //        grid[11][8].updateType(ALIVE);
     }
 
     /**

@@ -8,13 +8,18 @@
     </Authors>
     <Description>Description Here</Description>
     <Dimensions>
-        <Width>500</Width>
-        <Height>500</Height>
+        <Width>20</Width>
+        <Height>20</Height>
     </Dimensions>
     <InitialCellState>
-        <Cell x="0" y="0" type="DEAD"/>
-        <Cell x="1" y="1" type="ALIVE"/>
-        <Cell x="2" y="2" type="DEAD"/>
+        <Cell x="5" y="5" type="ALIVE"/>
+        <Cell x="6" y="5" type="ALIVE"/>
+        <Cell x="7" y="5" type="ALIVE"/>
+        <Cell x="10" y="10" type="ALIVE"/>
+        <Cell x="11" y="10" type="ALIVE"/>
+        <Cell x="12" y="10" type="ALIVE"/>
+        <Cell x="12" y="9" type="ALIVE"/>
+        <Cell x="11" y="8" type="ALIVE"/>
     </InitialCellState>
     <Parameters>
         <Speed>0</Speed>
