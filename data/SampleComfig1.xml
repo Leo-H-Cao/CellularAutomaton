@@ -3,15 +3,15 @@
     <Title>Cell Society</Title>
     <Authors>
         <Author>Leo Cao</Author>
-        <Author>Noal Gelinas</Author>
+        <Author>Nolan Gelinas</Author>
         <Author>Zack Schrage</Author>
     </Authors>
     <GameType>Fire</GameType>
     <Description>Description Here</Description>
-    <Dimentions>
+    <Dimensions>
         <Width>500</Width>
         <Height>500</Height>
-    </Dimentions>
+    </Dimensions>
     <InitialCellState>
         <Cell x="0" y="0" type="0"/>
         <Cell x="1" y="1" type="1"/>
@@ -19,10 +19,10 @@
     </InitialCellState>
     <Parameters>
         <Speed>0</Speed>
-        <ColorSceme>
-            <Color type="0">#ffffff</Color>
-            <Color type="1">#ffff00</Color>
-            <Color type="2">#abcdef</Color>
-        </ColorSceme>
     </Parameters>
+    <ColorScheme>
+        <Color type="0">#ffffff</Color>
+        <Color type="1">#ffff00</Color>
+        <Color type="2">#abcdef</Color>
+    </ColorScheme>
 </CellSociety>
