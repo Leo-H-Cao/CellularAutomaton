@@ -49,7 +49,7 @@ public class FileReader {
 
   public void parseFile(String fileName){
     Element rootElement = getRootElement(new File(fileName));
-    getGameType(rootElement);
+    setGameType(rootElement);
 
     NodeList childNodes = rootElement.getChildNodes();
 
@@ -125,17 +125,12 @@ public class FileReader {
     return initialState;
   }
 
-  private void getGameType (Element root) {
+  private void setGameType (Element root) {
     String gameTypeString = root.getAttributes().getNamedItem(GAME_TYPE_ATTRIBUTE).getNodeValue();
     game_type = GAMETYPE.valueOf(gameTypeString);
   }
 
-
-
-
-  //TODO: validate if xml file is correct for given game?
-
-
-
-
+  private GAMETYPE getGameType(){
+    return game_type;
+  }
 }
