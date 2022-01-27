@@ -14,5 +14,4 @@ public class XMLException extends RuntimeException {
     super(cause);
   }
 
-
 }
