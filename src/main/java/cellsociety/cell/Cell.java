@@ -43,13 +43,19 @@ public abstract class Cell {
     }
 
     /**
-     * Setter Method to update a type
-     * Subclasses can override this to expand upon and change internal properties while changing a cells type
-     *
-     * @param cType a cells new type
+     * Getter method for a cells x position
+     * @return x position
      */
-    public void updateType(CELLTYPE cType) {
-        this.cType = cType;
+    public int getX() {
+        return x;
+    }
+
+    /**
+     * Getter method for a cells y position
+     * @return y position
+     */
+    public int getY() {
+        return y;
     }
 
     /**
@@ -58,6 +64,16 @@ public abstract class Cell {
      */
     public CELLTYPE getType() {
         return cType;
+    }
+
+    /**
+     * Setter Method to update a type
+     * Subclasses can override this to expand upon and change internal properties while changing a cells type
+     *
+     * @param cType a cells new type
+     */
+    public void updateType(CELLTYPE cType) {
+        this.cType = cType;
     }
 
 

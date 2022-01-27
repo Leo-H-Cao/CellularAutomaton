@@ -3,6 +3,8 @@ package cellsociety.cell;
 import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.Type.CELLTYPE;
 
+import java.util.ArrayList;
+
 import static cellsociety.cell.Type.CELLTYPE.ALIVE;
 import static cellsociety.cell.Type.CELLTYPE.DEAD;
 import static cellsociety.cell.Type.CELLTYPE.NULL;
@@ -18,6 +20,7 @@ import static cellsociety.cell.Type.GAMETYPE.GAMEOFLIFE;
 public class CellGrid {
 
     private static Cell[][] grid;
+    private static GAMETYPE gametype;
 
     /**
      * Initializes a grid of cells with the appropriate type given the game being played
@@ -27,6 +30,7 @@ public class CellGrid {
      * @param gType game being played
      */
     public static void initializeGrid(int width, int height, GAMETYPE gType) {
+        gametype = gType;
         grid = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
@@ -36,25 +40,28 @@ public class CellGrid {
     }
 
     /**
-     * Initializes the cells to start at certain cell type states
+     * Initializes the cells on the grid to their default states given a game type and
+     * takes in a list of cells to initialize onto the board
      */
-    public static void initializeCells() {
-        //Something here about reading in cells from the parser and putting them on the grid
-        //HARDCODED FOR TESTING PURPOSES
+    public static void initializeCells(ArrayList<Cell> cells) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 grid[i][j].updateType(grid[i][j].getDefault());
             }
         }
-        grid[5][5].updateType(ALIVE);
-        grid[6][5].updateType(ALIVE);
-        grid[7][5].updateType(ALIVE);
-
-        grid[10][10].updateType(ALIVE);
-        grid[11][10].updateType(ALIVE);
-        grid[12][10].updateType(ALIVE);
-        grid[12][9].updateType(ALIVE);
-        grid[11][8].updateType(ALIVE);
+        for (Cell c : cells) {
+            grid[c.getX()][c.getY()].updateType(c.getType());
+        }
+        //HARDCODED FOR TESTING PURPOSES
+        //        grid[5][5].updateType(ALIVE);
+        //        grid[6][5].updateType(ALIVE);
+        //        grid[7][5].updateType(ALIVE);
+        //
+        //        grid[10][10].updateType(ALIVE);
+        //        grid[11][10].updateType(ALIVE);
+        //        grid[12][10].updateType(ALIVE);
+        //        grid[12][9].updateType(ALIVE);
+        //        grid[11][8].updateType(ALIVE);
     }
 
     /**
@@ -65,8 +72,7 @@ public class CellGrid {
         Cell[][] nextGrid = new Cell[grid.length][grid[0].length];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                //HARDCODED FOR TESTING PURPOSES
-                nextGrid[i][j] = Cell.newGameCell(i, j, GAMEOFLIFE, DEAD);
+                nextGrid[i][j] = Cell.newGameCell(i, j, gametype, NULL);
                 nextGrid[i][j].updateType(grid[i][j].nextGeneration(getNeighbors(i, j)));
             }
         }

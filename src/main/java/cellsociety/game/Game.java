@@ -1,7 +1,7 @@
 package cellsociety.game;
 
 import cellsociety.cell.Cell;
-import cellsociety.cell.Type;
+import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.CellGrid;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -17,7 +17,7 @@ public class Game {
     public Game(double SECOND_DELAY) {
         //HARDCODED FOR TESTING PURPOSES
         cellGrid = new CellGrid();
-        cellGrid.initializeGrid(20, 20, Type.GAMETYPE.GAMEOFLIFE);
+        cellGrid.initializeGrid(20, 20, GAMETYPE.GAMEOFLIFE);
         cellGrid.initializeCells();
 
         animation = new Timeline();
