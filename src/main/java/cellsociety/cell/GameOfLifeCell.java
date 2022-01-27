@@ -23,8 +23,8 @@ public class GameOfLifeCell extends Cell {
     public CELLTYPE nextGeneration(CELLTYPE[][] neighborsType) {
         int liveNeighbors = countLiveNeighbors(neighborsType);
         if (cType == ALIVE) {
-            if (liveNeighbors < 3) return DEAD;
-            if (liveNeighbors == 3) return ALIVE;
+            if (liveNeighbors < 2) return DEAD;
+            if (liveNeighbors == 2 || liveNeighbors == 3) return ALIVE;
             if (liveNeighbors > 3) return DEAD;
         }
         else {

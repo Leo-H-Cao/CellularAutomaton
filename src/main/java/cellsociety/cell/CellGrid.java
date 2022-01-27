@@ -2,7 +2,11 @@ package cellsociety.cell;
 
 import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.Type.CELLTYPE;
+
+import static cellsociety.cell.Type.CELLTYPE.ALIVE;
+import static cellsociety.cell.Type.CELLTYPE.DEAD;
 import static cellsociety.cell.Type.CELLTYPE.NULL;
+import static cellsociety.cell.Type.GAMETYPE.GAMEOFLIFE;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -23,6 +27,7 @@ public class CellGrid {
      * @param gType game being played
      */
     public static void initializeGrid(int width, int height, GAMETYPE gType) {
+        grid = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 grid[i][j] = newGameCell(i, j, gType);
@@ -32,6 +37,21 @@ public class CellGrid {
 
     public static void initializeCells() {
         //Something here about reading in cells from the parser and putting them on the grid
+        //HARDCODED FOR TESTING PURPOSES
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                grid[i][j].updateType(DEAD);
+            }
+        }
+        grid[5][5].updateType(ALIVE);
+        grid[6][5].updateType(ALIVE);
+        grid[7][5].updateType(ALIVE);
+
+        grid[10][10].updateType(ALIVE);
+        grid[11][10].updateType(ALIVE);
+        grid[12][10].updateType(ALIVE);
+        grid[12][9].updateType(ALIVE);
+        grid[11][8].updateType(ALIVE);
     }
 
     /**
@@ -42,6 +62,8 @@ public class CellGrid {
         Cell[][] nextGrid = new Cell[grid.length][grid[0].length];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
+                //HARDCODED FOR TESTING PURPOSES
+                nextGrid[i][j] = newGameCell(i, j, GAMEOFLIFE);
                 nextGrid[i][j].updateType(grid[i][j].nextGeneration(getNeighbors(i, j)));
             }
         }
@@ -62,10 +84,10 @@ public class CellGrid {
 
     private static CELLTYPE[][] getNeighbors(int x, int y) {
         CELLTYPE[][] neighbors = new CELLTYPE[3][3];
-        for (int i = 0; i < 2; i++) {
-            for (int j = 0; j < 2; j++) {
+        for (int i = 0; i < neighbors.length; i++) {
+            for (int j = 0; j < neighbors[0].length; j++) {
                 try {
-                    neighbors[i][j] = grid[x - 1 + i][y - 1 + j].cType;
+                    neighbors[i][j] = grid[x - 1 + i][y - 1 + j].getType();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     neighbors[i][j] = NULL;
                 }

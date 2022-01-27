@@ -28,7 +28,7 @@ public class WaTorCell extends Cell {
     @Override
     public CELLTYPE nextGeneration(CELLTYPE[][] neighborsType) {
         if (cType == FISH) {
-            
+
         }
         else if (cType == SHARK) {
 
@@ -43,14 +43,14 @@ public class WaTorCell extends Cell {
         else if (cType == SHARK) energy = 0;
     }
 
-    private int countLiveNeighbors(CELLTYPE[][] neighborsType) {
-        int liveNeighbors = 0;
+    private int returnFish(CELLTYPE[][] neighborsType) {
+        int fish = 0;
         for (int i = 0; i < neighborsType.length; i++) {
             for (int j= 0; j < neighborsType[0].length; j++) {
-                if (neighborsType[i][j] == ALIVE) liveNeighbors++;
+                if (neighborsType[i][j] == FISH) fish++;
             }
         }
-        return liveNeighbors;
+        return fish;
     }
 
 }

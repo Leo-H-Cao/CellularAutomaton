@@ -33,6 +33,14 @@ public abstract class Cell {
     }
 
     /**
+     * Getter method for a cells type
+     * @return a cells type
+     */
+    public CELLTYPE getType() {
+        return cType;
+    }
+
+    /**
      * Each next generation is a function of the current generation and since the rules surrounding
      * what a cells type will be in the next generation is game dependent, each subclass will implement
      * its own rules dictating the game behavior

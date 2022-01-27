@@ -7,13 +7,13 @@ package cellsociety.cell;
  */
 public enum Type {;
 
-    enum GAMETYPE {
+    public enum GAMETYPE {
         GAMEOFLIFE,
         FIRE,
         WATOR
     }
 
-    enum CELLTYPE {
+    public enum CELLTYPE {
         NULL,
         DEAD,
         ALIVE,
