@@ -4,8 +4,10 @@ module cellsociety_app {
     requires javafx.graphics;
     requires javafx.base;
     requires javafx.media;
-	requires java.desktop;
+  requires java.xml;
 
-	// allow other classes to access listed packages in your project
-    exports cellsociety;
+  // allow other classes to access listed packages in your project
+    exports cellsociety.cell;
+    exports cellsociety.io;
+    exports cellsociety.game;
 }
