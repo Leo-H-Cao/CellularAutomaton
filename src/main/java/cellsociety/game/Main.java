@@ -1,5 +1,6 @@
 package cellsociety.game;
 
+import cellsociety.io.FileReader;
 import cellsociety.io.UI;
 import javafx.application.Application;
 import javafx.stage.Stage;

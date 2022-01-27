@@ -1,5 +1,9 @@
 package cellsociety.io;
 
+import cellsociety.cell.Cell;
+import cellsociety.cell.Type.CELLTYPE;
+import cellsociety.cell.Type.GAMETYPE;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import javax.xml.stream.XMLStreamException;
@@ -20,38 +24,33 @@ import java.io.InputStream;
 
 public class FileReader {
 
+  private final String GAME_TYPE_ATTRIBUTE = "game";
+  public static final String ERROR_MESSAGE = "XML file does not represent %s";
+
   private final DocumentBuilder BUILDER;
-  private Document dom;
-  private HashMap<String, String> data;
+  private HashMap<String, String> gameData;
+  private ArrayList<Cell> initialState;
+  private GAMETYPE game_type;
 
   public FileReader(){
     BUILDER = createDocumentBuilder();
-    dom = null;
-    data = new HashMap<>();
-  }
-
-  private void parse(File xmlFile){
-    try{
-      dom = BUILDER.parse(xmlFile);
-    }
-    catch (IOException | SAXException e) {
-      System.out.print("Error parsing " + xmlFile.getPath());
-    }
+    gameData = new HashMap<>();
+    initialState = new ArrayList<>();
   }
 
   private DocumentBuilder createDocumentBuilder(){
-    DocumentBuilder documentBuilder = null;
     try{
-      documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
+      return DocumentBuilderFactory.newInstance().newDocumentBuilder();
     }catch (ParserConfigurationException e) {
-      e.printStackTrace();
+      throw new XMLException(e);
     }
-    return documentBuilder;
   }
 
-  public Map<String, String> getData(String fileName){
-    parse(new File (fileName));
-    Element rootElement = dom.getDocumentElement();
+
+  public void parseFile(String fileName){
+    Element rootElement = getRootElement(new File(fileName));
+    getGameType(rootElement);
+
     NodeList childNodes = rootElement.getChildNodes();
 
     //each node only has one child?
@@ -65,14 +64,23 @@ public class FileReader {
         String nodeName = curNode.getNodeName();
         String nodeText = curNode.getTextContent();
         if(!nodeName.equals("#text")){
-            data.put(nodeName, nodeText);
+            gameData.put(nodeName, nodeText);
 //            System.out.print(nodeName +" ");
 //            System.out.println(nodeText);
         }
       }
     }
-    BUILDER.reset();
-    return data;
+  }
+
+  private Element getRootElement (File xmlFile) throws XMLException {
+    try {
+      BUILDER.reset();
+      Document xmlDocument = BUILDER.parse(xmlFile);
+      return xmlDocument.getDocumentElement();
+    }
+    catch (SAXException | IOException e) {
+      throw new XMLException(e);
+    }
   }
 
   private void parseChildNode(NodeList childNodes){
@@ -81,24 +89,26 @@ public class FileReader {
       String childNodeName = curChildNode.getNodeName();
       String childNodeText = curChildNode.getTextContent();
       if(childNodeName.equals("Cell")){
-        childNodeText = parseCellNode(curChildNode);
+        parseCellNode(curChildNode);
       }
       else if(childNodeName.equals("Color")){
         childNodeName = childNodeName + " " + parseColorAttribute(curChildNode);
       }
-      if(!childNodeName.equals("#text")) {
-        data.put(childNodeName, childNodeText);
+      if(!childNodeName.equals("Cell") && !childNodeName.equals("#text")) {
+        gameData.put(childNodeName, childNodeText);
 //        System.out.print(childNodeName + " ");
 //        System.out.println(childNodeText);
       }
     }
   }
 
-  private String parseCellNode(Node cellNode){
+  private void parseCellNode(Node cellNode){
     NamedNodeMap attributes = cellNode.getAttributes();
-    String nodeAttributes = attributes.getNamedItem("x").getNodeValue() + attributes.getNamedItem("y").getNodeValue()
-        +attributes.getNamedItem("type").getNodeValue();
-    return nodeAttributes;
+    int initialX = Integer.parseInt(attributes.getNamedItem("x").getNodeValue());
+    int initialY = Integer.parseInt(attributes.getNamedItem("y").getNodeValue());
+    String cellType = attributes.getNamedItem("type").getNodeValue();
+    Cell cell = Cell.newGameCell(initialX, initialY, game_type, CELLTYPE.valueOf(cellType));
+    initialState.add(cell);
   }
 
   private String parseColorAttribute(Node colorNode){
@@ -107,6 +117,25 @@ public class FileReader {
     return nodeAttributes;
   }
 
+  public HashMap<String, String> getGameData(){
+    return gameData;
+  }
+
+  public ArrayList<Cell> getInitialState(){
+    return initialState;
+  }
+
+  private void getGameType (Element root) {
+    String gameTypeString = root.getAttributes().getNamedItem(GAME_TYPE_ATTRIBUTE).getNodeValue();
+    game_type = GAMETYPE.valueOf(gameTypeString);
+  }
+
+
+
+
   //TODO: validate if xml file is correct for given game?
+
+
+
 
 }
