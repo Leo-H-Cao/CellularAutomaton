@@ -97,13 +97,13 @@ more feasible because the controller would not have to process all the logic for
 
 Here is our amazing UI:
 
-![This is cool, too bad you can't see it](images/wireframe.png "An alternate design")
+![This is cool, too bad you can't see it](images/wireframev2.png "Basic wireframe layout")
 * Click a cell to toggle its state
 * Drag playback speed slider to changer the simulation speed
 * Click play button to toggle the simulation
 * Click the step button (right of play button) to step one cycle of the simulation
 * Import/export the current simulation state with import and export buttons
-* Load a new simulation configuration with the load file button
+* Select cell type dropdown will give you a list of options based on the current game type. This will decide which cell type is created when a user clicks a cell on the grid
 * Click the i on the top right to view the simulation parameters and any errors
 
 ## Team Responsibilities
