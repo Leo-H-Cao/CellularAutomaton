@@ -1,8 +1,7 @@
 package cellsociety.cell;
 
 import cellsociety.cell.Type.CELLTYPE;
-
-import static cellsociety.cell.Type.CELLTYPE.NULL;
+import cellsociety.cell.Type.GAMETYPE;
 
 /**
  * This class outlines the primary attributes of a Cell: position (xy coordinate) and type (game specific)
@@ -31,14 +30,14 @@ public abstract class Cell {
      * @param gType game type of cell
      * @return
      */
-    public static Cell newGameCell(int x, int y, Type.GAMETYPE gType) {
+    public static Cell newGameCell(int x, int y, GAMETYPE gType, CELLTYPE cType) {
         switch(gType) {
             case GAMEOFLIFE:
-                return new GameOfLifeCell(x, y, NULL);
+                return new GameOfLifeCell(x, y, cType);
             case FIRE:
-                return new FireCell(x, y, NULL);
+                return new FireCell(x, y, cType);
             case WATOR:
-                return new WaTorCell(x, y, NULL);
+                return new WaTorCell(x, y, cType);
         }
         return null;
     }

@@ -30,7 +30,7 @@ public class CellGrid {
         grid = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                grid[i][j] = Cell.newGameCell(i, j, gType);
+                grid[i][j] = Cell.newGameCell(i, j, gType, NULL);
             }
         }
     }
@@ -66,7 +66,7 @@ public class CellGrid {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 //HARDCODED FOR TESTING PURPOSES
-                nextGrid[i][j] = Cell.newGameCell(i, j, GAMEOFLIFE);
+                nextGrid[i][j] = Cell.newGameCell(i, j, GAMEOFLIFE, DEAD);
                 nextGrid[i][j].updateType(grid[i][j].nextGeneration(getNeighbors(i, j)));
             }
         }
