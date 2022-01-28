@@ -20,17 +20,17 @@ public class GameOfLifeCell extends Cell {
     }
 
     @Override
-    public CELLTYPE nextGeneration(CELLTYPE[][] neighborsType) {
-        int liveNeighbors = countLiveNeighbors(neighborsType);
+    public void nextGeneration(Cell[][] updatingGrid) {
+        int liveNeighbors = countLiveNeighbors(CellGrid.getNeighbors(getX(), getY()));
         if (getType() == ALIVE) {
-            if (liveNeighbors < 2) return DEAD;
-            if (liveNeighbors == 2 || liveNeighbors == 3) return ALIVE;
-            if (liveNeighbors > 3) return DEAD;
+            if (liveNeighbors < 2) updatingGrid[getX()][getY()].updateType(DEAD);
+            else if (liveNeighbors == 2 || liveNeighbors == 3) updatingGrid[getX()][getY()].updateType(ALIVE);
+            else if (liveNeighbors > 3) updatingGrid[getX()][getY()].updateType(DEAD);
         }
         else {
-            if (liveNeighbors == 3) return ALIVE;
+            if (liveNeighbors == 3) updatingGrid[getX()][getY()].updateType(ALIVE);
+            else updatingGrid[getX()][getY()].updateType(DEAD);
         }
-        return DEAD;
     }
 
     @Override

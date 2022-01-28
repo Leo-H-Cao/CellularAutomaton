@@ -1,7 +1,6 @@
 package cellsociety.cell;
 
 import cellsociety.cell.Type.CELLTYPE;
-
 import static cellsociety.cell.Type.CELLTYPE.*;
 
 /**
@@ -26,14 +25,14 @@ public class WaTorCell extends Cell {
     }
 
     @Override
-    public CELLTYPE nextGeneration(CELLTYPE[][] neighborsType) {
+    public void nextGeneration(Cell[][] updatingGrid) {
         if (getType() == FISH) {
-
+            if (reproductionTimer == 5) ; //Move to unoccupied and leave behind child
+            else ; //Move to unoccupied square
         }
         else if (getType() == SHARK) {
 
         }
-        return EMPTY;
     }
 
     @Override
@@ -46,16 +45,6 @@ public class WaTorCell extends Cell {
         updateType(cType);
         if (cType == FISH) reproductionTimer = 0;
         else if (cType == SHARK) energy = 0;
-    }
-
-    private int returnFish(CELLTYPE[][] neighborsType) {
-        int fish = 0;
-        for (int i = 0; i < neighborsType.length; i++) {
-            for (int j= 0; j < neighborsType[0].length; j++) {
-                if (neighborsType[i][j] == FISH) fish++;
-            }
-        }
-        return fish;
     }
 
 }
