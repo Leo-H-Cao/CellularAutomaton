@@ -7,7 +7,7 @@ import javafx.scene.shape.Rectangle;
 public class CellNode {
 	private int x, y, width, height;
 	private Color color;
-	private Rectangle cell;
+	private final Rectangle cell;
 
 	public CellNode(double x, double y, double width, double height) {
 		x = Math.round(x);
@@ -18,7 +18,7 @@ public class CellNode {
 	}
 
 	public void setColor(Color c) {
-		color = c;
+		cell.setFill(c);
 	}
 
 	public Node getNode() {
