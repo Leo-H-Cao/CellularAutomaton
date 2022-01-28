@@ -1,22 +1,26 @@
 package cellsociety.game;
 
 import cellsociety.cell.Cell;
-import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.CellGrid;
+import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.io.FileReader;
+import cellsociety.view.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.Type.CELLTYPE.ALIVE;
 
 public class Game {
 
     private static Timeline animation;
     private static CellGrid cellGrid;
+    private static ViewController viewController;
 
-    public Game(double SECOND_DELAY) {
+    public Game(double SECOND_DELAY, Stage stage) {
         init();
+        viewController = new ViewController(stage);
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY)));
@@ -46,6 +50,7 @@ public class Game {
 
         //Updates the 2D Array in Cell
         cellGrid.nextGeneration();
+        viewController.update(cellGrid.getGrid());
     }
 
 }

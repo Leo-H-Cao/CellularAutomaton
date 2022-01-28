@@ -1,5 +1,6 @@
-package cellsociety.View;
+package cellsociety.view;
 
+import cellsociety.cell.Cell;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 
@@ -15,5 +16,11 @@ public class GridManager {
 
 	public Node getGrid() {
 		return grid;
+	}
+
+	public void update(Cell[][] cells) {
+		// reset grid
+		grid.getChildren().clear();
+
 	}
 }
