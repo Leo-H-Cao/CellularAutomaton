@@ -38,6 +38,8 @@ public abstract class Cell {
                 return new FireCell(x, y, cType);
             case WATOR:
                 return new WaTorCell(x, y, cType);
+            case SCHELLSEG:
+                return new SchellingSegCell(x, y, cType);
         }
         return null;
     }
@@ -79,7 +81,7 @@ public abstract class Cell {
      * Setter Method to update a cells type and modify internal properties by passing arguments
      *
      * @param cType a cells new type
-     * @param prop array of properties
+     * @param properties array of properties
      */
     public void updateType(CELLTYPE cType, Object[] properties) {
         this.cType = cType;

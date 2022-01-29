@@ -15,6 +15,7 @@ public class PropertiesLoader {
 
     public static double fireP;
     public static double fireF;
+    public static double fIdeal;
 
     /**
      * Code attributed to:
@@ -35,6 +36,7 @@ public class PropertiesLoader {
 
             fireP = Integer.parseInt(prop.getProperty("fireP"));
             fireF = Integer.parseInt(prop.getProperty("fireF"));
+            fIdeal = Integer.parseInt(prop.getProperty("fIdeal"));
 
         } catch (Exception e) {
 
