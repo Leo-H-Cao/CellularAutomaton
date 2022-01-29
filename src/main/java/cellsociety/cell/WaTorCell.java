@@ -26,6 +26,7 @@ public class WaTorCell extends Cell {
 
     @Override
     public void nextGeneration(Cell[][] updatingGrid) {
+        if (updatingGrid[getX()][getY()].getType() != NULL) return;
         if (getType() == EMPTY) {
             updatingGrid[getX()][getY()].updateType(EMPTY);
             return;
@@ -40,8 +41,6 @@ public class WaTorCell extends Cell {
             updatingGrid[getX()][getY()].updateType(EMPTY, getProperties());
         }
         else {
-            reproductionTimer++;
-            energy--;
             updatingGrid[getX()][getY()].updateType(getType(), getProperties());
         }
     }

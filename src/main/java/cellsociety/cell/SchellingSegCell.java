@@ -21,11 +21,18 @@ public class SchellingSegCell extends Cell {
 
     @Override
     public void nextGeneration(Cell[][] updatingGrid) {
-        if (getType() == EMPTY) return;
+        if (updatingGrid[getX()][getY()].getType() != NULL) return;
+        if (getType() == EMPTY) {
+            updatingGrid[getX()][getY()].updateType(EMPTY);
+            return;
+        }
         double fReal = fReal(CellGrid.getNeighbors(getX(), getY()));
         if (fReal >= PropertiesLoader.fIdeal) return;
         int d = bestDirection(getValidDirections(updatingGrid), fReal);
-        if (d < 0) return;
+        if (d < 0) {
+            updatingGrid[getX()][getY()].updateType(EMPTY);
+            return;
+        }
         updateGrid(d, getType(), updatingGrid);
     }
 
@@ -46,14 +53,14 @@ public class SchellingSegCell extends Cell {
 
     private double[] getValidDirections(Cell[][] updatingGrid) {
         double[] validDirections = new double[8];
-        if (updatingGrid[getX()-1][getY()-1].getType() == EMPTY) validDirections[0] = fReal(CellGrid.getNeighbors(getX()-1, getY()-1));
-        if (updatingGrid[getX()][getY()-1].getType() == EMPTY) validDirections[1] = fReal(CellGrid.getNeighbors(getX(), getY()-1));
-        if (updatingGrid[getX()+1][getY()-1].getType() == EMPTY) validDirections[2] = fReal(CellGrid.getNeighbors(getX()+1, getY()-1));
-        if (updatingGrid[getX()-1][getY()].getType() == EMPTY) validDirections[3] = fReal(CellGrid.getNeighbors(getX()-1, getY()));
-        if (CellGrid.getGrid()[getX()+1][getY()].getType() == EMPTY) validDirections[4] = fReal(CellGrid.getNeighbors(getX()+1, getY()));
-        if (CellGrid.getGrid()[getX()-1][getY()+1].getType() == EMPTY) validDirections[5] = fReal(CellGrid.getNeighbors(getX()-1, getY()+1));
-        if (CellGrid.getGrid()[getX()][getY()+1].getType() == EMPTY) validDirections[6] = fReal(CellGrid.getNeighbors(getX(), getY()+1));
-        if (CellGrid.getGrid()[getX()+1][getY()+1].getType() == EMPTY) validDirections[7] = fReal(CellGrid.getNeighbors(getX()+1, getY()+1));
+        if (updatingGrid[getX()-1][getY()-1].getType() == NULL) validDirections[0] = fReal(CellGrid.getNeighbors(getX()-1, getY()-1));
+        if (updatingGrid[getX()][getY()-1].getType() == NULL) validDirections[1] = fReal(CellGrid.getNeighbors(getX(), getY()-1));
+        if (updatingGrid[getX()+1][getY()-1].getType() == NULL) validDirections[2] = fReal(CellGrid.getNeighbors(getX()+1, getY()-1));
+        if (updatingGrid[getX()-1][getY()].getType() == NULL) validDirections[3] = fReal(CellGrid.getNeighbors(getX()-1, getY()));
+        if (CellGrid.getGrid()[getX()+1][getY()].getType() == EMPTY && updatingGrid[getX()+1][getY()].getType() == NULL) validDirections[4] = fReal(CellGrid.getNeighbors(getX()+1, getY()));
+        if (CellGrid.getGrid()[getX()-1][getY()+1].getType() == EMPTY && updatingGrid[getX()-1][getY()+1].getType() == NULL) validDirections[5] = fReal(CellGrid.getNeighbors(getX()-1, getY()+1));
+        if (CellGrid.getGrid()[getX()][getY()+1].getType() == EMPTY && updatingGrid[getX()][getY()+1].getType() == NULL) validDirections[6] = fReal(CellGrid.getNeighbors(getX(), getY()+1));
+        if (CellGrid.getGrid()[getX()+1][getY()+1].getType() == EMPTY && updatingGrid[getX()+1][getY()+1].getType() == NULL) validDirections[7] = fReal(CellGrid.getNeighbors(getX()+1, getY()+1));
         return validDirections;
     }
 
