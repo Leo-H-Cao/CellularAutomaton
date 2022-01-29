@@ -18,7 +18,7 @@ import static cellsociety.cell.Type.CELLTYPE.*;
 public class WaTorCell extends Cell {
 
     private int reproductionTimer = 0;
-    private int energy = 0;
+    private int energy = 5;
 
     public WaTorCell(int x, int y, CELLTYPE cType) {
         super(x, y, cType);
@@ -26,13 +26,29 @@ public class WaTorCell extends Cell {
 
     @Override
     public void nextGeneration(Cell[][] updatingGrid) {
-        if (getType() == FISH) {
-            if (reproductionTimer == 5) ; //Move to unoccupied and leave behind child
-            else ; //Move to unoccupied square
+        if (getType() == EMPTY) return;
+        if (getType() == SHARK) {
+            if (energy == 0) {
+                updatingGrid[getX()][getY()].updateType(EMPTY, getProperties());
+                return;
+            }
         }
-        else if (getType() == SHARK) {
+        if (moveToRandom(updatingGrid) && reproductionTimer < 4) {
+            updatingGrid[getX()][getY()].updateType(EMPTY, getProperties());
+        }
+        else {
+            reproductionTimer++;
+            energy--;
+        }
+    }
 
-        }
+    @Override
+    public void updateType(CELLTYPE cType, Object[] properties) {
+        super.updateType(cType);
+        reproductionTimer = (int) properties[0];
+        energy = (int) properties[1];
+        reproductionTimer++;
+        energy--;
     }
 
     @Override
@@ -40,11 +56,53 @@ public class WaTorCell extends Cell {
         return EMPTY;
     }
 
-    @Override
-    public void updateType(CELLTYPE cType) {
-        updateType(cType);
-        if (cType == FISH) reproductionTimer = 0;
-        else if (cType == SHARK) energy = 0;
+    private boolean moveToRandom(Cell[][] updatingGrid) {
+        if (getType() == FISH) {
+            int d = randomDirection(getValidDirections(updatingGrid, EMPTY));
+            if (d < 0) return false;
+            updateGrid(d, FISH, updatingGrid);
+        }
+        else if (getType() == SHARK) {
+            int d = randomDirection(getValidDirections(updatingGrid, FISH));
+            if (d < 0) d = randomDirection(getValidDirections(updatingGrid, EMPTY));
+            if (d < 0) return false;
+            updateGrid(d, SHARK, updatingGrid);
+        }
+        return true;
+    }
+
+    private boolean[] getValidDirections(Cell[][] updatingGrid, CELLTYPE destType) {
+        boolean[] validDirections = new boolean[4];
+        if (updatingGrid[getX()][getY()-1].getType() == destType) validDirections[0] = true;
+        if (updatingGrid[getX()-1][getY()].getType() == destType) validDirections[1] = true;
+        if (CellGrid.getGrid()[getX()+1][getY()].getType() == destType) validDirections[2] = true;
+        if (CellGrid.getGrid()[getX()][getY()+1].getType() == destType) validDirections[3] = true;
+        return validDirections;
+    }
+
+    private int randomDirection(boolean[] validDirections) {
+        int count = 0;
+        for (int i = 0; i < validDirections.length; i++) {
+            if (validDirections[i]) count++;
+        }
+        int random = (int)(Math.random() * count);
+        for (int i = 0; i < validDirections.length; i++) {
+            if (validDirections[i] && random > 0) random--;
+            else if (validDirections[i] && random == 0) return i;
+        }
+        return -1;
+    }
+
+    private void updateGrid(int d, CELLTYPE cType, Cell[][] updatingGrid) {
+        if (d == 0) updatingGrid[getX()][getY()-1].updateType(cType, getProperties());
+        if (d == 1) updatingGrid[getX()-1][getY()].updateType(cType, getProperties());
+        if (d == 2) updatingGrid[getX()+1][getY()].updateType(cType, getProperties());
+        if (d == 3) updatingGrid[getX()][getY()+1].updateType(cType, getProperties());
+    }
+
+    private Object[] getProperties() {
+        Object[] properties = {reproductionTimer, energy};
+        return properties;
     }
 
 }

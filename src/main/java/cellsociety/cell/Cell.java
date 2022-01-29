@@ -67,12 +67,21 @@ public abstract class Cell {
     }
 
     /**
-     * Setter Method to update a type
-     * Subclasses can override this to expand upon and change internal properties while changing a cells type
+     * Setter Method to update a cells type
      *
      * @param cType a cells new type
      */
     public void updateType(CELLTYPE cType) {
+        this.cType = cType;
+    }
+
+    /**
+     * Setter Method to update a cells type and modify internal properties by passing arguments
+     *
+     * @param cType a cells new type
+     * @param prop array of properties
+     */
+    public void updateType(CELLTYPE cType, Object[] properties) {
         this.cType = cType;
     }
 
