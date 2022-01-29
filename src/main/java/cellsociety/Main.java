@@ -1,9 +1,10 @@
-package cellsociety.game;
+package cellsociety;
 
-import cellsociety.io.FileReader;
-import cellsociety.io.UI;
+import cellsociety.game.Game;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import java.awt.*;
 
 
 /**
@@ -14,7 +15,7 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     public static final String TITLE = "Cell Society";
-    public static final int SIZE = 400;
+    public static final Dimension DEFAULT_SIZE = new Dimension(800, 600);
     public static final int FRAMES_PER_SECOND = 1;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 
@@ -23,7 +24,6 @@ public class Main extends Application {
      */
     @Override
     public void start (Stage stage) {
-        new UI(stage);
-        new Game(SECOND_DELAY);
+        new Game(SECOND_DELAY, stage);
     }
 }

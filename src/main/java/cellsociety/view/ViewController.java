@@ -1,5 +1,7 @@
-package cellsociety.View;
+package cellsociety.view;
 
+import cellsociety.Main;
+import cellsociety.cell.Cell;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -10,24 +12,32 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Stage;
 
 public class ViewController {
 	private Button importButton;
 	private Button exportButton;
+	private GridManager gm;
+	private BorderPane root;
 
+	public ViewController(Stage stage) {
+		gm = new GridManager();
 
-	// TEMPORARY TESTING METHOD
-	private GridManager initializeGridManager() {
-		return new GridManager(10, 10);
+		stage.setScene(makeScene(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
+		stage.setTitle(Main.TITLE);
+		stage.show();
+	}
+
+	public void updateGridPane(Cell[][] cells){
+		gm.update(cells);
+		root.setCenter(gm.getGrid());
 	}
 
 
-	public Scene makeScene (int width, int height) {
-		BorderPane root = new BorderPane();
-
+	private Scene makeScene (int width, int height) {
+		root = new BorderPane();
 
 		// must be first since other panels may refer to page
-		GridManager gm = initializeGridManager();
 		root.setCenter(gm.getGrid());
 		root.setTop(makeTopDisplay());
 //		root.setBottom(makeInformationPanel());
