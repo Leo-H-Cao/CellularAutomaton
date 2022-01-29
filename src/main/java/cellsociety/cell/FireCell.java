@@ -3,9 +3,7 @@ package cellsociety.cell;
 import cellsociety.cell.Type.CELLTYPE;
 import cellsociety.io.PropertiesLoader;
 
-import static cellsociety.cell.Type.CELLTYPE.BURNING;
-import static cellsociety.cell.Type.CELLTYPE.EMPTY;
-import static cellsociety.cell.Type.CELLTYPE.TREE;
+import static cellsociety.cell.Type.CELLTYPE.*;
 
 /**
  * This is the Cell type for Fire, its next generation method follows the rules that:
@@ -23,12 +21,12 @@ public class FireCell extends Cell {
     }
 
     @Override
-    public CELLTYPE nextGeneration(CELLTYPE[][] neighborsType) {
-        if (getType() == BURNING) return EMPTY;
-        if (hasBurningNeighbor(neighborsType)) return BURNING;
-        if (getType() == TREE && (Math.random() < PropertiesLoader.fireF)) return BURNING;
-        if (getType() == EMPTY && (Math.random() < PropertiesLoader.fireP)) return TREE;
-        return TREE;
+    public void nextGeneration(Cell[][] updatingGrid) {
+        if (getType() == BURNING) updatingGrid[getX()][getY()].updateType(EMPTY);
+        else if (hasBurningNeighbor(CellGrid.getNeighbors(getX(), getY()))) updatingGrid[getX()][getY()].updateType(BURNING);
+        else if (getType() == TREE && (Math.random() < PropertiesLoader.fireF)) updatingGrid[getX()][getY()].updateType(BURNING);
+        else if (getType() == EMPTY && (Math.random() < PropertiesLoader.fireP)) updatingGrid[getX()][getY()].updateType(TREE);
+        else updatingGrid[getX()][getY()].updateType(TREE);
     }
 
     @Override

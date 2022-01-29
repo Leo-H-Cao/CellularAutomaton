@@ -38,6 +38,8 @@ public abstract class Cell {
                 return new FireCell(x, y, cType);
             case WATOR:
                 return new WaTorCell(x, y, cType);
+            case SCHELLSEG:
+                return new SchellingSegCell(x, y, cType);
         }
         return null;
     }
@@ -67,8 +69,7 @@ public abstract class Cell {
     }
 
     /**
-     * Setter Method to update a type
-     * Subclasses can override this to expand upon and change internal properties while changing a cells type
+     * Setter Method to update a cells type
      *
      * @param cType a cells new type
      */
@@ -76,16 +77,24 @@ public abstract class Cell {
         this.cType = cType;
     }
 
+    /**
+     * Setter Method to update a cells type and modify internal properties by passing arguments
+     *
+     * @param cType a cells new type
+     * @param properties array of properties
+     */
+    public void updateType(CELLTYPE cType, Object[] properties) {
+        this.cType = cType;
+    }
 
     /**
      * Each next generation is a function of the current generation and since the rules surrounding
      * what a cells type will be in the next generation is game dependent, each subclass will implement
      * its own rules dictating the game behavior
      *
-     * @param neighborsType 3x3 2D array of a cells neighbors with itself set as the NULL Cell
-     * @return the cell type in the next generation
+     * @param updatingGrid a grid to update the next generation to
      */
-    public abstract CELLTYPE nextGeneration(CELLTYPE[][] neighborsType);
+    public abstract void nextGeneration(Cell[][] updatingGrid);
 
     /**
      * Getter method for a cells default type upon initialization

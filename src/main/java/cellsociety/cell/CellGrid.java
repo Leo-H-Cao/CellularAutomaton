@@ -4,7 +4,7 @@ import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.Type.CELLTYPE;
 import java.util.ArrayList;
 
-import static cellsociety.cell.Type.CELLTYPE.NULL;
+import static cellsociety.cell.Type.CELLTYPE.*;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -51,21 +51,31 @@ public class CellGrid {
     }
 
     /**
-     * Iterates through the entire grid and calls the nextGeneration method on each cell and compiles
-     * the results into a new cell grid, then overwrite the old cell grid with the next generation of cells
+     * Iterates through the entire grid and calls the nextGeneration method on each cell
+     * The updated positions of the next generation are compiled onto the updatingGrid array
+     * Then the grid is overwritten with the old cell grid containing the next generation of cells
      */
     public static void nextGeneration() {
-        Cell[][] nextGrid = new Cell[grid.length][grid[0].length];
+        Cell[][] updatingGrid = new Cell[grid.length][grid[0].length];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                nextGrid[i][j] = Cell.newGameCell(i, j, gametype, NULL);
-                nextGrid[i][j].updateType(grid[i][j].nextGeneration(getNeighbors(i, j)));
+                updatingGrid[i][j] = Cell.newGameCell(i, j, gametype, NULL);
+                grid[i][j].nextGeneration(updatingGrid);
             }
         }
-        grid = nextGrid;
+        grid = updatingGrid;
     }
 
-    private static CELLTYPE[][] getNeighbors(int x, int y) {
+    /**
+     * Returns a cells 8 neighboring cell types.
+     * If a cell is on the edge than cells that would be out of bounds are set to NULL cells
+     * Its central cell, itself, is also set to NULL
+     *
+     * @param x coordinate of the cell
+     * @param y coordinate of the cell
+     * @return its neighboring cell types
+     */
+    public static CELLTYPE[][] getNeighbors(int x, int y) {
         CELLTYPE[][] neighbors = new CELLTYPE[3][3];
         for (int i = 0; i < neighbors.length; i++) {
             for (int j = 0; j < neighbors[0].length; j++) {
