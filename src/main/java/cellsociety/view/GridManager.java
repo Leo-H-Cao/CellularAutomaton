@@ -9,11 +9,12 @@ import static cellsociety.cell.Type.CELLTYPE.ALIVE;
 
 public class GridManager {
 	private static GridPane grid;
+	public static final int GRIDGAP = 1;
 
 	public GridManager() {
 		grid = new GridPane();
-		grid.setHgap(2);
-		grid.setVgap(2);
+		grid.setHgap(GRIDGAP);
+		grid.setVgap(GRIDGAP);
 	}
 
 
@@ -22,8 +23,9 @@ public class GridManager {
 	}
 
 	public void update(Cell[][] g) {
-		int cellWidth = Math.round(Main.DEFAULT_SIZE.width / g.length);
-		int cellHeight = Math.round(Main.DEFAULT_SIZE.height / g[0].length);
+		int verticalPadding = 100;
+		int cellWidth = Integer.valueOf(Main.DEFAULT_SIZE.width / g.length) - GRIDGAP;
+		int cellHeight = Math.round((Main.DEFAULT_SIZE.height - verticalPadding) / g[0].length) - GRIDGAP;
 		// reset grid
 		grid.getChildren().clear();
 
@@ -34,7 +36,7 @@ public class GridManager {
 				if (g[i][j].getType() == ALIVE) {
 					c.setColor(Color.BLUE);
 				} else {
-					c.setColor(Color.BLACK);
+					c.setColor(Color.GRAY);
 				}
 				grid.add(c.getNode(), j, i);
 			}
