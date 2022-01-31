@@ -37,10 +37,6 @@ public class Game {
 		playing = !playing;
 	}
 
-	public static CellGrid getCellGrid() {
-		return cellGrid;
-	}
-
     private void init() {
         FileReader f = new FileReader();
         f.parseFile("data/SampleComfig1.xml");

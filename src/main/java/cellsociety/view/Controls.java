@@ -15,7 +15,6 @@ public class Controls {
 		HBox ret = new HBox();
 		playButton = makeButton("Play", (e) -> {
 			Game.toggleSimulation();
-//			e.setText();
 			if(e.getTarget() instanceof Button) {
 				Button b = (Button) e.getTarget();
 				if(Game.getPlaying()) {

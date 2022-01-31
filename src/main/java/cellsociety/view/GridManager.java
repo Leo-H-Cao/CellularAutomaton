@@ -26,7 +26,6 @@ public class GridManager {
 		return ret;
 	}
 
-
 	public Node getGrid() {
 		return grid;
 	}
@@ -50,20 +49,5 @@ public class GridManager {
 				grid.add(c.getNode(), i, j);
 			}
 		}
-
-//		grid.getChildren().forEach(item -> {
-//			item.setOnMouseClicked(event -> {
-//				if (event.getClickCount() == 1) {
-//					System.out.println("singleClick");
-//					if(item instanceof Rectangle) {
-//
-//					}
-//				}
-//			});
-//		});
 	}
-
-//	public void handleClick(int x, int y) {
-//		for()
-//	}
 }

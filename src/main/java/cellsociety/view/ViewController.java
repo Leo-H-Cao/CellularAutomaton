@@ -55,7 +55,6 @@ public class ViewController {
 		root.setBottom(controls.makeControls());
 
 		Scene scene = new Scene(root, width, height);
-//		scene.setOnMouseClicked(e -> handleMouseInput( e));
 		return scene;
 	}
 
@@ -104,7 +103,6 @@ public class ViewController {
 		return layout;
 	}
 
-
 	// makes a button using either an image or a label
 	private Button makeButton (String label, EventHandler<ActionEvent> handler) {
 		// represent all supported image suffixes
@@ -113,8 +111,4 @@ public class ViewController {
 		result.setOnAction(handler);
 		return result;
 	}
-
-//	private void handleMouseInput(e) {
-//		System.out.println((int) e.getX() + " " + (int) y);
-//	}
 }
