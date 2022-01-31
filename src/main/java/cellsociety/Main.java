@@ -15,7 +15,7 @@ import java.awt.*;
 public class Main extends Application {
 
     public static final String TITLE = "Cell Society";
-    public static final Dimension DEFAULT_SIZE = new Dimension(800, 600);
+    public static final Dimension DEFAULT_SIZE = new Dimension(800, 800);
     public static final int FRAMES_PER_SECOND = 1;
     public static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 

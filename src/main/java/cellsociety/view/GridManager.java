@@ -5,16 +5,25 @@ import cellsociety.cell.Cell;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+
 import static cellsociety.cell.Type.CELLTYPE.ALIVE;
 
 public class GridManager {
 	private static GridPane grid;
-	public static final int GRIDGAP = 1;
+	private static final int GRID_GAP = 3;
+	private static int cellWidth, cellHeight;
 
 	public GridManager() {
 		grid = new GridPane();
-		grid.setHgap(GRIDGAP);
-		grid.setVgap(GRIDGAP);
+		grid.setHgap(GRID_GAP);
+		grid.setVgap(GRID_GAP);
+	}
+
+	public static int[] getCellDimensions() {
+		int[] ret = new int[2];
+		ret[0] = cellWidth;
+		ret[1] = cellHeight;
+		return ret;
 	}
 
 
@@ -23,23 +32,38 @@ public class GridManager {
 	}
 
 	public void update(Cell[][] g) {
-		int verticalPadding = 100;
-		int cellWidth = Integer.valueOf(Main.DEFAULT_SIZE.width / g.length) - GRIDGAP;
-		int cellHeight = Math.round((Main.DEFAULT_SIZE.height - verticalPadding) / g[0].length) - GRIDGAP;
+		int verticalPadding = 120;
+		cellWidth = Integer.valueOf(Main.DEFAULT_SIZE.width / g.length) - GRID_GAP - 1;
+		cellHeight = Math.round((Main.DEFAULT_SIZE.height - verticalPadding) / g[0].length) - GRID_GAP - 1;
 		// reset grid
 		grid.getChildren().clear();
 
 
 		for (int i = 0; i < g.length; i++) {
 			for (int j = 0; j < g[0].length; j++) {
-				CellNode c = new CellNode(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+				CellNode c = new CellNode(g[i][j]);
 				if (g[i][j].getType() == ALIVE) {
 					c.setColor(Color.BLUE);
 				} else {
 					c.setColor(Color.GRAY);
 				}
-				grid.add(c.getNode(), j, i);
+				grid.add(c.getNode(), i, j);
 			}
 		}
+
+//		grid.getChildren().forEach(item -> {
+//			item.setOnMouseClicked(event -> {
+//				if (event.getClickCount() == 1) {
+//					System.out.println("singleClick");
+//					if(item instanceof Rectangle) {
+//
+//					}
+//				}
+//			});
+//		});
 	}
+
+//	public void handleClick(int x, int y) {
+//		for()
+//	}
 }

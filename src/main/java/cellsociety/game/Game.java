@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class Game {
+	private static boolean playing = false;
 
     private static Timeline animation;
     private static CellGrid cellGrid;
@@ -20,9 +21,25 @@ public class Game {
         init();
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step(SECOND_DELAY)));
-        animation.play();
+        animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
     }
+
+	public static boolean getPlaying() {
+		return playing;
+	}
+
+	public static void toggleSimulation() {
+		if(playing) {
+			animation.pause();
+		} else {
+			animation.play();
+		}
+		playing = !playing;
+	}
+
+	public static CellGrid getCellGrid() {
+		return cellGrid;
+	}
 
     private void init() {
         FileReader f = new FileReader();
@@ -33,23 +50,15 @@ public class Game {
         viewController.updateGridPane(cellGrid.getGrid());
     }
 
-    private void step(double second_delay) {
+	public static void renderGrid() {
+		viewController.updateGridPane(cellGrid.getGrid());
+	}
 
-        //HARDCODED FOR TESTING PURPOSES
-//        Cell[][] g = cellGrid.getGrid();
-//        for (int i = 0 ; i < g.length; i++) {
-//            for (int j = 0 ; j < g[0].length; j++) {
-//                if (g[i][j].getType() == ALIVE) System.out.print("* ");
-//                else System.out.print(". ");
-//            }
-//            System.out.println();
-//        }
-//        System.out.println();
+    public static void step() {
+	    //Updates the 2D Array in Cell
+	    cellGrid.nextGeneration();
 
-        // Display current cellGrid
-        viewController.updateGridPane(cellGrid.getGrid());
-
-        //Updates the 2D Array in Cell
-        cellGrid.nextGeneration();
+	    // Display current cellGrid
+	    renderGrid();
     }
 }
