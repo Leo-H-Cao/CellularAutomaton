@@ -2,6 +2,7 @@ package cellsociety.view;
 
 import cellsociety.Main;
 import cellsociety.cell.Cell;
+import cellsociety.cell.Type;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -18,14 +19,18 @@ public class ViewController {
 	private Button importButton;
 	private Button exportButton;
 	private GridManager gm;
+	private Controls controls;
 	private BorderPane root;
+	private static Type.CELLTYPE selectedClickType;
 
 	public ViewController(Stage stage) {
 		gm = new GridManager();
+		controls = new Controls();
 
 		stage.setScene(makeScene(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
 		stage.setTitle(Main.TITLE);
 		stage.show();
+		selectedClickType = Type.CELLTYPE.ALIVE;
 	}
 
 	public void updateGridPane(Cell[][] cells){
@@ -33,6 +38,13 @@ public class ViewController {
 		root.setCenter(gm.getGrid());
 	}
 
+	public static Type.CELLTYPE getSelectedClickType() {
+		return selectedClickType;
+	}
+
+	public static void setSelectedClickType(Type.CELLTYPE type) {
+		selectedClickType = type;
+	}
 
 	private Scene makeScene (int width, int height) {
 		root = new BorderPane();
@@ -40,8 +52,10 @@ public class ViewController {
 		// must be first since other panels may refer to page
 		root.setCenter(gm.getGrid());
 		root.setTop(makeTopDisplay());
-//		root.setBottom(makeInformationPanel());
-		return new Scene(root, width, height);
+		root.setBottom(controls.makeControls());
+
+		Scene scene = new Scene(root, width, height);
+		return scene;
 	}
 
 	private Node makeTopDisplay() {
@@ -88,7 +102,6 @@ public class ViewController {
 
 		return layout;
 	}
-
 
 	// makes a button using either an image or a label
 	private Button makeButton (String label, EventHandler<ActionEvent> handler) {
