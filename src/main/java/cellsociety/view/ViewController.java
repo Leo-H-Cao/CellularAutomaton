@@ -9,10 +9,12 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.TouchPoint;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class ViewController {
@@ -21,12 +23,14 @@ public class ViewController {
 	private GridManager gm;
 	private Controls controls;
 	private BorderPane root;
+	private Stage stage;
 	private static Type.CELLTYPE selectedClickType;
 
-	public ViewController(Stage stage) {
+	public ViewController(Stage _stage) {
 		gm = new GridManager();
 		controls = new Controls();
 
+		stage = _stage;
 		stage.setScene(makeScene(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
 		stage.setTitle(Main.TITLE);
 		stage.show();
@@ -85,7 +89,9 @@ public class ViewController {
 
 
 		importButton = makeButton("Import", e -> {
-			System.out.println(e);
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Open Resource File");
+			fileChooser.showOpenDialog(stage);
 		});
 		exportButton = makeButton("Export", e -> {
 			System.out.println(e);

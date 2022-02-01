@@ -25,7 +25,6 @@ public class Controls {
 				} else {
 					b.setText("Play");
 				}
-
 			}
 		});
 		stepButton = makeButton("Step", (e) -> {

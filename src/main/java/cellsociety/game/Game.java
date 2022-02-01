@@ -43,7 +43,7 @@ public class Game {
         cellGrid = new CellGrid();
         cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.GAMEOFLIFE);
         cellGrid.initializeCells(f.getInitialState());
-        viewController.updateGridPane(cellGrid.getGrid());
+        renderGrid();
     }
 
 	public static void renderGrid() {

@@ -23,5 +23,4 @@ public enum Type {;
         FISH,
         SHARK
     }
-
 }
