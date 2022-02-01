@@ -4,7 +4,6 @@ import cellsociety.Main;
 import cellsociety.cell.Cell;
 import cellsociety.cell.Type;
 import cellsociety.game.Game;
-import cellsociety.io.FileReader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -94,7 +93,9 @@ public class ViewController {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Open Resource File");
 			File file = fileChooser.showOpenDialog(stage);
-			Game.makeNewGrid(file);
+			if(file != null) {
+				Game.makeNewGrid(file.toString());
+			}
 		});
 		exportButton = makeButton("Export", e -> {
 			System.out.println(e);
