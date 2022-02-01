@@ -4,7 +4,6 @@ import cellsociety.cell.CellGrid;
 import cellsociety.cell.CellGridFire;
 import cellsociety.cell.CellGridGOL;
 import cellsociety.cell.CellGridWaTor;
-import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.io.FileReader;
 import cellsociety.io.PropertiesLoader;
 import cellsociety.view.ViewController;
@@ -13,7 +12,6 @@ import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.File;
 import java.io.IOException;
 
 public class Game {
@@ -51,17 +49,12 @@ public class Game {
 	}
 
     private void init() {
-        FileReader f = new FileReader();
-        f.parseFile("data/SampleComfig2.xml");
-        cellGrid = new CellGridGOL();
-        cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.GAMEOFLIFE);
-        cellGrid.initializeCells(f.getInitialState());
-        renderGrid();
+		 makeNewGrid("data/SampleComfig1.xml");
     }
 
-	public static void makeNewGrid(File file) {
+	public static void makeNewGrid(String filePath) {
 		FileReader f = new FileReader();
-		f.parseFile(file.toString());
+		f.parseFile(filePath);
 		switch(f.getGameType()) {
 			case default: cellGrid = null;
 			case GAMEOFLIFE: cellGrid = new CellGridGOL();

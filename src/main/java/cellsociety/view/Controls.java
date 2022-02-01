@@ -3,9 +3,12 @@ package cellsociety.view;
 import cellsociety.game.Game;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 
 public class Controls {
 	private Button playButton;
@@ -32,6 +35,9 @@ public class Controls {
 		});
 
 		centerBox.getChildren().addAll(playButton, stepButton);
+		centerBox.setAlignment(Pos.CENTER);
+		HBox.setMargin(playButton,new Insets(0,10,20,0));
+		HBox.setMargin(stepButton,new Insets(0,0,20,10));
 
 		ret.add(leftBox, 0, 0);
 		ret.add(centerBox, 1, 0);
@@ -57,5 +63,11 @@ public class Controls {
 		result.setText(title);
 		result.setOnAction(handler);
 		return result;
+	}
+
+	private Node makeTypeSelector() {
+		Node ret = new Rectangle();
+		
+		return ret;
 	}
 }
