@@ -19,73 +19,26 @@ public class SchellingSegCell extends Cell {
         super(x, y, cType);
     }
 
-    @Override
-    public void nextGeneration(Cell[][] updatingGrid) {
-        if (updatingGrid[getX()][getY()].getType() != NULL) return;
-        if (getType() == EMPTY) {
-            updatingGrid[getX()][getY()].updateType(EMPTY);
-            return;
-        }
-        double fReal = fReal(CellGrid.getNeighbors(getX(), getY()));
-        if (fReal >= PropertiesLoader.fIdeal) return;
-        int d = bestDirection(getValidDirections(updatingGrid), fReal);
-        if (d < 0) {
-            updatingGrid[getX()][getY()].updateType(EMPTY);
-            return;
-        }
-        updateGrid(d, getType(), updatingGrid);
-    }
+//    @Override
+//    public void nextGeneration(Cell[][] updatingGrid) {
+//        if (updatingGrid[getX()][getY()].getType() == EMPTY) return;
+//        if (getType() == EMPTY) {
+//            updatingGrid[getX()][getY()].updateType(EMPTY);
+//            return;
+//        }
+//        double fReal = fReal(CellGrid.getNeighbors(getX(), getY()));
+//        if (fReal >= 0.6) return;
+//        int d = bestDirection(getValidDirections(updatingGrid), fReal);
+//        if (d < 0) {
+//            updatingGrid[getX()][getY()].updateType(EMPTY);
+//            return;
+//        }
+//        updateGrid(d, getType(), updatingGrid);
+//    }
 
     @Override
     public Type.CELLTYPE getDefault() {
         return EMPTY;
-    }
-
-    private double fReal(CELLTYPE[][] neighbors) {
-        int countA = getType() == A ? 1 : 0;
-        for (int i = 0; i < neighbors.length; i++) {
-            for (int j = 0; j < neighbors[0].length; j++) {
-                if (neighbors[0][0] == A) countA++;
-            }
-        }
-        return getType() == A ? (double)countA/8.0 : 1.0-((double)countA/8.0);
-    }
-
-    private double[] getValidDirections(Cell[][] updatingGrid) {
-        double[] validDirections = new double[8];
-        if (updatingGrid[getX()-1][getY()-1].getType() == NULL) validDirections[0] = fReal(CellGrid.getNeighbors(getX()-1, getY()-1));
-        if (updatingGrid[getX()][getY()-1].getType() == NULL) validDirections[1] = fReal(CellGrid.getNeighbors(getX(), getY()-1));
-        if (updatingGrid[getX()+1][getY()-1].getType() == NULL) validDirections[2] = fReal(CellGrid.getNeighbors(getX()+1, getY()-1));
-        if (updatingGrid[getX()-1][getY()].getType() == NULL) validDirections[3] = fReal(CellGrid.getNeighbors(getX()-1, getY()));
-        if (CellGrid.getGrid()[getX()+1][getY()].getType() == EMPTY && updatingGrid[getX()+1][getY()].getType() == NULL) validDirections[4] = fReal(CellGrid.getNeighbors(getX()+1, getY()));
-        if (CellGrid.getGrid()[getX()-1][getY()+1].getType() == EMPTY && updatingGrid[getX()-1][getY()+1].getType() == NULL) validDirections[5] = fReal(CellGrid.getNeighbors(getX()-1, getY()+1));
-        if (CellGrid.getGrid()[getX()][getY()+1].getType() == EMPTY && updatingGrid[getX()][getY()+1].getType() == NULL) validDirections[6] = fReal(CellGrid.getNeighbors(getX(), getY()+1));
-        if (CellGrid.getGrid()[getX()+1][getY()+1].getType() == EMPTY && updatingGrid[getX()+1][getY()+1].getType() == NULL) validDirections[7] = fReal(CellGrid.getNeighbors(getX()+1, getY()+1));
-        return validDirections;
-    }
-
-    private int bestDirection(double[] validDirections, double fReal) {
-        int count = 0;
-        for (int i = 0; i < validDirections.length; i++) {
-            if (validDirections[i] > fReal) count++;
-        }
-        int random = (int)(Math.random() * count);
-        for (int i = 0; i < validDirections.length; i++) {
-            if (validDirections[i] > fReal && random > 0) random--;
-            else if (validDirections[i] > fReal && random == 0) return i;
-        }
-        return -1;
-    }
-
-    private void updateGrid(int d, CELLTYPE cType, Cell[][] updatingGrid) {
-        if (d == 0) updatingGrid[getX()-1][getY()-1].updateType(cType);
-        if (d == 1) updatingGrid[getX()][getY()-1].updateType(cType);
-        if (d == 2) updatingGrid[getX()+1][getY()-1].updateType(cType);
-        if (d == 3) updatingGrid[getX()-1][getY()].updateType(cType);
-        if (d == 4) updatingGrid[getX()+1][getY()].updateType(cType);
-        if (d == 5) updatingGrid[getX()-1][getY()+1].updateType(cType);
-        if (d == 6) updatingGrid[getX()][getY()+1].updateType(cType);
-        if (d == 7) updatingGrid[getX()+1][getY()+1].updateType(cType);
     }
 
 }
