@@ -58,3 +58,16 @@ public class CellGridGOL extends CellGrid {
     }
 
 }
+
+class GameOfLifeCell extends Cell {
+
+    public GameOfLifeCell(int x, int y, CELLTYPE cType) {
+        super(x, y, cType);
+    }
+
+    @Override
+    public CELLTYPE getDefault() {
+        return DEAD;
+    }
+
+}

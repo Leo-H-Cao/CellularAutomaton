@@ -1,5 +1,6 @@
 package cellsociety.cell;
 
+import cellsociety.cell.Type.CELLTYPE;
 import java.util.HashMap;
 
 import static cellsociety.cell.Type.CELLTYPE.*;
@@ -113,6 +114,24 @@ public class CellGridWaTor extends CellGrid {
     private static boolean inBounds(int x, int y, Cell[][] updatingGrid) {
         if (x < 0 || x >= updatingGrid.length || y < 0 || y >= updatingGrid[0].length) return false;
         return true;
+    }
+
+}
+
+class WaTorCell extends Cell {
+
+    public WaTorCell(int x, int y, CELLTYPE cType) {
+        super(x, y, cType);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("Moved", false);
+        map.put("Reproduce", 0);
+        map.put("Energy", 5);
+        setProperties(map);
+    }
+
+    @Override
+    public CELLTYPE getDefault() {
+        return EMPTY;
     }
 
 }

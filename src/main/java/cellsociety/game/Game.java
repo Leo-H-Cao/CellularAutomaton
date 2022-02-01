@@ -3,6 +3,7 @@ package cellsociety.game;
 import cellsociety.cell.CellGrid;
 import cellsociety.cell.CellGridFire;
 import cellsociety.cell.CellGridGOL;
+import cellsociety.cell.CellGridSchellingSeg;
 import cellsociety.cell.CellGridWaTor;
 import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.io.FileReader;
@@ -52,8 +53,9 @@ public class Game {
     private void init() {
         FileReader f = new FileReader();
         f.parseFile("data/SampleComfig1.xml");
-        cellGrid = new CellGridWaTor();
-        cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.WATOR);
+        cellGrid  = new CellGridFire();
+//        cellGrid = new CellGridWaTor();
+        cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.FIRE);
         cellGrid.initializeCells(f.getInitialState());
         viewController.updateGridPane(cellGrid.getGrid());
     }

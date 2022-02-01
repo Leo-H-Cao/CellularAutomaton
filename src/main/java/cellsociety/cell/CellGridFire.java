@@ -50,3 +50,16 @@ public class CellGridFire extends CellGrid {
     }
 
 }
+
+class FireCell extends Cell {
+
+    public FireCell(int x, int y, CELLTYPE cType) {
+        super(x, y, cType);
+    }
+
+    @Override
+    public CELLTYPE getDefault() {
+        return EMPTY;
+    }
+
+}

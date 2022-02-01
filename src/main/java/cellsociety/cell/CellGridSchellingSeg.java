@@ -77,3 +77,34 @@ public class CellGridSchellingSeg extends CellGrid {
         return true;
     }
 }
+
+class SchellingSegCell extends Cell {
+
+    public SchellingSegCell(int x, int y, Type.CELLTYPE cType) {
+        super(x, y, cType);
+    }
+
+//    @Override
+//    public void nextGeneration(Cell[][] updatingGrid) {
+//        if (updatingGrid[getX()][getY()].getType() == EMPTY) return;
+//        if (getType() == EMPTY) {
+//            updatingGrid[getX()][getY()].updateType(EMPTY);
+//            return;
+//        }
+//        double fReal = fReal(CellGrid.getNeighbors(getX(), getY()));
+//        if (fReal >= 0.6) return;
+//        int d = bestDirection(getValidDirections(updatingGrid), fReal);
+//        if (d < 0) {
+//            updatingGrid[getX()][getY()].updateType(EMPTY);
+//            return;
+//        }
+//        updateGrid(d, getType(), updatingGrid);
+//    }
+
+    @Override
+    public Type.CELLTYPE getDefault() {
+        return EMPTY;
+    }
+
+}
+
