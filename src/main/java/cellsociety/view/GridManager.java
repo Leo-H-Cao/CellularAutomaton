@@ -5,15 +5,25 @@ import cellsociety.cell.Cell;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+
 import static cellsociety.cell.Type.CELLTYPE.ALIVE;
 
 public class GridManager {
 	private static GridPane grid;
+	private static final int GRID_GAP = 3;
+	private static int cellWidth, cellHeight;
 
 	public GridManager() {
 		grid = new GridPane();
-		grid.setHgap(2);
-		grid.setVgap(2);
+		grid.setHgap(GRID_GAP);
+		grid.setVgap(GRID_GAP);
+	}
+
+	public static int[] getCellDimensions() {
+		int[] ret = new int[2];
+		ret[0] = cellWidth;
+		ret[1] = cellHeight;
+		return ret;
 	}
 
 	public Node getGrid() {
@@ -21,8 +31,9 @@ public class GridManager {
 	}
 
 	public void update(Cell[][] g) {
-		int cellWidth = Math.round(Main.DEFAULT_SIZE.width / g.length);
-		int cellHeight = Math.round(Main.DEFAULT_SIZE.height / g[0].length);
+		int verticalPadding = 120;
+		cellWidth = Integer.valueOf(Main.DEFAULT_SIZE.width / g.length) - GRID_GAP - 1;
+		cellHeight = Math.round((Main.DEFAULT_SIZE.height - verticalPadding) / g[0].length) - GRID_GAP - 1;
 		// reset grid
 		grid.getChildren().clear();
 
@@ -59,7 +70,7 @@ public class GridManager {
 					default:
 						c.setColor(Color.BLACK);
 				}
-				grid.add(c.getNode(), j, i);
+				grid.add(c.getNode(), i, j);
 			}
 		}
 	}

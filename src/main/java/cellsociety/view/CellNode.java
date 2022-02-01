@@ -1,27 +1,39 @@
 package cellsociety.view;
 
+import cellsociety.cell.Cell;
+import cellsociety.game.Game;
 import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class CellNode {
-	private int x, y, width, height;
-	private Color color;
-	private final Rectangle cell;
+public class CellNode extends Node {
 
-	public CellNode(double x, double y, double width, double height) {
-		x = Math.round(x);
-		y = Math.round(y);
-		width = Math.round(width);
-		height = Math.round(height);
-		cell = new Rectangle(x, y, width, height);
+	private final double width, height;
+	private final Rectangle rect;
+	private final Cell cell;
+
+	public CellNode(Cell c) {
+		int[] dimensions = GridManager.getCellDimensions();
+		width = dimensions[0];
+		height = dimensions[1];
+		cell = c;
+		rect = new Rectangle(c.getX(), c.getY(), width, height);
+		rect.setOnMouseClicked(event -> {
+			handleMouseEvent(event);
+		});
 	}
 
 	public void setColor(Color c) {
-		cell.setFill(c);
+		rect.setFill(c);
 	}
 
 	public Node getNode() {
-		return cell;
+		return rect;
+	}
+
+	private void handleMouseEvent(MouseEvent e) {
+		cell.updateType(ViewController.getSelectedClickType());
+		Game.renderGrid();
 	}
 }
