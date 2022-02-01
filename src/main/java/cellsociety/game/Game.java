@@ -26,7 +26,6 @@ public class Game {
         try {
             pl.readPropValues();
         } catch (IOException e) {
-
         }
         viewController = new ViewController(stage);
         init();
@@ -56,10 +55,10 @@ public class Game {
 		FileReader f = new FileReader();
 		f.parseFile(filePath);
 		switch(f.getGameType()) {
-			case default: cellGrid = null;
-			case GAMEOFLIFE: cellGrid = new CellGridGOL();
-			case FIRE: cellGrid = new CellGridFire();
-			case WATOR: cellGrid = new CellGridWaTor();
+			case default -> cellGrid = null;
+			case GAMEOFLIFE -> cellGrid = new CellGridGOL();
+			case FIRE -> cellGrid = new CellGridFire();
+			case WATOR -> cellGrid = new CellGridWaTor();
 		}
 		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), f.getGameType());
 		cellGrid.initializeCells(f.getInitialState());
