@@ -3,6 +3,8 @@ package cellsociety.view;
 import cellsociety.Main;
 import cellsociety.cell.Cell;
 import cellsociety.cell.Type;
+import cellsociety.game.Game;
+import cellsociety.io.FileReader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -13,7 +15,10 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class ViewController {
 	private Button importButton;
@@ -21,12 +26,14 @@ public class ViewController {
 	private GridManager gm;
 	private Controls controls;
 	private BorderPane root;
+	private Stage stage;
 	private static Type.CELLTYPE selectedClickType;
 
-	public ViewController(Stage stage) {
+	public ViewController(Stage _stage) {
 		gm = new GridManager();
 		controls = new Controls();
 
+		stage = _stage;
 		stage.setScene(makeScene(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
 		stage.setTitle(Main.TITLE);
 		stage.show();
@@ -83,9 +90,11 @@ public class ViewController {
 		Region spacerRight = new Region();
 		HBox.setHgrow(spacerRight, Priority.ALWAYS);
 
-
 		importButton = makeButton("Import", e -> {
-			System.out.println(e);
+			FileChooser fileChooser = new FileChooser();
+			fileChooser.setTitle("Open Resource File");
+			File file = fileChooser.showOpenDialog(stage);
+			Game.makeNewGrid(file);
 		});
 		exportButton = makeButton("Export", e -> {
 			System.out.println(e);

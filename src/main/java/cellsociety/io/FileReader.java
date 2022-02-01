@@ -130,7 +130,7 @@ public class FileReader {
     game_type = GAMETYPE.valueOf(gameTypeString);
   }
 
-  private GAMETYPE getGameType(){
+  public GAMETYPE getGameType(){
     return game_type;
   }
 }
