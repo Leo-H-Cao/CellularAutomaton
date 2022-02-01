@@ -1,13 +1,20 @@
 package cellsociety.game;
 
 import cellsociety.cell.CellGrid;
+import cellsociety.cell.CellGridFire;
+import cellsociety.cell.CellGridGOL;
+import cellsociety.cell.CellGridWaTor;
 import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.io.FileReader;
+import cellsociety.io.PropertiesLoader;
 import cellsociety.view.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.File;
+import java.io.IOException;
 
 public class Game {
 	private static boolean playing = false;
@@ -17,6 +24,12 @@ public class Game {
     private static ViewController viewController;
 
     public Game(double SECOND_DELAY, Stage stage) {
+        PropertiesLoader pl = new PropertiesLoader();
+        try {
+            pl.readPropValues();
+        } catch (IOException e) {
+
+        }
         viewController = new ViewController(stage);
         init();
         animation = new Timeline();
@@ -37,18 +50,28 @@ public class Game {
 		playing = !playing;
 	}
 
-	public static CellGrid getCellGrid() {
-		return cellGrid;
-	}
-
     private void init() {
         FileReader f = new FileReader();
-        f.parseFile("data/SampleComfig1.xml");
-        cellGrid = new CellGrid();
+        f.parseFile("data/SampleComfig2.xml");
+        cellGrid = new CellGridGOL();
         cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.GAMEOFLIFE);
         cellGrid.initializeCells(f.getInitialState());
-        viewController.updateGridPane(cellGrid.getGrid());
+        renderGrid();
     }
+
+	public static void makeNewGrid(File file) {
+		FileReader f = new FileReader();
+		f.parseFile(file.toString());
+		switch(f.getGameType()) {
+			case default: cellGrid = null;
+			case GAMEOFLIFE: cellGrid = new CellGridGOL();
+			case FIRE: cellGrid = new CellGridFire();
+			case WATOR: cellGrid = new CellGridWaTor();
+		}
+		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), f.getGameType());
+		cellGrid.initializeCells(f.getInitialState());
+		renderGrid();
+	}
 
 	public static void renderGrid() {
 		viewController.updateGridPane(cellGrid.getGrid());

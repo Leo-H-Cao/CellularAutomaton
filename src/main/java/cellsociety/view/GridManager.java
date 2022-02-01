@@ -26,7 +26,6 @@ public class GridManager {
 		return ret;
 	}
 
-
 	public Node getGrid() {
 		return grid;
 	}
@@ -38,32 +37,36 @@ public class GridManager {
 		// reset grid
 		grid.getChildren().clear();
 
-
 		for (int i = 0; i < g.length; i++) {
 			for (int j = 0; j < g[0].length; j++) {
 				CellNode c = new CellNode(g[i][j]);
-				if (g[i][j].getType() == ALIVE) {
-					c.setColor(Color.BLUE);
-				} else {
-					c.setColor(Color.GRAY);
+				switch (g[i][j].getType()) {
+					case EMPTY:
+					case DEAD:
+						c.setColor(Color.BLACK);
+						break;
+					case ALIVE:
+					case FISH:
+					case A:
+						c.setColor(Color.BLUE);
+						break;
+					case TREE:
+						c.setColor(Color.GREEN);
+						break;
+					case BURNING:
+						c.setColor(Color.YELLOW);
+						break;
+					case SHARK:
+					case B:
+						c.setColor(Color.RED);
+						break;
+					case NULL:
+						c.setColor(Color.BROWN);
+					default:
+						c.setColor(Color.BLACK);
 				}
 				grid.add(c.getNode(), i, j);
 			}
 		}
-
-//		grid.getChildren().forEach(item -> {
-//			item.setOnMouseClicked(event -> {
-//				if (event.getClickCount() == 1) {
-//					System.out.println("singleClick");
-//					if(item instanceof Rectangle) {
-//
-//					}
-//				}
-//			});
-//		});
 	}
-
-//	public void handleClick(int x, int y) {
-//		for()
-//	}
 }

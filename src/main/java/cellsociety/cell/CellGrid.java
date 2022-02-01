@@ -4,7 +4,7 @@ import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.Type.CELLTYPE;
 import java.util.ArrayList;
 
-import static cellsociety.cell.Type.CELLTYPE.NULL;
+import static cellsociety.cell.Type.CELLTYPE.*;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -13,7 +13,7 @@ import static cellsociety.cell.Type.CELLTYPE.NULL;
  *
  * @author Zack Schrage
  */
-public class CellGrid {
+public abstract class CellGrid {
 
     private static Cell[][] grid;
     private static GAMETYPE gametype;
@@ -51,21 +51,15 @@ public class CellGrid {
     }
 
     /**
-     * Iterates through the entire grid and calls the nextGeneration method on each cell and compiles
-     * the results into a new cell grid, then overwrite the old cell grid with the next generation of cells
+     * Returns a cells 8 neighboring cell types.
+     * If a cell is on the edge than cells that would be out of bounds are set to NULL cells
+     * Its central cell, itself, is also set to NULL
+     *
+     * @param x coordinate of the cell
+     * @param y coordinate of the cell
+     * @return its neighboring cell types
      */
-    public static void nextGeneration() {
-        Cell[][] nextGrid = new Cell[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                nextGrid[i][j] = Cell.newGameCell(i, j, gametype, NULL);
-                nextGrid[i][j].updateType(grid[i][j].nextGeneration(getNeighbors(i, j)));
-            }
-        }
-        grid = nextGrid;
-    }
-
-    private static CELLTYPE[][] getNeighbors(int x, int y) {
+    public static CELLTYPE[][] getNeighbors(int x, int y) {
         CELLTYPE[][] neighbors = new CELLTYPE[3][3];
         for (int i = 0; i < neighbors.length; i++) {
             for (int j = 0; j < neighbors[0].length; j++) {
@@ -82,11 +76,31 @@ public class CellGrid {
 
     /**
      * Getter method for the grid
-     *
      * @return Grid of Cells
      */
     public static Cell[][] getGrid() {
         return grid;
     }
+
+    /**
+     * Setter method for the grid
+     * @param gridIn grid of Cells
+     */
+    public static void setGrid(Cell[][] gridIn) {
+        grid = gridIn;
+    }
+
+    /**
+     * Getter method for the game type
+     * @return game type
+     */
+    public static GAMETYPE getGameType() { return gametype; }
+
+    /**
+     * Each next generation is a function of the current generation and since the rules surrounding
+     * what a cells type will be in the next generation is game dependent, each subclass will implement
+     * its own rules dictating the game behavior
+     */
+    public abstract void nextGeneration();
 
 }

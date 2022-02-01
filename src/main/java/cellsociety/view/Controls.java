@@ -5,17 +5,19 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.*;
 
 public class Controls {
 	private Button playButton;
 	private Button stepButton;
 
 	public Node makeControls() {
-		HBox ret = new HBox();
+		GridPane ret = new GridPane();
+		HBox leftBox = new HBox();
+		HBox centerBox = new HBox();
+		HBox rightBox = new HBox();
 		playButton = makeButton("Play", (e) -> {
 			Game.toggleSimulation();
-//			e.setText();
 			if(e.getTarget() instanceof Button) {
 				Button b = (Button) e.getTarget();
 				if(Game.getPlaying()) {
@@ -23,13 +25,28 @@ public class Controls {
 				} else {
 					b.setText("Play");
 				}
-
 			}
 		});
 		stepButton = makeButton("Step", (e) -> {
 			Game.step();
 		});
-		ret.getChildren().addAll(playButton, stepButton);
+
+		centerBox.getChildren().addAll(playButton, stepButton);
+
+		ret.add(leftBox, 0, 0);
+		ret.add(centerBox, 1, 0);
+		ret.add(rightBox, 2, 0);
+
+		for (int i = 0 ; i < 3 ; i++) {
+			ColumnConstraints cc = new ColumnConstraints();
+			cc.setPercentWidth(100.0/3.0);
+			cc.setHgrow(Priority.ALWAYS);
+			ret.getColumnConstraints().add(cc);
+		}
+
+		RowConstraints rc = new RowConstraints();
+		rc.setVgrow(Priority.ALWAYS);
+		ret.getRowConstraints().add(rc);
 
 		return ret;
 	}

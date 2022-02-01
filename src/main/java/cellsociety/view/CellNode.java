@@ -10,7 +10,6 @@ import javafx.scene.shape.Rectangle;
 public class CellNode extends Node {
 
 	private final double width, height;
-	private Color color;
 	private final Rectangle rect;
 	private final Cell cell;
 
@@ -27,7 +26,6 @@ public class CellNode extends Node {
 
 	public void setColor(Color c) {
 		rect.setFill(c);
-		color = c;
 	}
 
 	public Node getNode() {
@@ -35,7 +33,6 @@ public class CellNode extends Node {
 	}
 
 	private void handleMouseEvent(MouseEvent e) {
-		System.out.println("type: " + cell.getType());
 		cell.updateType(ViewController.getSelectedClickType());
 		Game.renderGrid();
 	}

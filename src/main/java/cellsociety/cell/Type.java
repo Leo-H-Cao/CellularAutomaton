@@ -10,18 +10,20 @@ public enum Type {;
     public enum GAMETYPE {
         GAMEOFLIFE,
         FIRE,
-        WATOR
+        WATOR,
+        SCHELLSEG
     }
 
     public enum CELLTYPE {
         NULL,
         DEAD,
         ALIVE,
-        TREE,
         EMPTY,
+        TREE,
         BURNING,
         FISH,
-        SHARK
+        SHARK,
+        A,
+        B
     }
-
 }

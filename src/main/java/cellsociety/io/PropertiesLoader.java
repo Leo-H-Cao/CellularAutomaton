@@ -15,6 +15,7 @@ public class PropertiesLoader {
 
     public static double fireP;
     public static double fireF;
+    public static double fIdeal;
 
     /**
      * Code attributed to:
@@ -33,8 +34,9 @@ public class PropertiesLoader {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
 
-            fireP = Integer.parseInt(prop.getProperty("fireP"));
-            fireF = Integer.parseInt(prop.getProperty("fireF"));
+            fireP = Double.parseDouble(prop.getProperty("fireP"));
+            fireF = Double.parseDouble(prop.getProperty("fireF"));
+            fIdeal = Double.parseDouble(prop.getProperty("fIdeal"));
 
         } catch (Exception e) {
 
