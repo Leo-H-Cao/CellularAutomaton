@@ -37,14 +37,38 @@ public class GridManager {
 		// reset grid
 		grid.getChildren().clear();
 
-
 		for (int i = 0; i < g.length; i++) {
 			for (int j = 0; j < g[0].length; j++) {
-				CellNode c = new CellNode(g[i][j]);
-				if (g[i][j].getType() == ALIVE) {
-					c.setColor(Color.BLUE);
-				} else {
-					c.setColor(Color.GRAY);
+				CellNode c = new CellNode(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+//				if (g[i][j].getType() == ALIVE) {
+//					c.setColor(Color.BLUE);
+//				} else {
+//					c.setColor(Color.BLACK);
+//				}
+				switch (g[i][j].getType()) {
+					case EMPTY:
+					case DEAD:
+						c.setColor(Color.BLACK);
+						break;
+					case ALIVE:
+					case FISH:
+					case A:
+						c.setColor(Color.BLUE);
+						break;
+					case TREE:
+						c.setColor(Color.GREEN);
+						break;
+					case BURNING:
+						c.setColor(Color.YELLOW);
+						break;
+					case SHARK:
+					case B:
+						c.setColor(Color.RED);
+						break;
+					case NULL:
+						c.setColor(Color.BROWN);
+					default:
+						c.setColor(Color.BLACK);
 				}
 				grid.add(c.getNode(), i, j);
 			}

@@ -3,11 +3,11 @@ package cellsociety.cell;
 import cellsociety.cell.Type.CELLTYPE;
 import cellsociety.cell.Type.GAMETYPE;
 
+import java.util.HashMap;
+
 /**
  * This class outlines the primary attributes of a Cell: position (xy coordinate) and type (game specific)
  * Different games will have specialized cells that extend this class.
- * Each cell must have a nextGeneration method that takes in its neighbors as a parameter
- * The nextGeneration method determines what its type of Cell it will be in the next generation
  *
  * @author Zack Schrage
  */
@@ -16,11 +16,13 @@ public abstract class Cell {
     private int x;
     private int y;
     private CELLTYPE cType;
+    private HashMap<String, Object> properties;
 
     public Cell(int x, int y, CELLTYPE cType) {
         this.x = x;
         this.y = y;
         this.cType = cType;
+        properties = new HashMap<String, Object>();
     }
 
     /**
@@ -38,6 +40,8 @@ public abstract class Cell {
                 return new FireCell(x, y, cType);
             case WATOR:
                 return new WaTorCell(x, y, cType);
+            case SCHELLSEG:
+                return new SchellingSegCell(x, y, cType);
         }
         return null;
     }
@@ -67,25 +71,38 @@ public abstract class Cell {
     }
 
     /**
-     * Setter Method to update a type
-     * Subclasses can override this to expand upon and change internal properties while changing a cells type
-     *
+     * Setter Method to update a cells type
      * @param cType a cells new type
      */
     public void updateType(CELLTYPE cType) {
         this.cType = cType;
     }
 
+    /**
+     * Setter Method to update a cells type and modify internal properties by passing arguments
+     * @param cType a cells new type
+     * @param properties array of properties
+     */
+    public void updateType(CELLTYPE cType, HashMap<String, Object> properties) {
+        this.cType = cType;
+        this.properties = properties;
+    }
 
     /**
-     * Each next generation is a function of the current generation and since the rules surrounding
-     * what a cells type will be in the next generation is game dependent, each subclass will implement
-     * its own rules dictating the game behavior
-     *
-     * @param neighborsType 3x3 2D array of a cells neighbors with itself set as the NULL Cell
-     * @return the cell type in the next generation
+     * Getter method for a cells private properties
+     * @return properties array of a cells objects
      */
-    public abstract CELLTYPE nextGeneration(CELLTYPE[][] neighborsType);
+    public HashMap<String, Object> getProperties() {
+        return properties;
+    }
+
+    /**
+     * Setter method for a cells private properties
+     * @param properties array of a cells objects
+     */
+    public void setProperties(HashMap<String, Object> properties) {
+        this.properties = properties;
+    }
 
     /**
      * Getter method for a cells default type upon initialization
