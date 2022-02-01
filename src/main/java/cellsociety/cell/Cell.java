@@ -3,11 +3,11 @@ package cellsociety.cell;
 import cellsociety.cell.Type.CELLTYPE;
 import cellsociety.cell.Type.GAMETYPE;
 
+import java.util.HashMap;
+
 /**
  * This class outlines the primary attributes of a Cell: position (xy coordinate) and type (game specific)
  * Different games will have specialized cells that extend this class.
- * Each cell must have a nextGeneration method that takes in its neighbors as a parameter
- * The nextGeneration method determines what its type of Cell it will be in the next generation
  *
  * @author Zack Schrage
  */
@@ -16,11 +16,13 @@ public abstract class Cell {
     private int x;
     private int y;
     private CELLTYPE cType;
+    private HashMap<String, Object> properties;
 
     public Cell(int x, int y, CELLTYPE cType) {
         this.x = x;
         this.y = y;
         this.cType = cType;
+        properties = new HashMap<String, Object>();
     }
 
     /**
@@ -70,7 +72,6 @@ public abstract class Cell {
 
     /**
      * Setter Method to update a cells type
-     *
      * @param cType a cells new type
      */
     public void updateType(CELLTYPE cType) {
@@ -79,22 +80,29 @@ public abstract class Cell {
 
     /**
      * Setter Method to update a cells type and modify internal properties by passing arguments
-     *
      * @param cType a cells new type
      * @param properties array of properties
      */
-    public void updateType(CELLTYPE cType, Object[] properties) {
+    public void updateType(CELLTYPE cType, HashMap<String, Object> properties) {
         this.cType = cType;
+        this.properties = properties;
     }
 
     /**
-     * Each next generation is a function of the current generation and since the rules surrounding
-     * what a cells type will be in the next generation is game dependent, each subclass will implement
-     * its own rules dictating the game behavior
-     *
-     * @param updatingGrid a grid to update the next generation to
+     * Getter method for a cells private properties
+     * @return properties array of a cells objects
      */
-    public abstract void nextGeneration(Cell[][] updatingGrid);
+    public HashMap<String, Object> getProperties() {
+        return properties;
+    }
+
+    /**
+     * Setter method for a cells private properties
+     * @param properties array of a cells objects
+     */
+    public void setProperties(HashMap<String, Object> properties) {
+        this.properties = properties;
+    }
 
     /**
      * Getter method for a cells default type upon initialization

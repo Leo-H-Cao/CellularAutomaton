@@ -34,9 +34,9 @@ public class PropertiesLoader {
                 throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
             }
 
-            fireP = Integer.parseInt(prop.getProperty("fireP"));
-            fireF = Integer.parseInt(prop.getProperty("fireF"));
-            fIdeal = Integer.parseInt(prop.getProperty("fIdeal"));
+            fireP = Double.parseDouble(prop.getProperty("fireP"));
+            fireF = Double.parseDouble(prop.getProperty("fireF"));
+            fIdeal = Double.parseDouble(prop.getProperty("fIdeal"));
 
         } catch (Exception e) {
 

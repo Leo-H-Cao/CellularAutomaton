@@ -13,7 +13,7 @@ import static cellsociety.cell.Type.CELLTYPE.*;
  *
  * @author Zack Schrage
  */
-public class CellGrid {
+public abstract class CellGrid {
 
     private static Cell[][] grid;
     private static GAMETYPE gametype;
@@ -51,22 +51,6 @@ public class CellGrid {
     }
 
     /**
-     * Iterates through the entire grid and calls the nextGeneration method on each cell
-     * The updated positions of the next generation are compiled onto the updatingGrid array
-     * Then the grid is overwritten with the old cell grid containing the next generation of cells
-     */
-    public static void nextGeneration() {
-        Cell[][] updatingGrid = new Cell[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                updatingGrid[i][j] = Cell.newGameCell(i, j, gametype, NULL);
-                grid[i][j].nextGeneration(updatingGrid);
-            }
-        }
-        grid = updatingGrid;
-    }
-
-    /**
      * Returns a cells 8 neighboring cell types.
      * If a cell is on the edge than cells that would be out of bounds are set to NULL cells
      * Its central cell, itself, is also set to NULL
@@ -92,11 +76,31 @@ public class CellGrid {
 
     /**
      * Getter method for the grid
-     *
      * @return Grid of Cells
      */
     public static Cell[][] getGrid() {
         return grid;
     }
+
+    /**
+     * Setter method for the grid
+     * @param gridIn grid of Cells
+     */
+    public static void setGrid(Cell[][] gridIn) {
+        grid = gridIn;
+    }
+
+    /**
+     * Getter method for the game type
+     * @return game type
+     */
+    public static GAMETYPE getGameType() { return gametype; }
+
+    /**
+     * Each next generation is a function of the current generation and since the rules surrounding
+     * what a cells type will be in the next generation is game dependent, each subclass will implement
+     * its own rules dictating the game behavior
+     */
+    public abstract void nextGeneration();
 
 }
