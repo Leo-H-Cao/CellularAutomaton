@@ -3,19 +3,22 @@ package cellsociety.view;
 import cellsociety.Main;
 import cellsociety.cell.Cell;
 import cellsociety.cell.Type;
+import cellsociety.game.Game;
+import cellsociety.io.FileReader;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.TouchPoint;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+
+import java.io.File;
 
 public class ViewController {
 	private Button importButton;
@@ -87,11 +90,11 @@ public class ViewController {
 		Region spacerRight = new Region();
 		HBox.setHgrow(spacerRight, Priority.ALWAYS);
 
-
 		importButton = makeButton("Import", e -> {
 			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Open Resource File");
-			fileChooser.showOpenDialog(stage);
+			File file = fileChooser.showOpenDialog(stage);
+			Game.makeNewGrid(file);
 		});
 		exportButton = makeButton("Export", e -> {
 			System.out.println(e);
