@@ -8,7 +8,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
 public class Controls {
 	private Button playButton;
@@ -39,6 +39,11 @@ public class Controls {
 		HBox.setMargin(playButton,new Insets(0,10,20,0));
 		HBox.setMargin(stepButton,new Insets(0,0,20,10));
 
+		Node typeSelector = makeTypeSelector();
+		HBox.setMargin(typeSelector, new Insets(0,0,0,20));
+		leftBox.getChildren().add(typeSelector);
+		centerBox.setAlignment(Pos.CENTER);
+
 		ret.add(leftBox, 0, 0);
 		ret.add(centerBox, 1, 0);
 		ret.add(rightBox, 2, 0);
@@ -66,8 +71,14 @@ public class Controls {
 	}
 
 	private Node makeTypeSelector() {
-		Node ret = new Rectangle();
-		
+		HBox ret = new HBox();
+		Text defaultText = new Text();
+		defaultText.setText("Click to select cell type");
+		ret.setOnMouseClicked(event -> {
+			System.out.println(event);
+		});
+
+		ret.getChildren().add(defaultText);
 		return ret;
 	}
 }

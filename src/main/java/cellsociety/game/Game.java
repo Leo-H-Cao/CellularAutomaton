@@ -1,9 +1,6 @@
 package cellsociety.game;
 
-import cellsociety.cell.CellGrid;
-import cellsociety.cell.CellGridFire;
-import cellsociety.cell.CellGridGOL;
-import cellsociety.cell.CellGridWaTor;
+import cellsociety.cell.*;
 import cellsociety.io.FileReader;
 import cellsociety.io.PropertiesLoader;
 import cellsociety.view.ViewController;
@@ -16,6 +13,7 @@ import java.io.IOException;
 
 public class Game {
 	private static boolean playing = false;
+	private static Type.GAMETYPE currentGameType;
 
     private static Timeline animation;
     private static CellGrid cellGrid;
@@ -36,6 +34,10 @@ public class Game {
 
 	public static boolean getPlaying() {
 		return playing;
+	}
+
+	public static Type.GAMETYPE getCurrentGameType() {
+		return currentGameType;
 	}
 
 	public static void toggleSimulation() {
