@@ -22,11 +22,12 @@ public class Game {
     private static ViewController viewController;
 
     public Game(double SECOND_DELAY, Stage stage) {
-        PropertiesLoader pl = new PropertiesLoader();
-        try {
-            pl.readPropValues();
-        } catch (IOException e) {
-
+        PropertiesLoader propertiesLoader = new PropertiesLoader();
+        try{
+          propertiesLoader.getPropValues();
+        }
+        catch (IOException e){
+          System.out.println(e);
         }
         viewController = new ViewController(stage);
         init();
