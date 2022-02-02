@@ -2,7 +2,7 @@ package cellsociety.view;
 
 import cellsociety.Main;
 import cellsociety.cell.Cell;
-import cellsociety.cell.Type;
+import cellsociety.utils.Type;
 import cellsociety.game.Game;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,10 +22,10 @@ import java.io.File;
 public class ViewController {
 	private Button importButton;
 	private Button exportButton;
-	private GridManager gm;
-	private Controls controls;
+	private final GridManager gm;
+	private final Controls controls;
 	private BorderPane root;
-	private Stage stage;
+	private final Stage stage;
 	private static Type.CELLTYPE selectedClickType;
 
 	public ViewController(Stage _stage) {
@@ -33,7 +33,7 @@ public class ViewController {
 		controls = new Controls();
 
 		stage = _stage;
-		stage.setScene(makeScene(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
+		stage.setScene(makeScene(Game.DEFAULT_SIZE.width, Game.DEFAULT_SIZE.height));
 		stage.setTitle(Main.TITLE);
 		stage.show();
 		selectedClickType = Type.CELLTYPE.ALIVE;
@@ -97,9 +97,7 @@ public class ViewController {
 				Game.makeNewGrid(file.toString());
 			}
 		});
-		exportButton = makeButton("Export", e -> {
-			System.out.println(e);
-		});
+		exportButton = makeButton("Export", System.out::println);
 
 		buttonContainer.getChildren().addAll(importButton, exportButton);
 

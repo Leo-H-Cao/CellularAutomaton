@@ -1,9 +1,10 @@
 package cellsociety.cell;
 
+import cellsociety.utils.Type;
+
 import java.util.HashMap;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
-import static cellsociety.cell.Type.CELLTYPE.SHARK;
+import static cellsociety.utils.Type.CELLTYPE.*;
 
 /**
  * This is the Cell Grid Manager for WaTor, its next generation method follows the rules that:
@@ -89,8 +90,8 @@ public class CellGridWaTor extends CellGrid {
 
     private static int randomDirection(boolean[] validDirections) {
         int count = 0;
-        for (int i = 0; i < validDirections.length; i++) {
-            if (validDirections[i]) count++;
+        for (boolean validDirection : validDirections) {
+            if (validDirection) count++;
         }
         int random = (int)(Math.random() * count);
         for (int i = 0; i < validDirections.length; i++) {
@@ -111,8 +112,7 @@ public class CellGridWaTor extends CellGrid {
     }
 
     private static boolean inBounds(int x, int y, Cell[][] updatingGrid) {
-        if (x < 0 || x >= updatingGrid.length || y < 0 || y >= updatingGrid[0].length) return false;
-        return true;
+        return x >= 0 && x < updatingGrid.length && y >= 0 && y < updatingGrid[0].length;
     }
 
 }

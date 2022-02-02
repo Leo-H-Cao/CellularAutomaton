@@ -1,11 +1,11 @@
 package cellsociety.view;
 
-import cellsociety.cell.Type;
+import cellsociety.utils.Type;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 
 public class TypeSelector {
-	private Type.CELLTYPE type;
+	private final Type.CELLTYPE type;
 
 	public TypeSelector(Type.CELLTYPE _type) {
 		type = _type;

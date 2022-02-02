@@ -1,7 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-import static cellsociety.cell.Type.CELLTYPE.*;
+import cellsociety.utils.Type;
+import cellsociety.utils.Type.CELLTYPE;
+import static cellsociety.utils.Type.CELLTYPE.*;
 
 public class CellGridSchellingSeg extends CellGrid {
 
@@ -50,8 +51,8 @@ public class CellGridSchellingSeg extends CellGrid {
 
     private static int bestDirection(double[] validDirections, double fReal) {
         int count = 0;
-        for (int i = 0; i < validDirections.length; i++) {
-            if (validDirections[i] > fReal) count++;
+        for (double validDirection : validDirections) {
+            if (validDirection > fReal) count++;
         }
         int random = (int)(Math.random() * count);
         for (int i = 0; i < validDirections.length; i++) {
@@ -73,7 +74,6 @@ public class CellGridSchellingSeg extends CellGrid {
     }
 
     private static boolean inBounds(int x, int y) {
-        if (x < 0 || x >= updatingGrid.length || y < 0 || y >= updatingGrid[0].length) return false;
-        return true;
+        return x >= 0 && x < updatingGrid.length && y >= 0 && y < updatingGrid[0].length;
     }
 }

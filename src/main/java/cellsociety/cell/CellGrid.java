@@ -1,10 +1,10 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.GAMETYPE;
-import cellsociety.cell.Type.CELLTYPE;
+import cellsociety.utils.Type.GAMETYPE;
+import cellsociety.utils.Type.CELLTYPE;
 import java.util.ArrayList;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.utils.Type.CELLTYPE.*;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -40,9 +40,9 @@ public abstract class CellGrid {
      * takes in a list of cells to initialize onto the board
      */
     public static void initializeCells(ArrayList<Cell> cells) {
-        for (int i = 0; i < grid.length; i++) {
+        for (Cell[] value : grid) {
             for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j].updateType(grid[i][j].getDefault());
+                value[j].updateType(value[j].getDefault());
             }
         }
         for (Cell c : cells) {

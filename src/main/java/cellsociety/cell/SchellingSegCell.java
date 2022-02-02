@@ -1,9 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-import cellsociety.io.PropertiesLoader;
+import cellsociety.utils.Type;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.utils.Type.CELLTYPE.*;
 
 /**
  * This is the Cell type for Schelling Segregation, its next generation method follows the rules that:

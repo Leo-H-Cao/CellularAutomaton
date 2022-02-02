@@ -1,8 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
+import cellsociety.utils.Type.CELLTYPE;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.utils.Type.CELLTYPE.*;
 
 /**
  * Cell type for Game of Life

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<CellSociety game="GAMEOFLIFE">
+    <Title>Cell Society - Game of Life</Title>
+    <Authors>
+        <Author>Nolan Gelinas</Author>
+    </Authors>
+    <Description>A basic default configuration that loads in some interesting Game of Life Cells.</Description>
+    <Dimensions>
+        <Width>50</Width>
+        <Height>50</Height>
+    </Dimensions>
+    <InitialCellState>
+        <Cell x="5" y="5" type="ALIVE"/>
+        <Cell x="6" y="5" type="ALIVE"/>
+        <Cell x="7" y="5" type="ALIVE"/>
+        <Cell x="10" y="10" type="ALIVE"/>
+        <Cell x="11" y="10" type="ALIVE"/>
+        <Cell x="12" y="10" type="ALIVE"/>
+        <Cell x="12" y="9" type="ALIVE"/>
+        <Cell x="11" y="8" type="ALIVE"/>
+    </InitialCellState>
+    <Parameters>
+        <Speed>0</Speed>
+    </Parameters>
+    <ColorScheme>
+        <Color type="0">#ffffff</Color>
+        <Color type="1">#ffff00</Color>
+        <Color type="2">#abcdef</Color>
+    </ColorScheme>
+</CellSociety>

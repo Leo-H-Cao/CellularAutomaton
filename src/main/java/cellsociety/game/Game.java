@@ -2,35 +2,46 @@ package cellsociety.game;
 
 import cellsociety.cell.*;
 import cellsociety.io.FileReader;
-import cellsociety.io.PropertiesLoader;
+import cellsociety.utils.Type;
 import cellsociety.view.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
+import java.awt.*;
+import java.util.ResourceBundle;
 
 public class Game {
 	private static boolean playing = false;
 	private static Type.GAMETYPE currentGameType;
+	public static Dimension DEFAULT_SIZE;
 
     private static Timeline animation;
     private static CellGrid cellGrid;
     private static ViewController viewController;
+	private static ResourceBundle myResources;
 
     public Game(double SECOND_DELAY, Stage stage) {
-        PropertiesLoader pl = new PropertiesLoader();
-        try {
-            pl.readPropValues();
-        } catch (IOException e) {
+	    try {
+		    myResources = ResourceBundle.getBundle("config");
+	    } catch (Exception e) {
+			e.printStackTrace();
         }
+
+		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getProperties().getString("DEFAULT_WIDTH")),
+				Integer.parseInt(Game.getProperties().getString("DEFAULT_HEIGHT")));
+
         viewController = new ViewController(stage);
-        init();
+	    makeNewGrid("data/defaultGameState.xml");
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
     }
+
+	public static ResourceBundle getProperties() {
+		return myResources;
+	}
 
 	public static boolean getPlaying() {
 		return playing;
@@ -49,20 +60,17 @@ public class Game {
 		playing = !playing;
 	}
 
-    private void init() {
-		 makeNewGrid("data/SampleComfig1.xml");
-    }
-
 	public static void makeNewGrid(String filePath) {
 		FileReader f = new FileReader();
 		f.parseFile(filePath);
-		switch(f.getGameType()) {
+		currentGameType = f.getGameType();
+		switch(currentGameType) {
 			case default -> cellGrid = null;
 			case GAMEOFLIFE -> cellGrid = new CellGridGOL();
 			case FIRE -> cellGrid = new CellGridFire();
 			case WATOR -> cellGrid = new CellGridWaTor();
 		}
-		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), f.getGameType());
+		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), currentGameType);
 		cellGrid.initializeCells(f.getInitialState());
 		renderGrid();
 	}

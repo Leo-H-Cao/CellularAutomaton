@@ -1,12 +1,17 @@
 package cellsociety.view;
 
 import cellsociety.game.Game;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 
@@ -30,9 +35,7 @@ public class Controls {
 				}
 			}
 		});
-		stepButton = makeButton("Step", (e) -> {
-			Game.step();
-		});
+		stepButton = makeButton("Step", (e) -> Game.step());
 
 		centerBox.getChildren().addAll(playButton, stepButton);
 		centerBox.setAlignment(Pos.CENTER);
@@ -71,14 +74,49 @@ public class Controls {
 	}
 
 	private Node makeTypeSelector() {
+
+
+
+		// FROM: https://www.geeksforgeeks.org/javafx-choicebox/
+
+		// create a button
+		Button b = new Button("show");
+
+		// create a tile pane
+		TilePane r = new TilePane();
+
+		// create a label
+		Label l = new Label("This is a choice box");
+		Label l1 = new Label("nothing selected");
+
+		// string array
+		String st[] = { "Arnab", "Andrew", "Ankit", "None" };
+
+		// create a choiceBox
+		ChoiceBox c = new ChoiceBox(FXCollections.observableArrayList(st));
+
+		// add a listener
+		// if the item of the list is changed
+		c.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
+			// set the text for the label to the selected item
+			l1.setText(st[new_value.intValue()] + " selected");
+		});
+
+		// add ChoiceBox
+		r.getChildren().add(l);
+		r.getChildren().add(c);
+		r.getChildren().add(l1);
+
+
+
 		HBox ret = new HBox();
 		Text defaultText = new Text();
 		defaultText.setText("Click to select cell type");
-		ret.setOnMouseClicked(event -> {
-			System.out.println(event);
-		});
+		ret.setOnMouseClicked(System.out::println);
 
 		ret.getChildren().add(defaultText);
-		return ret;
+		return r;
 	}
+
+
 }

@@ -1,7 +1,7 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-import cellsociety.cell.Type.GAMETYPE;
+import cellsociety.utils.Type.CELLTYPE;
+import cellsociety.utils.Type.GAMETYPE;
 
 import java.util.HashMap;
 
@@ -13,8 +13,8 @@ import java.util.HashMap;
  */
 public abstract class Cell {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     private CELLTYPE cType;
     private HashMap<String, Object> properties;
 
@@ -22,7 +22,7 @@ public abstract class Cell {
         this.x = x;
         this.y = y;
         this.cType = cType;
-        properties = new HashMap<String, Object>();
+        properties = new HashMap<>();
     }
 
     /**
@@ -33,17 +33,12 @@ public abstract class Cell {
      * @return
      */
     public static Cell newGameCell(int x, int y, GAMETYPE gType, CELLTYPE cType) {
-        switch(gType) {
-            case GAMEOFLIFE:
-                return new GameOfLifeCell(x, y, cType);
-            case FIRE:
-                return new FireCell(x, y, cType);
-            case WATOR:
-                return new WaTorCell(x, y, cType);
-            case SCHELLSEG:
-                return new SchellingSegCell(x, y, cType);
-        }
-        return null;
+        return switch (gType) {
+            case GAMEOFLIFE -> new GameOfLifeCell(x, y, cType);
+            case FIRE -> new FireCell(x, y, cType);
+            case WATOR -> new WaTorCell(x, y, cType);
+            case SCHELLSEG -> new SchellingSegCell(x, y, cType);
+        };
     }
 
     /**

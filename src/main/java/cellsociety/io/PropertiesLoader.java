@@ -25,7 +25,7 @@ public class PropertiesLoader {
 
         try {
             Properties prop = new Properties();
-            String propFileName = "config.properties";
+            String propFileName = "config_en_US.properties";
             InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
 
             if (inputStream != null) {
@@ -39,9 +39,6 @@ public class PropertiesLoader {
             fIdeal = Double.parseDouble(prop.getProperty("fIdeal"));
 
         } catch (Exception e) {
-
         }
-
     }
-
 }

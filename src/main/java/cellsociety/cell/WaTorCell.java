@@ -1,10 +1,10 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
+import cellsociety.utils.Type.CELLTYPE;
 
 import java.util.HashMap;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.utils.Type.CELLTYPE.*;
 
 /**
  * This is the Cell type for WaTor

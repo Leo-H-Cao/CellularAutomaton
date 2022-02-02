@@ -1,7 +1,7 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-import static cellsociety.cell.Type.CELLTYPE.*;
+import cellsociety.utils.Type.CELLTYPE;
+import static cellsociety.utils.Type.CELLTYPE.*;
 
 /**
  * This is the Cell Grid Manager for Fire, its next generation method follows the rules that:
@@ -48,5 +48,4 @@ public class CellGridFire extends CellGrid {
         if (neighborsType[2][1] == BURNING) return true;
         return false;
     }
-
 }
