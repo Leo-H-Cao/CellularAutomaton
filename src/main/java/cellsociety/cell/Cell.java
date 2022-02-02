@@ -1,17 +1,20 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
 import cellsociety.cell.Type.GAMETYPE;
+import cellsociety.cell.Type.CELLTYPE;
+import static cellsociety.cell.Type.CELLTYPE.NULL;
 
 import java.util.HashMap;
 
 /**
- * This class outlines the primary attributes of a Cell: position (xy coordinate) and type (game specific)
- * Different games will have specialized cells that extend this class.
+ * This class outlines the primary attributes of a Cell:
+ * position (xy coordinate)
+ * type (game specific status)
+ * properties (cell attributes for more complex gameplay)
  *
  * @author Zack Schrage
  */
-public abstract class Cell {
+public class Cell {
 
     private int x;
     private int y;
@@ -30,7 +33,7 @@ public abstract class Cell {
      * @param x coordinate of cell
      * @param y coordinate of cell
      * @param gType game type of cell
-     * @return
+     * @return a new cell of the specified game and cell type
      */
     public static Cell newGameCell(int x, int y, GAMETYPE gType, CELLTYPE cType) {
         switch(gType) {
@@ -108,6 +111,8 @@ public abstract class Cell {
      * Getter method for a cells default type upon initialization
      * @return a cells default type
      */
-    public abstract CELLTYPE getDefault();
+    public CELLTYPE getDefault() {
+        return NULL;
+    }
 
 }

@@ -39,7 +39,7 @@ public class GridManager {
 
 		for (int i = 0; i < g.length; i++) {
 			for (int j = 0; j < g[0].length; j++) {
-				CellNode c = new CellNode(i * cellWidth, j * cellHeight, cellWidth, cellHeight);
+				CellNode c = new CellNode(g[i][j]);
 //				if (g[i][j].getType() == ALIVE) {
 //					c.setColor(Color.BLUE);
 //				} else {
