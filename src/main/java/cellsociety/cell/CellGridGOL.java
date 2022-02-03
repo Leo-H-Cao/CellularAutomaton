@@ -39,7 +39,7 @@ public class CellGridGOL extends CellGrid {
         if (type == ALIVE) {
             if (liveNeighbors < 2) updatingGrid[x][y].updateType(DEAD);
             else if (liveNeighbors == 2 || liveNeighbors == 3) updatingGrid[x][y].updateType(ALIVE);
-            else if (liveNeighbors > 3) updatingGrid[x][y].updateType(DEAD);
+            else updatingGrid[x][y].updateType(DEAD);
         }
         else {
             if (liveNeighbors == 3) updatingGrid[x][y].updateType(ALIVE);

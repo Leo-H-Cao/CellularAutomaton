@@ -53,7 +53,7 @@ public class CellGridWaTor extends CellGrid {
                     properties.put("Reproduce", (int)properties.get("Reproduce") + 1);
                     properties.put("Energy", (int)properties.get("Energy") - 1);
                     updatingGrid[i][j].setProperties(properties);
-                    System.out.println("STAGE B " + (boolean)updatingGrid[i][j].getProperties().get("Moved") + " " + (int)updatingGrid[i][j].getProperties().get("Reproduce") + " " + (int)updatingGrid[i][j].getProperties().get("Energy"));
+                    System.out.println("STAGE B " + updatingGrid[i][j].getProperties().get("Moved") + " " + updatingGrid[i][j].getProperties().get("Reproduce") + " " + updatingGrid[i][j].getProperties().get("Energy"));
                     System.out.println();
                     //Update position
                     updateGrid(d, i, j, SHARK);

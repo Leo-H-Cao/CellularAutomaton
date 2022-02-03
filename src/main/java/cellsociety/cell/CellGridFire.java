@@ -45,7 +45,6 @@ public class CellGridFire extends CellGrid {
         if (neighborsType[0][1] == BURNING) return true;
         if (neighborsType[1][0] == BURNING) return true;
         if (neighborsType[1][2] == BURNING) return true;
-        if (neighborsType[2][1] == BURNING) return true;
-        return false;
+        return neighborsType[2][1] == BURNING;
     }
 }

@@ -1,17 +1,8 @@
 package cellsociety.io;
 
 import cellsociety.cell.Cell;
-import cellsociety.cell.Type.CELLTYPE;
-import cellsociety.cell.Type.GAMETYPE;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import javax.xml.stream.XMLStreamException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NamedNodeMap;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import cellsociety.utils.Type;
+import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -19,7 +10,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class FileReader {
@@ -30,7 +22,7 @@ public class FileReader {
   private final DocumentBuilder BUILDER;
   private HashMap<String, String> gameData;
   private ArrayList<Cell> initialState;
-  private GAMETYPE game_type;
+  private Type.GAMETYPE game_type;
 
   public FileReader(){
     BUILDER = createDocumentBuilder();
@@ -107,7 +99,7 @@ public class FileReader {
     int initialX = Integer.parseInt(attributes.getNamedItem("x").getNodeValue());
     int initialY = Integer.parseInt(attributes.getNamedItem("y").getNodeValue());
     String cellType = attributes.getNamedItem("type").getNodeValue();
-    Cell cell = Cell.newGameCell(initialX, initialY, game_type, CELLTYPE.valueOf(cellType));
+    Cell cell = Cell.newGameCell(initialX, initialY, game_type, Type.CELLTYPE.valueOf(cellType));
     initialState.add(cell);
   }
 
@@ -127,10 +119,10 @@ public class FileReader {
 
   private void setGameType (Element root) {
     String gameTypeString = root.getAttributes().getNamedItem(GAME_TYPE_ATTRIBUTE).getNodeValue();
-    game_type = GAMETYPE.valueOf(gameTypeString);
+    game_type = Type.GAMETYPE.valueOf(gameTypeString);
   }
 
-  public GAMETYPE getGameType(){
+  public Type.GAMETYPE getGameType(){
     return game_type;
   }
 }

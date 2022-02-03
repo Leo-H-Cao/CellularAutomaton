@@ -6,8 +6,8 @@
     </Authors>
     <Description>A basic default configuration that loads in some interesting Game of Life Cells.</Description>
     <Dimensions>
-        <Width>50</Width>
-        <Height>50</Height>
+        <Width>20</Width>
+        <Height>20</Height>
     </Dimensions>
     <InitialCellState>
         <Cell x="5" y="5" type="ALIVE"/>
