@@ -2,7 +2,7 @@ package cellsociety.view;
 
 import cellsociety.Main;
 import cellsociety.cell.Cell;
-import cellsociety.util.CellType;
+import cellsociety.cell.CellType;
 import cellsociety.game.Game;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

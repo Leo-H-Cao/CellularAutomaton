@@ -2,7 +2,6 @@ package cellsociety.game;
 
 import cellsociety.cell.*;
 import cellsociety.io.FileReader;
-import cellsociety.util.Type;
 import cellsociety.view.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -14,6 +13,7 @@ import java.util.ResourceBundle;
 
 public class Game {
 	private static boolean playing = false;
+	private static GameType currentGameType;
 
     private static Timeline animation;
     private static CellGrid cellGrid;
@@ -50,7 +50,7 @@ public class Game {
 		return DEFAULT_SIZE;
 	}
 
-	public static Type.GAMETYPE getCurrentGameType() {
+	public static GameType getCurrentGameType() {
 		return currentGameType;
 	}
 
@@ -62,10 +62,6 @@ public class Game {
 		}
 		playing = !playing;
 	}
-
-    private void init() {
-		 makeNewGrid("data/SampleComfig1.xml");
-    }
 
 	public static void makeNewGrid(String filePath) {
 		FileReader f = new FileReader();

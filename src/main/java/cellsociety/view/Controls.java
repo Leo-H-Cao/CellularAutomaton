@@ -1,7 +1,7 @@
 package cellsociety.view;
 
+import cellsociety.cell.CellType;
 import cellsociety.game.Game;
-import cellsociety.util.Type;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,9 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
-
-import java.util.Locale;
 
 public class Controls {
 	private Button playButton;
@@ -82,7 +79,7 @@ public class Controls {
 		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(options));
 
 		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
-			ViewController.setSelectedClickType(Type.CELLTYPE.valueOf(options[new_value.intValue()].toUpperCase()));
+			ViewController.setSelectedClickType(CellType.valueOf(options[new_value.intValue()].toUpperCase()));
 		});
 
 		ret.getChildren().add(selectorTitle);
