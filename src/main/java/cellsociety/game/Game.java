@@ -1,7 +1,6 @@
 package cellsociety.game;
 
 import cellsociety.cell.*;
-import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.io.FileReader;
 import cellsociety.io.PropertiesLoader;
 import cellsociety.view.ViewController;
@@ -55,10 +54,11 @@ public class Game {
 		FileReader f = new FileReader();
 		f.parseFile(filePath);
 		switch(f.getGameType()) {
-			case default: cellGrid = null;
-			case GAMEOFLIFE: cellGrid = new GameOfLife();
-			case FIRE: cellGrid = new Fire();
-			case WATOR: cellGrid = new WaTor();
+			case GAMEOFLIFE -> cellGrid = new GameOfLife();
+			case FIRE -> cellGrid = new Fire();
+			case WATOR -> cellGrid = new WaTor();
+			case PERCOLATION -> cellGrid = new Percolation();
+			case SCHELLSEG -> cellGrid = new SchellingSegregation();
 		}
 		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), f.getGameType());
 		cellGrid.initializeCells(f.getInitialState());
