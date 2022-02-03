@@ -16,11 +16,11 @@
         <Cell x="6" y="5" type="FISH"/>
         <Cell x="7" y="5" type="FISH"/>
         <Cell x="10" y="10" type="FISH"/>
-        <Cell x="11" y="10" type="SHARK"/>
+        <Cell x="11" y="10" type="FISH"/>
         <Cell x="12" y="10" type="FISH"/>
         <Cell x="12" y="9" type="FISH"/>
-        <Cell x="11" y="8" type="SHARK"/>
-        <Cell x="8" y="8" type="SHARK"/>
+        <Cell x="11" y="8" type="FISH"/>
+        <Cell x="8" y="8" type="FISH"/>
         <Cell x="9" y="8" type="SHARK"/>
         <Cell x="10" y="8" type="SHARK"/>
         <Cell x="10" y="7" type="SHARK"/>

@@ -3,7 +3,7 @@ package cellsociety.cell;
 import cellsociety.cell.Type.CELLTYPE;
 import static cellsociety.cell.Type.CELLTYPE.*;
 
-public class CellGridSchellingSeg extends CellGrid {
+public class SchellingSegregation extends CellGrid {
 
     private static Cell[][] updatingGrid;
 

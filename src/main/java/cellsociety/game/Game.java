@@ -1,9 +1,10 @@
 package cellsociety.game;
 
 import cellsociety.cell.CellGrid;
-import cellsociety.cell.CellGridFire;
-import cellsociety.cell.CellGridGOL;
-import cellsociety.cell.CellGridWaTor;
+import cellsociety.cell.Fire;
+import cellsociety.cell.GameOfLife;
+import cellsociety.cell.Type.GAMETYPE;
+import cellsociety.cell.WaTor;
 import cellsociety.io.FileReader;
 import cellsociety.io.PropertiesLoader;
 import cellsociety.view.ViewController;
@@ -58,9 +59,9 @@ public class Game {
 		f.parseFile(filePath);
 		switch(f.getGameType()) {
 			case default: cellGrid = null;
-			case GAMEOFLIFE: cellGrid = new CellGridGOL();
-			case FIRE: cellGrid = new CellGridFire();
-			case WATOR: cellGrid = new CellGridWaTor();
+			case GAMEOFLIFE: cellGrid = new GameOfLife();
+			case FIRE: cellGrid = new Fire();
+			case WATOR: cellGrid = new WaTor();
 		}
 		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), f.getGameType());
 		cellGrid.initializeCells(f.getInitialState());

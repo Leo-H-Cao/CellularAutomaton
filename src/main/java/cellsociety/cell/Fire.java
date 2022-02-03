@@ -1,8 +1,6 @@
 package cellsociety.cell;
 
 import cellsociety.cell.Type.CELLTYPE;
-import cellsociety.io.PropertiesLoader;
-
 import static cellsociety.cell.Type.CELLTYPE.*;
 
 /**
@@ -14,19 +12,13 @@ import static cellsociety.cell.Type.CELLTYPE.*;
  *
  * @author Zack Schrage
  */
-public class CellGridFire extends CellGrid {
+public class Fire extends CellGrid {
 
     private static Cell[][] updatingGrid;
 
     @Override
     public void nextGeneration() {
-        Cell[][] grid = getGrid();
-        updatingGrid = new Cell[grid.length][grid[0].length];
-        for (int i = 0; i < updatingGrid.length; i++) {
-            for (int j = 0; j < updatingGrid[0].length; j++) {
-                updatingGrid[i][j] = Cell.newGameCell(i, j, getGameType(), grid[i][j].getType());
-            }
-        }
+        updatingGrid = initializeUpdateGrid();
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
                 updateState(i, j, updatingGrid[i][j].getType());
@@ -39,7 +31,7 @@ public class CellGridFire extends CellGrid {
         if (type == BURNING) updatingGrid[x][y].updateType(EMPTY);
         else if (type == TREE && hasBurningNeighbor(CellGrid.getNeighbors(x, y))) updatingGrid[x][y].updateType(BURNING);
         else if (type == TREE && (Math.random() < 0.05)) updatingGrid[x][y].updateType(BURNING);
-        else if (type == EMPTY && (Math.random() < PropertiesLoader.fireF)) updatingGrid[x][y].updateType(TREE);
+        else if (type == EMPTY && (Math.random() < 0.30)) updatingGrid[x][y].updateType(TREE);
         else updatingGrid[x][y].updateType(type);
     }
 
