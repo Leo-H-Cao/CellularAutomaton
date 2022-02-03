@@ -98,14 +98,10 @@ public class ViewController {
 				Game.makeNewGrid(file.toString());
 			}
 		});
-<<<<<<< HEAD
 		exportButton = makeButton("Export", e -> {
 			XMLExport exporter = new XMLExport();
 			exporter.saveToXML();
 		});
-=======
-		exportButton = makeButton("Export", System.out::println);
->>>>>>> fa445e1c10ac4a175baf912170710bc5f56492dc
 
 		buttonContainer.getChildren().addAll(importButton, exportButton);
 
