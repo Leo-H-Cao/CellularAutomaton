@@ -12,24 +12,24 @@
         <Height>20</Height>
     </Dimensions>
     <InitialCellState>
-        <Cell x="5" y="5" type="FISH"/>
-        <Cell x="6" y="5" type="FISH"/>
-        <Cell x="7" y="5" type="FISH"/>
-        <Cell x="10" y="10" type="FISH"/>
-        <Cell x="11" y="10" type="FISH"/>
-        <Cell x="12" y="10" type="FISH"/>
-        <Cell x="12" y="9" type="FISH"/>
-        <Cell x="11" y="8" type="FISH"/>
-        <Cell x="8" y="8" type="FISH"/>
-        <Cell x="9" y="8" type="SHARK"/>
-        <Cell x="10" y="8" type="SHARK"/>
-        <Cell x="10" y="7" type="SHARK"/>
-        <Cell x="10" y="3" type="FISH"/>
-        <Cell x="10" y="4" type="FISH"/>
-        <Cell x="10" y="5" type="SHARK"/>
-        <Cell x="10" y="13" type="FISH"/>
-        <Cell x="9" y="10" type="FISH"/>
-        <Cell x="8" y="5" type="FISH"/>
+        <Cell x="5" y="5" type="WATER"/>
+        <Cell x="6" y="5" type="BLOCK"/>
+        <Cell x="7" y="5" type="BLOCK"/>
+        <Cell x="10" y="10" type="BLOCK"/>
+        <Cell x="11" y="10" type="BLOCK"/>
+        <Cell x="12" y="10" type="BLOCK"/>
+        <Cell x="12" y="9" type="BLOCK"/>
+        <Cell x="11" y="8" type="BLOCK"/>
+        <Cell x="8" y="8" type="BLOCK"/>
+        <Cell x="9" y="8" type="BLOCK"/>
+        <Cell x="10" y="8" type="BLOCK"/>
+        <Cell x="10" y="7" type="BLOCK"/>
+        <Cell x="10" y="3" type="BLOCK"/>
+        <Cell x="10" y="4" type="BLOCK"/>
+        <Cell x="10" y="5" type="BLOCK"/>
+        <Cell x="10" y="13" type="BLOCK"/>
+        <Cell x="9" y="10" type="BLOCK"/>
+        <Cell x="8" y="5" type="BLOCK"/>
     </InitialCellState>
     <Parameters>
         <Speed>0</Speed>
