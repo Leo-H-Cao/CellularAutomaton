@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<CellSociety game = "GAMEOFLIFE">
+<CellSociety game="WATOR">
     <Title>Cell Society</Title>
     <Authors>
         <Author>Leo Cao</Author>

@@ -20,11 +20,12 @@ public class Game {
     private static ViewController viewController;
 
     public Game(double SECOND_DELAY, Stage stage) {
-        PropertiesLoader pl = new PropertiesLoader();
-        try {
-            pl.readPropValues();
-        } catch (IOException e) {
-
+        PropertiesLoader propertiesLoader = new PropertiesLoader();
+        try{
+          propertiesLoader.getPropValues();
+        }
+        catch (IOException e){
+          System.out.println(e);
         }
         viewController = new ViewController(stage);
         init();
@@ -47,13 +48,22 @@ public class Game {
 	}
 
     private void init() {
-        FileReader f = new FileReader();
-        f.parseFile("data/SampleComfig1.xml");
-        cellGrid = new Percolation();
-        cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.PERCOLATION);
-        cellGrid.initializeCells(f.getInitialState());
-        viewController.updateGridPane(cellGrid.getGrid());
+		 makeNewGrid("data/SampleComfig1.xml");
     }
+
+	public static void makeNewGrid(String filePath) {
+		FileReader f = new FileReader();
+		f.parseFile(filePath);
+		switch(f.getGameType()) {
+			case default: cellGrid = null;
+			case GAMEOFLIFE: cellGrid = new GameOfLife();
+			case FIRE: cellGrid = new Fire();
+			case WATOR: cellGrid = new WaTor();
+		}
+		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), f.getGameType());
+		cellGrid.initializeCells(f.getInitialState());
+		renderGrid();
+	}
 
 	public static void renderGrid() {
 		viewController.updateGridPane(cellGrid.getGrid());

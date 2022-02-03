@@ -2,11 +2,11 @@ package cellsociety.view;
 
 import cellsociety.Main;
 import cellsociety.cell.Cell;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-
-import static cellsociety.cell.Type.CELLTYPE.ALIVE;
 
 public class GridManager {
 	private static GridPane grid;
@@ -27,11 +27,14 @@ public class GridManager {
 	}
 
 	public Node getGrid() {
-		return grid;
+		HBox ret = new HBox();
+		ret.getChildren().add(grid);
+		ret.setAlignment(Pos.CENTER);
+		return ret;
 	}
 
 	public void update(Cell[][] g) {
-		int verticalPadding = 120;
+		int verticalPadding = 100;
 		cellWidth = Integer.valueOf(Main.DEFAULT_SIZE.width / g.length) - GRID_GAP - 1;
 		cellHeight = Math.round((Main.DEFAULT_SIZE.height - verticalPadding) / g[0].length) - GRID_GAP - 1;
 		// reset grid
@@ -40,11 +43,6 @@ public class GridManager {
 		for (int i = 0; i < g.length; i++) {
 			for (int j = 0; j < g[0].length; j++) {
 				CellNode c = new CellNode(g[i][j]);
-//				if (g[i][j].getType() == ALIVE) {
-//					c.setColor(Color.BLUE);
-//				} else {
-//					c.setColor(Color.BLACK);
-//				}
 				switch (g[i][j].getType()) {
 					case EMPTY:
 					case DEAD:
