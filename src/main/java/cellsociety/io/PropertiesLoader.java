@@ -43,9 +43,7 @@ public class PropertiesLoader {
         } catch (Exception e) {
             throw new IOException(e);
         } finally {
-            if(inputStream !=null){
-                inputStream.close();
-            }
+            inputStream.close();
         }
     }
 }
