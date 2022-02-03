@@ -2,7 +2,7 @@ package cellsociety.io;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellGrid;
-import cellsociety.cell.Type.CELLTYPE;
+import cellsociety.cell.CellType;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
@@ -53,8 +53,8 @@ public class XMLExport {
     for(int i = 0; i < curCellGrid.length; i++){
       for(int j = 0; j < curCellGrid[0].length; j++){
         Cell curCell = curCellGrid[i][j];
-        CELLTYPE cellType = curCell.getType();
-        if(cellType != CELLTYPE.NULL && cellType != CELLTYPE.EMPTY && cellType != CELLTYPE.DEAD){
+        CellType cellType = curCell.getType();
+        if(cellType != cellType.NULL && cellType != cellType.EMPTY && cellType != cellType.DEAD){
           addCell(curCell, cellType);
         }
       }
@@ -80,7 +80,7 @@ public class XMLExport {
     }
   }
 
-  private void addCell(Cell cell, CELLTYPE celltype){
+  private void addCell(Cell cell, CellType celltype){
     Element element = dom.createElement("cell");
     String cellTypeString = celltype.toString();
     String cellX = String.valueOf(cell.getX());
