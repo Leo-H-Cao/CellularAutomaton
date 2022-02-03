@@ -1,8 +1,6 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.CellType.*;
 
 /**
  * Cell type for Game of Life
@@ -11,12 +9,12 @@ import static cellsociety.cell.Type.CELLTYPE.*;
  */
 public class GameOfLifeCell extends Cell {
 
-    public GameOfLifeCell(int x, int y, CELLTYPE cType) {
+    public GameOfLifeCell(int x, int y, CellType cType) {
         super(x, y, cType);
     }
 
     @Override
-    public CELLTYPE getDefault() {
+    public CellType getDefault() {
         return DEAD;
     }
 

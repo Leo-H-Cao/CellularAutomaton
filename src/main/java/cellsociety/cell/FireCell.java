@@ -1,8 +1,6 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.CellType.*;
 
 /**
  * This is the Cell type for Fire
@@ -11,12 +9,12 @@ import static cellsociety.cell.Type.CELLTYPE.*;
  */
 public class FireCell extends Cell {
 
-    public FireCell(int x, int y, CELLTYPE cType) {
+    public FireCell(int x, int y, CellType cType) {
         super(x, y, cType);
     }
 
     @Override
-    public CELLTYPE getDefault() {
+    public CellType getDefault() {
         return EMPTY;
     }
 

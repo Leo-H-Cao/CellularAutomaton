@@ -8,8 +8,8 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
 import java.io.IOException;
+import static cellsociety.game.GameType.*;
 
 public class Game {
 	private static boolean playing = false;

@@ -1,15 +1,15 @@
 package cellsociety.cell;
 
-import static cellsociety.cell.Type.CELLTYPE.EMPTY;
+import static cellsociety.cell.CellType.*;
 
 public class PercolationCell extends Cell {
 
-    public PercolationCell(int x, int y, Type.CELLTYPE cType) {
+    public PercolationCell(int x, int y, CellType cType) {
         super(x, y, cType);
     }
 
     @Override
-    public Type.CELLTYPE getDefault() {
+    public CellType getDefault() {
         return EMPTY;
     }
 

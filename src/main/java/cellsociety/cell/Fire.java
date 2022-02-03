@@ -1,9 +1,6 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-import cellsociety.io.PropertiesLoader;
-
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.CellType.*;
 
 /**
  * This is the Cell Grid Manager for Fire, its next generation method follows the rules that:
@@ -29,7 +26,7 @@ public class Fire extends CellGrid {
         setGrid(updatingGrid);
     }
 
-    private static void updateState(int x, int y, CELLTYPE type) {
+    private static void updateState(int x, int y, CellType type) {
         if (type == BURNING) updatingGrid[x][y].updateType(EMPTY);
         else if (type == TREE && hasBurningNeighbor(CellGrid.getNeighbors(x, y))) updatingGrid[x][y].updateType(BURNING);
         else if (type == TREE && (Math.random() < 0.05)) updatingGrid[x][y].updateType(BURNING);
@@ -37,7 +34,7 @@ public class Fire extends CellGrid {
         else updatingGrid[x][y].updateType(type);
     }
 
-    private static boolean hasBurningNeighbor(CELLTYPE[][] neighborsType) {
+    private static boolean hasBurningNeighbor(CellType[][] neighborsType) {
         if (neighborsType[0][1] == BURNING) return true;
         if (neighborsType[1][0] == BURNING) return true;
         if (neighborsType[1][2] == BURNING) return true;

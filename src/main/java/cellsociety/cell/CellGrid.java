@@ -1,11 +1,10 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.GAMETYPE;
-import cellsociety.cell.Type.CELLTYPE;
+import cellsociety.game.GameType;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.CellType.*;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -17,7 +16,7 @@ import static cellsociety.cell.Type.CELLTYPE.*;
 public abstract class CellGrid {
 
     private static Cell[][] grid;
-    private static GAMETYPE gametype;
+    private static GameType gametype;
 
     /**
      * Initializes a grid of cells with the appropriate type given the game being played
@@ -26,7 +25,7 @@ public abstract class CellGrid {
      * @param height of the cell grid
      * @param gType game being played
      */
-    public static void initializeGrid(int width, int height, GAMETYPE gType) {
+    public static void initializeGrid(int width, int height, GameType gType) {
         gametype = gType;
         grid = new Cell[width][height];
         for (int i = 0; i < width; i++) {
@@ -98,8 +97,8 @@ public abstract class CellGrid {
      * @param y coordinate of the cell
      * @return its neighboring cell types
      */
-    public static CELLTYPE[][] getNeighbors(int x, int y) {
-        CELLTYPE[][] neighbors = new CELLTYPE[3][3];
+    public static CellType[][] getNeighbors(int x, int y) {
+        CellType[][] neighbors = new CellType[3][3];
         for (int i = 0; i < neighbors.length; i++) {
             for (int j = 0; j < neighbors[0].length; j++) {
                 try {
@@ -133,7 +132,7 @@ public abstract class CellGrid {
      * Getter method for the game type
      * @return game type
      */
-    public static GAMETYPE getGameType() { return gametype; }
+    public static GameType getGameType() { return gametype; }
 
     /**
      * Each next generation is a function of the current generation and since the rules surrounding

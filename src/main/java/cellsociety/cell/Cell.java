@@ -1,8 +1,7 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.GAMETYPE;
-import cellsociety.cell.Type.CELLTYPE;
-import static cellsociety.cell.Type.CELLTYPE.NULL;
+import cellsociety.game.GameType;
+import static cellsociety.cell.CellType.*;
 
 import java.util.HashMap;
 
@@ -18,10 +17,10 @@ public class Cell {
 
     private int x;
     private int y;
-    private CELLTYPE cType;
+    private CellType cType;
     private HashMap<String, Object> properties;
 
-    public Cell(int x, int y, CELLTYPE cType) {
+    public Cell(int x, int y, CellType cType) {
         this.x = x;
         this.y = y;
         this.cType = cType;
@@ -35,7 +34,7 @@ public class Cell {
      * @param gType game type of cell
      * @return a new cell of the specified game and cell type
      */
-    public static Cell newGameCell(int x, int y, GAMETYPE gType, CELLTYPE cType) {
+    public static Cell newGameCell(int x, int y, GameType gType, CellType cType) {
         switch(gType) {
             case GAMEOFLIFE:
                 return new GameOfLifeCell(x, y, cType);
@@ -71,7 +70,7 @@ public class Cell {
      * Getter method for a cells type
      * @return a cells type
      */
-    public CELLTYPE getType() {
+    public CellType getType() {
         return cType;
     }
 
@@ -79,7 +78,7 @@ public class Cell {
      * Setter Method to update a cells type
      * @param cType a cells new type
      */
-    public void updateType(CELLTYPE cType) {
+    public void updateType(CellType cType) {
         this.cType = cType;
     }
 
@@ -88,7 +87,7 @@ public class Cell {
      * @param cType a cells new type
      * @param properties array of properties
      */
-    public void updateType(CELLTYPE cType, HashMap<String, Object> properties) {
+    public void updateType(CellType cType, HashMap<String, Object> properties) {
         this.cType = cType;
         this.properties = properties;
     }
@@ -113,7 +112,7 @@ public class Cell {
      * Getter method for a cells default type upon initialization
      * @return a cells default type
      */
-    public CELLTYPE getDefault() {
+    public CellType getDefault() {
         return NULL;
     }
 

@@ -1,7 +1,6 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.CellType.*;
 
 public class Percolation extends CellGrid {
 
@@ -18,7 +17,7 @@ public class Percolation extends CellGrid {
         setGrid(updatingGrid);
     }
 
-    private static void updateState(int x, int y, CELLTYPE type) {
+    private static void updateState(int x, int y, CellType type) {
         if (inBounds(x-1, y, updatingGrid) && CellGrid.getGrid()[x-1][y].getType() == type) updatingGrid[x][y].updateType(type);
         if (inBounds(x+1, y, updatingGrid) && CellGrid.getGrid()[x+1][y].getType() == type) updatingGrid[x][y].updateType(type);
         if (inBounds(x, y-1, updatingGrid) && CellGrid.getGrid()[x][y-1].getType() == type) updatingGrid[x][y].updateType(type);

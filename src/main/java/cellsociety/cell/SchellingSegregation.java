@@ -2,8 +2,7 @@ package cellsociety.cell;
 
 import java.util.HashMap;
 
-import cellsociety.cell.Type.CELLTYPE;
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.CellType.*;
 
 public class SchellingSegregation extends CellGrid {
 
@@ -21,7 +20,7 @@ public class SchellingSegregation extends CellGrid {
             for (int j = 0; j < updatingGrid[0].length; j++) {
                 HashMap<String, Object> properties = updatingGrid[i][j].getProperties();
                 if (updatingGrid[i][j].getType() != EMPTY && !(boolean) properties.get("Moved")) {
-                    CELLTYPE type = updatingGrid[i][j].getType();
+                    CellType type = updatingGrid[i][j].getType();
                     double fReal = fReal(CellGrid.getNeighbors(i, j), type);
                     if (fReal > 0.5) continue;
                     int d = bestDirection(getValidDirections(i, j, EMPTY), fReal);
@@ -33,7 +32,7 @@ public class SchellingSegregation extends CellGrid {
         }
     }
 
-    private static double fReal(CELLTYPE[][] neighbors, CELLTYPE type) {
+    private static double fReal(CellType[][] neighbors, CellType type) {
         double countA = type == A ? 1 : 0;
         double den = 0;
         for (int i = 0; i < neighbors.length; i++) {
@@ -45,7 +44,7 @@ public class SchellingSegregation extends CellGrid {
         return type == A ? countA/8.0 : 1.0-(countA/den);
     }
 
-    private static double[] getValidDirections(int x, int y, CELLTYPE type) {
+    private static double[] getValidDirections(int x, int y, CellType type) {
         double[] validDirections = new double[8];
         if (inBounds(x-1, y-1) && updatingGrid[x-1][y-1].getType() == EMPTY) validDirections[0] = fReal(CellGrid.getNeighbors(x-1, y-1), type);
         if (inBounds(x, y-1) && updatingGrid[x][y-1].getType() == EMPTY) validDirections[1] = fReal(CellGrid.getNeighbors(x, y-1), type);
@@ -71,7 +70,7 @@ public class SchellingSegregation extends CellGrid {
         return -1;
     }
 
-    private static void updateGrid(int d, int x, int y, CELLTYPE cType, HashMap<String, Object> properties) {
+    private static void updateGrid(int d, int x, int y, CellType cType, HashMap<String, Object> properties) {
         properties.put("Moved", true);
         if (d == -1) updatingGrid[x][y].updateType(cType, properties);
         if (d == 0) updatingGrid[x-1][y-1].updateType(cType, properties);
