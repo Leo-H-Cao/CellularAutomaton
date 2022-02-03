@@ -12,19 +12,13 @@ import static cellsociety.util.Type.CELLTYPE.*;
  *
  * @author Zack Schrage
  */
-public class CellGridFire extends CellGrid {
+public class Fire extends CellGrid {
 
     private static Cell[][] updatingGrid;
 
     @Override
     public void nextGeneration() {
-        Cell[][] grid = getGrid();
-        updatingGrid = new Cell[grid.length][grid[0].length];
-        for (int i = 0; i < updatingGrid.length; i++) {
-            for (int j = 0; j < updatingGrid[0].length; j++) {
-                updatingGrid[i][j] = Cell.newGameCell(i, j, getGameType(), grid[i][j].getType());
-            }
-        }
+        updatingGrid = initializeUpdateGrid();
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
                 updateState(i, j, updatingGrid[i][j].getType());

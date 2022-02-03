@@ -13,21 +13,15 @@ import static cellsociety.util.Type.CELLTYPE.DEAD;
  *
  * @author Zack Schrage
  */
-public class CellGridGOL extends CellGrid {
+public class GameOfLife extends CellGrid {
 
     private static Cell[][] updatingGrid;
 
     @Override
     public void nextGeneration() {
-        Cell[][] grid = getGrid();
-        updatingGrid = new Cell[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                updatingGrid[i][j] = Cell.newGameCell(i, j, getGameType(), grid[i][j].getType());
-            }
-        }
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
+        updatingGrid = initializeUpdateGrid();
+        for (int i = 0; i < updatingGrid.length; i++) {
+            for (int j = 0; j < updatingGrid[0].length; j++) {
                 updateState(i, j, updatingGrid[i][j].getType());
             }
         }

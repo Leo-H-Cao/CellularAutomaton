@@ -9,7 +9,7 @@ import java.util.Properties;
  * Loads in constants from the properties file
  * Constants can be accessed in a public static manner from this class
  *
- * @author Zack Schrage
+ * @author Leo Cao
  */
 public class PropertiesLoader {
 
@@ -17,28 +17,35 @@ public class PropertiesLoader {
     public static double fireF;
     public static double fIdeal;
 
-    /**
-     * Code attributed to:
-     * https://crunchify.com/java-properties-file-how-to-read-config-properties-values-in-java/
-     */
-    public void readPropValues() throws IOException {
+    public static final String PROP_FILE_NAME = "config.properties";
+    public static final String EXCEPTION_MESSAGE = "property file '" + PROP_FILE_NAME + "' not found in the classpath";
+
+    public void getPropValues() throws IOException {
+        InputStream inputStream = null;
 
         try {
             Properties prop = new Properties();
-            String propFileName = "config_en_US.properties";
-            InputStream inputStream = getClass().getClassLoader().getResourceAsStream(propFileName);
+
+            inputStream = getClass().getClassLoader().getResourceAsStream(PROP_FILE_NAME);
 
             if (inputStream != null) {
                 prop.load(inputStream);
             } else {
-                throw new FileNotFoundException("property file '" + propFileName + "' not found in the classpath");
+                throw new FileNotFoundException(EXCEPTION_MESSAGE);
             }
 
             fireP = Double.parseDouble(prop.getProperty("fireP"));
             fireF = Double.parseDouble(prop.getProperty("fireF"));
             fIdeal = Double.parseDouble(prop.getProperty("fIdeal"));
 
+//            String result = "fireP = " + fireP + ", fireF = " + fireF + ", fIdeal = " + fIdeal;
+//            System.out.println(result);
         } catch (Exception e) {
+            throw new IOException(e);
+        } finally {
+            if(inputStream !=null){
+                inputStream.close();
+            }
         }
     }
 }

@@ -1,8 +1,15 @@
 package cellsociety.io;
 
 import cellsociety.cell.Cell;
-import cellsociety.util.Type;
-import org.w3c.dom.*;
+import cellsociety.cell.Type.CELLTYPE;
+import cellsociety.cell.Type.GAMETYPE;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -10,19 +17,27 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
+
+/**
+ * Parses XML file by getting content from parent nodes and child nodes,
+ * Also reads in attributes if necessary,
+ * Stores game data in hashmap and initial state of cells in a list of cells
+ *
+ * @author Leo Cao
+ */
 
 public class FileReader {
 
   private final String GAME_TYPE_ATTRIBUTE = "game";
-  public static final String ERROR_MESSAGE = "XML file does not represent %s";
+  public static final String FILE_TYPE_ERROR = "Not an XML file!";
+  public static final String ROOT_TAG_ERROR = "Not a game configuration file, root tag should be 'CellSociety'";
+  public static final String VALID_ROOT_TAG = "CellSociety";
 
   private final DocumentBuilder BUILDER;
   private HashMap<String, String> gameData;
   private ArrayList<Cell> initialState;
-  private Type.GAMETYPE game_type;
+  private GAMETYPE game_type;
 
   public FileReader(){
     BUILDER = createDocumentBuilder();
@@ -99,7 +114,7 @@ public class FileReader {
     int initialX = Integer.parseInt(attributes.getNamedItem("x").getNodeValue());
     int initialY = Integer.parseInt(attributes.getNamedItem("y").getNodeValue());
     String cellType = attributes.getNamedItem("type").getNodeValue();
-    Cell cell = Cell.newGameCell(initialX, initialY, game_type, Type.CELLTYPE.valueOf(cellType));
+    Cell cell = Cell.newGameCell(initialX, initialY, game_type, CELLTYPE.valueOf(cellType));
     initialState.add(cell);
   }
 
@@ -119,10 +134,10 @@ public class FileReader {
 
   private void setGameType (Element root) {
     String gameTypeString = root.getAttributes().getNamedItem(GAME_TYPE_ATTRIBUTE).getNodeValue();
-    game_type = Type.GAMETYPE.valueOf(gameTypeString);
+    game_type = GAMETYPE.valueOf(gameTypeString);
   }
 
-  public Type.GAMETYPE getGameType(){
+  public GAMETYPE getGameType(){
     return game_type;
   }
 }

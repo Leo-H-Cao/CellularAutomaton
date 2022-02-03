@@ -4,7 +4,7 @@ import cellsociety.util.Type;
 import cellsociety.util.Type.CELLTYPE;
 import static cellsociety.util.Type.CELLTYPE.*;
 
-public class CellGridSchellingSeg extends CellGrid {
+public class SchellingSegregation extends CellGrid {
 
     private static Cell[][] updatingGrid;
 

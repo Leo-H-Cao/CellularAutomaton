@@ -51,10 +51,24 @@ public abstract class CellGrid {
     }
 
     /**
+     * Initializes an new grid of cells to be used by the next generation function that it can update as it loops over it
+     * The current grid gets overwritten by this grid
+     * @return a new update grid
+     */
+    public static Cell[][] initializeUpdateGrid() {
+        Cell[][] updatingGrid = new Cell[grid.length][grid[0].length];
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[0].length; j++) {
+                updatingGrid[i][j] = Cell.newGameCell(i, j, gametype, grid[i][j].getType());
+            }
+        }
+        return updatingGrid;
+    }
+
+    /**
      * Returns a cells 8 neighboring cell types.
      * If a cell is on the edge than cells that would be out of bounds are set to NULL cells
      * Its central cell, itself, is also set to NULL
-     *
      * @param x coordinate of the cell
      * @param y coordinate of the cell
      * @return its neighboring cell types

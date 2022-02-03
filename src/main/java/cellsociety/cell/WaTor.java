@@ -18,13 +18,12 @@ import static cellsociety.util.Type.CELLTYPE.*;
  *
  * @author Zack Schrage
  */
-public class CellGridWaTor extends CellGrid {
+public class WaTor extends CellGrid {
 
     private static Cell[][] updatingGrid;
 
     @Override
     public void nextGeneration() {
-        //Copy Grid to an updating grid
         Cell[][] grid = getGrid();
         updatingGrid = new Cell[grid.length][grid[0].length];
         for (int i = 0; i < updatingGrid.length; i++) {
@@ -52,9 +51,10 @@ public class CellGridWaTor extends CellGrid {
                     //Update Properties
                     properties.put("Reproduce", (int)properties.get("Reproduce") + 1);
                     properties.put("Energy", (int)properties.get("Energy") - 1);
-                    updatingGrid[i][j].setProperties(properties);
-                    System.out.println("STAGE B " + updatingGrid[i][j].getProperties().get("Moved") + " " + updatingGrid[i][j].getProperties().get("Reproduce") + " " + updatingGrid[i][j].getProperties().get("Energy"));
-                    System.out.println();
+                    if ((int) properties.get("Reproduce") > 5) {
+                        properties.put("Reproduce", 0);
+                        reproduce = true;
+                    }
                     //Update position
                     updateGrid(d, i, j, SHARK);
                     if (d >=0 && (int)properties.get("Reproduce") < 5) updateGrid(-1, i, j, EMPTY);
@@ -90,8 +90,8 @@ public class CellGridWaTor extends CellGrid {
 
     private static int randomDirection(boolean[] validDirections) {
         int count = 0;
-        for (boolean validDirection : validDirections) {
-            if (validDirection) count++;
+        for (int i = 0; i < validDirections.length; i++) {
+            if (validDirections[i]) count++;
         }
         int random = (int)(Math.random() * count);
         for (int i = 0; i < validDirections.length; i++) {
@@ -112,7 +112,8 @@ public class CellGridWaTor extends CellGrid {
     }
 
     private static boolean inBounds(int x, int y, Cell[][] updatingGrid) {
-        return x >= 0 && x < updatingGrid.length && y >= 0 && y < updatingGrid[0].length;
+        if (x < 0 || x >= updatingGrid.length || y < 0 || y >= updatingGrid[0].length) return false;
+        return true;
     }
 
 }
