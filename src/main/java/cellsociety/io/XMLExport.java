@@ -2,7 +2,6 @@ package cellsociety.io;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellGrid;
-import cellsociety.cell.Type;
 import cellsociety.cell.Type.CELLTYPE;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,7 +28,6 @@ public class XMLExport {
   public static final String XML_FILE_NAME = "data/test.xml";
   public static final String ROOT_TAG = "CellSociety";
   public static final String PARSER_EXCEPTION_MSG = "UsersXML: Error trying to instantiate DocumentBuilder ";
-  public static final String XML_CONFIG_FILE = "xml.properties";
 
   private Element rootElement;
   private Document dom;
