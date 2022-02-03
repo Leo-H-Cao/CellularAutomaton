@@ -1,14 +1,20 @@
 package cellsociety.view;
 
 import cellsociety.game.Game;
+import cellsociety.util.Type;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+
+import java.util.Locale;
 
 public class Controls {
 	private Button playButton;
@@ -30,14 +36,17 @@ public class Controls {
 				}
 			}
 		});
-		stepButton = makeButton("Step", (e) -> {
-			Game.step();
-		});
+		stepButton = makeButton("Step", (e) -> Game.step());
 
 		centerBox.getChildren().addAll(playButton, stepButton);
 		centerBox.setAlignment(Pos.CENTER);
 		HBox.setMargin(playButton,new Insets(0,10,20,0));
 		HBox.setMargin(stepButton,new Insets(0,0,20,10));
+
+		Node typeSelector = makeTypeSelector();
+		HBox.setMargin(typeSelector, new Insets(0,0,0,20));
+		leftBox.getChildren().add(typeSelector);
+		centerBox.setAlignment(Pos.CENTER);
 
 		ret.add(leftBox, 0, 0);
 		ret.add(centerBox, 1, 0);
@@ -58,7 +67,6 @@ public class Controls {
 	}
 
 	private Button makeButton(String title, EventHandler<ActionEvent> handler) {
-		// represent all supported image suffixes
 		Button result = new Button();
 		result.setText(title);
 		result.setOnAction(handler);
@@ -66,8 +74,20 @@ public class Controls {
 	}
 
 	private Node makeTypeSelector() {
-		Node ret = new Rectangle();
-		
+		TilePane ret = new TilePane();
+		Label selectorTitle = new Label("Select Cell Type");
+
+		String options[] = { "Alive", "Dead" };
+
+		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(options));
+
+		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
+			ViewController.setSelectedClickType(Type.CELLTYPE.valueOf(options[new_value.intValue()].toUpperCase()));
+		});
+
+		ret.getChildren().add(selectorTitle);
+		ret.getChildren().add(choiceBox);
+
 		return ret;
 	}
 }

@@ -20,7 +20,7 @@ sonar_analysis:
   script:
     - |
       mvn -B -ntp sonar:sonar \
-        -Dsonar.host.url=http://coursework.cs.duke.edu:9000 \
+        -Dsonar.host.url=https://coursework.cs.duke.edu:9000 \
         -Dsonar.java.binaries=. \
         -Dsonar.exclusions=**/*.xml,**/*.css
   tags:
