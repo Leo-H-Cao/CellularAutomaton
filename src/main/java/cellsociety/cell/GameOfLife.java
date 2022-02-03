@@ -28,7 +28,7 @@ public class GameOfLife extends CellGrid {
         setGrid(updatingGrid);
     }
 
-    public static void updateState(int x, int y, CELLTYPE type) {
+    private static void updateState(int x, int y, CELLTYPE type) {
         int liveNeighbors = countLiveNeighbors(CellGrid.getNeighbors(x, y));
         if (type == ALIVE) {
             if (liveNeighbors < 2) updatingGrid[x][y].updateType(DEAD);

@@ -24,16 +24,7 @@ public class WaTor extends CellGrid {
 
     @Override
     public void nextGeneration() {
-        Cell[][] grid = getGrid();
-        updatingGrid = new Cell[grid.length][grid[0].length];
-        for (int i = 0; i < updatingGrid.length; i++) {
-            for (int j = 0; j < updatingGrid[0].length; j++) {
-                updatingGrid[i][j] = Cell.newGameCell(i, j, getGameType(), grid[i][j].getType());
-                HashMap<String, Object> properties = grid[i][j].getProperties();
-                properties.put("Moved", false);
-                updatingGrid[i][j].setProperties(properties);
-            }
-        }
+        updatingGrid = initializeUpdateGridME();
         updateSharks();
         updateFish();
         setGrid(updatingGrid);

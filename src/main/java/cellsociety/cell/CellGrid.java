@@ -1,10 +1,11 @@
 package cellsociety.cell;
 
-import cellsociety.util.Type.GAMETYPE;
-import cellsociety.util.Type.CELLTYPE;
+import cellsociety.cell.Type.GAMETYPE;
+import cellsociety.cell.Type.CELLTYPE;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-import static cellsociety.util.Type.CELLTYPE.*;
+import static cellsociety.cell.Type.CELLTYPE.*;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -40,9 +41,13 @@ public abstract class CellGrid {
      * takes in a list of cells to initialize onto the board
      */
     public static void initializeCells(ArrayList<Cell> cells) {
-        for (Cell[] value : grid) {
+        for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
-                value[j].updateType(value[j].getDefault());
+                grid[i][j].updateType(grid[i][j].getDefault());
+//                FOR SCHELLING SEGREGATION TESTING
+//                CELLTYPE randomType = EMPTY;
+//                if (Math.random() > 0.35) randomType = Math.random() > 0.5? A : B;
+//                grid[i][j].updateType(randomType);
             }
         }
         for (Cell c : cells) {
@@ -51,7 +56,7 @@ public abstract class CellGrid {
     }
 
     /**
-     * Initializes an new grid of cells to be used by the next generation function that it can update as it loops over it
+     * Initializes a new grid of cells to be used by the next generation function that it can update as it loops over it
      * The current grid gets overwritten by this grid
      * @return a new update grid
      */
@@ -60,6 +65,26 @@ public abstract class CellGrid {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 updatingGrid[i][j] = Cell.newGameCell(i, j, gametype, grid[i][j].getType());
+            }
+        }
+        return updatingGrid;
+    }
+
+    /**
+     * Initializes a new grid of cells to be used by the next generation function
+     * This forcibly sets the moved property to be false for games with moving entities
+     * The current grid gets overwritten by this grid
+     * @return a new update grid with the moved property as false
+     */
+    public static Cell[][] initializeUpdateGridME() {
+        Cell[][] grid = getGrid();
+        Cell[][]  updatingGrid = new Cell[grid.length][grid[0].length];
+        for (int i = 0; i < updatingGrid.length; i++) {
+            for (int j = 0; j < updatingGrid[0].length; j++) {
+                updatingGrid[i][j] = Cell.newGameCell(i, j, getGameType(), grid[i][j].getType());
+                HashMap<String, Object> properties = grid[i][j].getProperties();
+                properties.put("Moved", false);
+                updatingGrid[i][j].setProperties(properties);
             }
         }
         return updatingGrid;

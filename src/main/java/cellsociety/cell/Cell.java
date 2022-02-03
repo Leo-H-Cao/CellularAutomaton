@@ -1,8 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.util.Type;
-import cellsociety.util.Type.CELLTYPE;
-import static cellsociety.util.Type.CELLTYPE.NULL;
+import cellsociety.cell.Type.GAMETYPE;
+import cellsociety.cell.Type.CELLTYPE;
+import static cellsociety.cell.Type.CELLTYPE.NULL;
 
 import java.util.HashMap;
 
@@ -16,8 +16,8 @@ import java.util.HashMap;
  */
 public class Cell {
 
-    private final int x;
-    private final int y;
+    private int x;
+    private int y;
     private CELLTYPE cType;
     private HashMap<String, Object> properties;
 
@@ -25,7 +25,7 @@ public class Cell {
         this.x = x;
         this.y = y;
         this.cType = cType;
-        properties = new HashMap<>();
+        properties = new HashMap<String, Object>();
     }
 
     /**
@@ -35,13 +35,20 @@ public class Cell {
      * @param gType game type of cell
      * @return a new cell of the specified game and cell type
      */
-    public static Cell newGameCell(int x, int y, Type.GAMETYPE gType, CELLTYPE cType) {
-        return switch (gType) {
-            case GAMEOFLIFE -> new GameOfLifeCell(x, y, cType);
-            case FIRE -> new FireCell(x, y, cType);
-            case WATOR -> new WaTorCell(x, y, cType);
-            case SCHELLSEG -> new SchellingSegCell(x, y, cType);
-        };
+    public static Cell newGameCell(int x, int y, GAMETYPE gType, CELLTYPE cType) {
+        switch(gType) {
+            case GAMEOFLIFE:
+                return new GameOfLifeCell(x, y, cType);
+            case FIRE:
+                return new FireCell(x, y, cType);
+            case PERCOLATION:
+                return new PercolationCell(x, y, cType);
+            case WATOR:
+                return new WaTorCell(x, y, cType);
+            case SCHELLSEG:
+                return new SchellingSegCell(x, y, cType);
+        }
+        return null;
     }
 
     /**
