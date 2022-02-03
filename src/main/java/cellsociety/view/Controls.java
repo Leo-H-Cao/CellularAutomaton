@@ -97,16 +97,6 @@ public class Controls {
 		r.getChildren().add(c);
 		r.getChildren().add(l1);
 
-
-
-		HBox ret = new HBox();
-		Text defaultText = new Text();
-		defaultText.setText("Click to select cell type");
-		ret.setOnMouseClicked(System.out::println);
-
-		ret.getChildren().add(defaultText);
 		return r;
 	}
-
-
 }
