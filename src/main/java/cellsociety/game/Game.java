@@ -59,6 +59,7 @@ public class Game {
 			case GAMEOFLIFE: cellGrid = new GameOfLife();
 			case FIRE: cellGrid = new Fire();
 			case WATOR: cellGrid = new WaTor();
+			case PERCOLATION: cellGrid = new Percolation();
 		}
 		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), f.getGameType());
 		cellGrid.initializeCells(f.getInitialState());
