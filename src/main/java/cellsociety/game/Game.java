@@ -50,6 +50,10 @@ public class Game {
 		return playing;
 	}
 
+	public static Dimension getDefaultSize() {
+		return DEFAULT_SIZE;
+	}
+
 	public static Type.GAMETYPE getCurrentGameType() {
 		return currentGameType;
 	}
@@ -62,10 +66,6 @@ public class Game {
 		}
 		playing = !playing;
 	}
-
-    private void init() {
-		 makeNewGrid("data/SampleComfig1.xml");
-    }
 
 	public static void makeNewGrid(String filePath) {
 		FileReader f = new FileReader();

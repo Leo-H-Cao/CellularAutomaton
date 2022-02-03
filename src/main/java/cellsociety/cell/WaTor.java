@@ -1,10 +1,10 @@
 package cellsociety.cell;
 
-import cellsociety.util.Type;
-
 import java.util.HashMap;
-
-import static cellsociety.util.Type.CELLTYPE.*;
+import cellsociety.util.Type;
+import static cellsociety.util.Type.CELLTYPE.EMPTY;
+import static cellsociety.util.Type.CELLTYPE.FISH;
+import static cellsociety.util.Type.CELLTYPE.SHARK;
 
 /**
  * This is the Cell Grid Manager for WaTor, its next generation method follows the rules that:
@@ -29,26 +29,32 @@ public class WaTor extends CellGrid {
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
                 updatingGrid[i][j] = Cell.newGameCell(i, j, getGameType(), grid[i][j].getType());
-                HashMap<String, Object> props = grid[i][j].getProperties();
-                props.put("Moved", false);
-                updatingGrid[i][j].setProperties(props);
+                HashMap<String, Object> properties = grid[i][j].getProperties();
+                properties.put("Moved", false);
+                updatingGrid[i][j].setProperties(properties);
             }
         }
-        //Update Sharks Positions
+        updateSharks();
+        updateFish();
+        setGrid(updatingGrid);
+    }
+
+    private void updateSharks() {
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
                 HashMap<String, Object> properties = updatingGrid[i][j].getProperties();
                 if (updatingGrid[i][j].getType() == SHARK && !(boolean)properties.get("Moved")) {
                     if ((int)properties.get("Energy") == 0) {
-                        updateGrid(-1, i, j, EMPTY);
+                        updateGrid(-1, i, j, EMPTY, properties);
                         continue;
                     }
                     int d = randomDirection(getValidDirections(i, j, FISH));
                     if (d >= 0) {
-                        properties.put("Energy", (int)properties.get("Energy") + 1);
+                        properties.put("Energy", (int)properties.get("Energy") + 3);
                     }
                     else d = randomDirection(getValidDirections(i, j, EMPTY));
                     //Update Properties
+                    boolean reproduce = false;
                     properties.put("Reproduce", (int)properties.get("Reproduce") + 1);
                     properties.put("Energy", (int)properties.get("Energy") - 1);
                     if ((int) properties.get("Reproduce") > 5) {
@@ -56,27 +62,46 @@ public class WaTor extends CellGrid {
                         reproduce = true;
                     }
                     //Update position
-                    updateGrid(d, i, j, SHARK);
-                    if (d >=0 && (int)properties.get("Reproduce") < 5) updateGrid(-1, i, j, EMPTY);
+                    updateGrid(d, i, j, SHARK, properties);
+                    if (reproduce) {
+                        HashMap<String, Object> props = new HashMap<String, Object>();
+                        props.put("Moved", false);
+                        props.put("Reproduce", 0);
+                        props.put("Energy", 5);
+                        updateGrid(-1, i, j, FISH, props);
+                    }
+                    else if (d >= 0) updateGrid(-1, i, j, EMPTY, properties);
                 }
             }
         }
-        //Update Fish Positions
+    }
+
+    private void updateFish() {
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
                 HashMap<String, Object> properties = updatingGrid[i][j].getProperties();
-                if (updatingGrid[i][j].getType() == FISH && !(boolean)properties.get("Moved")) {
+                if (updatingGrid[i][j].getType() == FISH && !(boolean) properties.get("Moved")) {
                     int d = randomDirection(getValidDirections(i, j, EMPTY));
-                    //Update Properties
-                    properties.put("Reproduce", (int)properties.get("Reproduce") + 1);
-                    updatingGrid[i][j].setProperties(properties);
+                    boolean reproduce = false;
+                    properties.put("Reproduce", (int) properties.get("Reproduce") + 1);
+                    if ((int) properties.get("Reproduce") > 5) {
+                        properties.put("Reproduce", 0);
+                        reproduce = true;
+                    }
                     //Update position
-                    updateGrid(d, i, j, FISH);
-                    if (d >=0 && (int)properties.get("Reproduce") < 5) updateGrid(-1, i, j, EMPTY);
+                    updateGrid(d, i, j, FISH, properties);
+                    if (reproduce) {
+                        HashMap<String, Object> props = new HashMap<String, Object>();
+                        props.put("Moved", false);
+                        props.put("Reproduce", 0);
+                        props.put("Energy", 5);
+                        updateGrid(-1, i, j, FISH, props);
+                    }
+                    else if (d >= 0) updateGrid(-1, i, j, EMPTY, properties);
+
                 }
             }
         }
-        setGrid(updatingGrid);
     }
 
     private static boolean[] getValidDirections(int x, int y, Type.CELLTYPE destType) {
@@ -101,8 +126,7 @@ public class WaTor extends CellGrid {
         return -1;
     }
 
-    private static void updateGrid(int d, int x, int y, Type.CELLTYPE cType) {
-        HashMap<String, Object> properties = updatingGrid[x][y].getProperties();
+    private static void updateGrid(int d, int x, int y, Type.CELLTYPE cType, HashMap<String, Object> properties) {
         properties.put("Moved", true);
         if (d == -1) updatingGrid[x][y].updateType(cType, properties);
         else if (d == 0) updatingGrid[x][y-1].updateType(cType, properties);

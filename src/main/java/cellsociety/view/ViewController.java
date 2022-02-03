@@ -33,7 +33,7 @@ public class ViewController {
 		controls = new Controls();
 
 		stage = _stage;
-		stage.setScene(makeScene(Game.DEFAULT_SIZE.width, Game.DEFAULT_SIZE.height));
+		stage.setScene(makeScene(Game.getDefaultSize().width, Game.getDefaultSize().height));
 		stage.setTitle(Main.TITLE);
 		stage.show();
 		selectedClickType = Type.CELLTYPE.ALIVE;
