@@ -3,6 +3,8 @@ package cellsociety.cell;
 import cellsociety.cell.Type.CELLTYPE;
 import cellsociety.io.PropertiesLoader;
 
+import java.util.HashMap;
+
 import static cellsociety.cell.Type.CELLTYPE.*;
 
 /**
@@ -17,24 +19,10 @@ public class SchellingSegCell extends Cell {
 
     public SchellingSegCell(int x, int y, Type.CELLTYPE cType) {
         super(x, y, cType);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("Moved", false);
+        setProperties(map);
     }
-
-//    @Override
-//    public void nextGeneration(Cell[][] updatingGrid) {
-//        if (updatingGrid[getX()][getY()].getType() == EMPTY) return;
-//        if (getType() == EMPTY) {
-//            updatingGrid[getX()][getY()].updateType(EMPTY);
-//            return;
-//        }
-//        double fReal = fReal(CellGrid.getNeighbors(getX(), getY()));
-//        if (fReal >= 0.6) return;
-//        int d = bestDirection(getValidDirections(updatingGrid), fReal);
-//        if (d < 0) {
-//            updatingGrid[getX()][getY()].updateType(EMPTY);
-//            return;
-//        }
-//        updateGrid(d, getType(), updatingGrid);
-//    }
 
     @Override
     public Type.CELLTYPE getDefault() {
