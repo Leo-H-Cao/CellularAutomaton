@@ -1,7 +1,7 @@
 package cellsociety.view;
 
-import cellsociety.Main;
 import cellsociety.cell.Cell;
+import cellsociety.game.Game;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
@@ -10,13 +10,14 @@ import javafx.scene.paint.Color;
 
 public class GridManager {
 	private static GridPane grid;
-	private static final int GRID_GAP = 3;
 	private static int cellWidth, cellHeight;
+	private final double gridGap;
 
 	public GridManager() {
 		grid = new GridPane();
-		grid.setHgap(GRID_GAP);
-		grid.setVgap(GRID_GAP);
+		gridGap = Double.parseDouble(Game.getProperties().getString("GRID_GAP"));
+		grid.setHgap(gridGap);
+		grid.setVgap(gridGap);
 	}
 
 	public static int[] getCellDimensions() {
@@ -35,8 +36,8 @@ public class GridManager {
 
 	public void update(Cell[][] g) {
 		int verticalPadding = 100;
-		cellWidth = Integer.valueOf(Main.DEFAULT_SIZE.width / g.length) - GRID_GAP - 1;
-		cellHeight = Math.round((Main.DEFAULT_SIZE.height - verticalPadding) / g[0].length) - GRID_GAP - 1;
+		cellWidth = (int) (Game.getDefaultSize().width / g.length - gridGap - 1);
+		cellHeight = (int) (Math.round((Game.getDefaultSize().height - verticalPadding) / g[0].length) - gridGap - 1);
 		// reset grid
 		grid.getChildren().clear();
 

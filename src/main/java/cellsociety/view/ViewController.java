@@ -23,10 +23,10 @@ import java.io.File;
 public class ViewController {
 	private Button importButton;
 	private Button exportButton;
-	private GridManager gm;
-	private Controls controls;
+	private final GridManager gm;
+	private final Controls controls;
 	private BorderPane root;
-	private Stage stage;
+	private final Stage stage;
 	private static CellType selectedClickType;
 
 	public ViewController(Stage _stage) {
@@ -34,7 +34,7 @@ public class ViewController {
 		controls = new Controls();
 
 		stage = _stage;
-		stage.setScene(makeScene(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
+		stage.setScene(makeScene(Game.getDefaultSize().width, Game.getDefaultSize().height));
 		stage.setTitle(Main.TITLE);
 		stage.show();
 		selectedClickType = CellType.ALIVE;
@@ -98,10 +98,14 @@ public class ViewController {
 				Game.makeNewGrid(file.toString());
 			}
 		});
+<<<<<<< HEAD
 		exportButton = makeButton("Export", e -> {
 			XMLExport exporter = new XMLExport();
 			exporter.saveToXML();
 		});
+=======
+		exportButton = makeButton("Export", System.out::println);
+>>>>>>> fa445e1c10ac4a175baf912170710bc5f56492dc
 
 		buttonContainer.getChildren().addAll(importButton, exportButton);
 
