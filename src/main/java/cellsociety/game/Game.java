@@ -1,27 +1,29 @@
 package cellsociety.game;
 
-import cellsociety.cell.*;
 import cellsociety.cell.CellGrid;
 import cellsociety.cell.Fire;
 import cellsociety.cell.GameOfLife;
-import cellsociety.cell.Type.GAMETYPE;
 import cellsociety.cell.WaTor;
 import cellsociety.io.FileReader;
-import cellsociety.io.PropertiesLoader;
+import cellsociety.util.Type;
 import cellsociety.view.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.io.IOException;
+import java.awt.*;
+import java.util.ResourceBundle;
 
 public class Game {
 	private static boolean playing = false;
+	private static Type.GAMETYPE currentGameType;
 
     private static Timeline animation;
     private static CellGrid cellGrid;
     private static ViewController viewController;
+	private static ResourceBundle myResources;
+	private static Dimension DEFAULT_SIZE;
 
     public Game(double SECOND_DELAY, Stage stage) {
 	    try {

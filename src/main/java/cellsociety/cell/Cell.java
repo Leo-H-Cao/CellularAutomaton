@@ -1,6 +1,6 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.GAMETYPE;
+import cellsociety.util.Type;
 import cellsociety.util.Type.CELLTYPE;
 import static cellsociety.util.Type.CELLTYPE.NULL;
 
@@ -35,7 +35,7 @@ public class Cell {
      * @param gType game type of cell
      * @return a new cell of the specified game and cell type
      */
-    public static Cell newGameCell(int x, int y, GAMETYPE gType, CELLTYPE cType) {
+    public static Cell newGameCell(int x, int y, Type.GAMETYPE gType, CELLTYPE cType) {
         return switch (gType) {
             case GAMEOFLIFE -> new GameOfLifeCell(x, y, cType);
             case FIRE -> new FireCell(x, y, cType);

@@ -1,10 +1,10 @@
 package cellsociety.io;
 
 import cellsociety.cell.Cell;
-import cellsociety.cell.Type.CELLTYPE;
-import cellsociety.cell.Type.GAMETYPE;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import cellsociety.util.Type;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -37,7 +37,7 @@ public class FileReader {
   private final DocumentBuilder BUILDER;
   private HashMap<String, String> gameData;
   private ArrayList<Cell> initialState;
-  private GAMETYPE game_type;
+  private Type.GAMETYPE game_type;
 
   public FileReader(){
     BUILDER = createDocumentBuilder();
@@ -72,8 +72,6 @@ public class FileReader {
         String nodeText = curNode.getTextContent();
         if(!nodeName.equals("#text")){
             gameData.put(nodeName, nodeText);
-//            System.out.print(nodeName +" ");
-//            System.out.println(nodeText);
         }
       }
     }
@@ -103,8 +101,6 @@ public class FileReader {
       }
       if(!childNodeName.equals("Cell") && !childNodeName.equals("#text")) {
         gameData.put(childNodeName, childNodeText);
-//        System.out.print(childNodeName + " ");
-//        System.out.println(childNodeText);
       }
     }
   }
@@ -114,7 +110,7 @@ public class FileReader {
     int initialX = Integer.parseInt(attributes.getNamedItem("x").getNodeValue());
     int initialY = Integer.parseInt(attributes.getNamedItem("y").getNodeValue());
     String cellType = attributes.getNamedItem("type").getNodeValue();
-    Cell cell = Cell.newGameCell(initialX, initialY, game_type, CELLTYPE.valueOf(cellType));
+    Cell cell = Cell.newGameCell(initialX, initialY, game_type, Type.CELLTYPE.valueOf(cellType));
     initialState.add(cell);
   }
 
@@ -134,10 +130,10 @@ public class FileReader {
 
   private void setGameType (Element root) {
     String gameTypeString = root.getAttributes().getNamedItem(GAME_TYPE_ATTRIBUTE).getNodeValue();
-    game_type = GAMETYPE.valueOf(gameTypeString);
+    game_type = Type.GAMETYPE.valueOf(gameTypeString);
   }
 
-  public GAMETYPE getGameType(){
+  public Type.GAMETYPE getGameType(){
     return game_type;
   }
 }
