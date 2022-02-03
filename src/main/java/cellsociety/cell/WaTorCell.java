@@ -1,10 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-
 import java.util.HashMap;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.CellType.*;
 
 /**
  * This is the Cell type for WaTor
@@ -13,7 +11,7 @@ import static cellsociety.cell.Type.CELLTYPE.*;
  */
 public class WaTorCell extends Cell {
 
-    public WaTorCell(int x, int y, CELLTYPE cType) {
+    public WaTorCell(int x, int y, CellType cType) {
         super(x, y, cType);
         HashMap<String, Object> map = new HashMap<>();
         map.put("Moved", false);
@@ -23,7 +21,7 @@ public class WaTorCell extends Cell {
     }
 
     @Override
-    public CELLTYPE getDefault() {
+    public CellType getDefault() {
         return EMPTY;
     }
 

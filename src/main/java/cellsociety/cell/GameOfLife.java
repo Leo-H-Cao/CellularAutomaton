@@ -1,8 +1,6 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-import static cellsociety.cell.Type.CELLTYPE.ALIVE;
-import static cellsociety.cell.Type.CELLTYPE.DEAD;
+import static cellsociety.cell.CellType.*;
 
 /**
  * This is the Cell Grid Manager for Game of Life, its next generation method follows the rules that:
@@ -28,7 +26,7 @@ public class GameOfLife extends CellGrid {
         setGrid(updatingGrid);
     }
 
-    private static void updateState(int x, int y, CELLTYPE type) {
+    private static void updateState(int x, int y, CellType type) {
         int liveNeighbors = countLiveNeighbors(CellGrid.getNeighbors(x, y));
         if (type == ALIVE) {
             if (liveNeighbors < 2) updatingGrid[x][y].updateType(DEAD);
@@ -41,7 +39,7 @@ public class GameOfLife extends CellGrid {
         }
     }
 
-    private static int countLiveNeighbors(CELLTYPE[][] neighborsType) {
+    private static int countLiveNeighbors(CellType[][] neighborsType) {
         int liveNeighbors = 0;
         for (int i = 0; i < neighborsType.length; i++) {
             for (int j= 0; j < neighborsType[0].length; j++) {
