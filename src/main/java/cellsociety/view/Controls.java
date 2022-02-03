@@ -72,14 +72,6 @@ public class Controls {
 	}
 
 	private Node makeTypeSelector() {
-
-
-
-		// FROM: https://www.geeksforgeeks.org/javafx-choicebox/
-
-		// create a button
-		Button b = new Button("show");
-
 		// create a tile pane
 		TilePane r = new TilePane();
 

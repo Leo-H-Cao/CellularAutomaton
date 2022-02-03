@@ -1,10 +1,10 @@
 package cellsociety.cell;
 
-import cellsociety.utils.Type.GAMETYPE;
-import cellsociety.utils.Type.CELLTYPE;
+import cellsociety.util.Type.GAMETYPE;
+import cellsociety.util.Type.CELLTYPE;
 import java.util.ArrayList;
 
-import static cellsociety.utils.Type.CELLTYPE.*;
+import static cellsociety.util.Type.CELLTYPE.*;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world

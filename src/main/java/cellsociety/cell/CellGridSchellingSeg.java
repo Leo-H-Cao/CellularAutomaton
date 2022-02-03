@@ -1,8 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.utils.Type;
-import cellsociety.utils.Type.CELLTYPE;
-import static cellsociety.utils.Type.CELLTYPE.*;
+import cellsociety.util.Type;
+import cellsociety.util.Type.CELLTYPE;
+import static cellsociety.util.Type.CELLTYPE.*;
 
 public class CellGridSchellingSeg extends CellGrid {
 

@@ -1,4 +1,4 @@
-package cellsociety.utils;
+package cellsociety.util;
 
 public class GameCellMapping {
 

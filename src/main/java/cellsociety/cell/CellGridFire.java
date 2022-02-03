@@ -1,7 +1,7 @@
 package cellsociety.cell;
 
-import cellsociety.utils.Type.CELLTYPE;
-import static cellsociety.utils.Type.CELLTYPE.*;
+import cellsociety.util.Type.CELLTYPE;
+import static cellsociety.util.Type.CELLTYPE.*;
 
 /**
  * This is the Cell Grid Manager for Fire, its next generation method follows the rules that:

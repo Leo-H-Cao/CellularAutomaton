@@ -1,6 +1,6 @@
 package cellsociety.view;
 
-import cellsociety.utils.Type;
+import cellsociety.util.Type;
 import javafx.scene.Node;
 import javafx.scene.layout.HBox;
 

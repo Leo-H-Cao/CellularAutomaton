@@ -1,4 +1,4 @@
-package cellsociety.utils;
+package cellsociety.util;
 
 /**
  * Enums for the different playable game types and all the cell types within each game

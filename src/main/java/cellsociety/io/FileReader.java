@@ -1,7 +1,7 @@
 package cellsociety.io;
 
 import cellsociety.cell.Cell;
-import cellsociety.utils.Type;
+import cellsociety.util.Type;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 

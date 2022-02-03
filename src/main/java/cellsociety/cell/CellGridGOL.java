@@ -1,8 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.utils.Type.CELLTYPE;
-import static cellsociety.utils.Type.CELLTYPE.ALIVE;
-import static cellsociety.utils.Type.CELLTYPE.DEAD;
+import cellsociety.util.Type.CELLTYPE;
+import static cellsociety.util.Type.CELLTYPE.ALIVE;
+import static cellsociety.util.Type.CELLTYPE.DEAD;
 
 /**
  * This is the Cell Grid Manager for Game of Life, its next generation method follows the rules that:

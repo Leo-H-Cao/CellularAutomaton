@@ -13,5 +13,5 @@ module cellsociety_app {
     exports cellsociety.game;
     exports cellsociety.view;
     exports cellsociety;
-	exports cellsociety.utils;
+	exports cellsociety.util;
 }

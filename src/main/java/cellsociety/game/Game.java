@@ -2,7 +2,7 @@ package cellsociety.game;
 
 import cellsociety.cell.*;
 import cellsociety.io.FileReader;
-import cellsociety.utils.Type;
+import cellsociety.util.Type;
 import cellsociety.view.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

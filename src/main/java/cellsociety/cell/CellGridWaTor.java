@@ -1,10 +1,10 @@
 package cellsociety.cell;
 
-import cellsociety.utils.Type;
+import cellsociety.util.Type;
 
 import java.util.HashMap;
 
-import static cellsociety.utils.Type.CELLTYPE.*;
+import static cellsociety.util.Type.CELLTYPE.*;
 
 /**
  * This is the Cell Grid Manager for WaTor, its next generation method follows the rules that:

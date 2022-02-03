@@ -1,7 +1,7 @@
 package cellsociety.cell;
 
-import cellsociety.utils.Type.CELLTYPE;
-import cellsociety.utils.Type.GAMETYPE;
+import cellsociety.util.Type.CELLTYPE;
+import cellsociety.util.Type.GAMETYPE;
 
 import java.util.HashMap;
 
