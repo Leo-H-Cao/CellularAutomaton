@@ -5,8 +5,6 @@ import cellsociety.cell.Type.CELLTYPE;
 import cellsociety.cell.Type.GAMETYPE;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
-import javax.xml.stream.XMLStreamException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -19,25 +17,43 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 
+
+/**
+ * Parses XML file by getting content from parent nodes and child nodes,
+ * Also reads in attributes if necessary,
+ * Stores game data in hashmap and initial state of cells in a list of cells
+ *
+ * @author Leo Cao
+ */
 
 public class FileReader {
 
   private final String GAME_TYPE_ATTRIBUTE = "game";
-  public static final String ERROR_MESSAGE = "XML file does not represent %s";
+  public static final String FILE_TYPE_ERROR = "Not an XML file!";
+  public static final String ROOT_TAG_ERROR = "Not a game configuration file, root tag should be 'CellSociety'";
+  public static final String VALID_ROOT_TAG = "CellSociety";
 
   private final DocumentBuilder BUILDER;
   private HashMap<String, String> gameData;
   private ArrayList<Cell> initialState;
   private GAMETYPE game_type;
 
+
+
+  /**
+   * creates file reader instance
+   */
   public FileReader(){
     BUILDER = createDocumentBuilder();
     gameData = new HashMap<>();
     initialState = new ArrayList<>();
   }
 
+  /**
+   * creates document builder, which is used to read through nodes of XML
+   * @return new document builder
+   */
   private DocumentBuilder createDocumentBuilder(){
     try{
       return DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -46,14 +62,17 @@ public class FileReader {
     }
   }
 
-
+  /**
+   * parses XML file, storing game data into hashmap
+   * @param fileName: name of file being read
+   */
   public void parseFile(String fileName){
+    validateFileType(fileName);
     Element rootElement = getRootElement(new File(fileName));
+    validateRootTag(rootElement);
     setGameType(rootElement);
-
     NodeList childNodes = rootElement.getChildNodes();
 
-    //each node only has one child?
     for(int i = 0; i < childNodes.getLength(); i++) {
       Node curNode = childNodes.item(i);
       if(curNode.hasChildNodes()){
@@ -69,6 +88,19 @@ public class FileReader {
 //            System.out.println(nodeText);
         }
       }
+    }
+  }
+
+  private void validateFileType(String fileName) throws XMLException{
+    String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+    if(!fileType.equals("xml")){
+      throw new XMLException(FILE_TYPE_ERROR);
+    }
+  }
+
+  private void validateRootTag(Element root) throws XMLException{
+    if(!root.getNodeName().equals(VALID_ROOT_TAG)){
+      throw new XMLException(ROOT_TAG_ERROR);
     }
   }
 
@@ -130,7 +162,7 @@ public class FileReader {
     game_type = GAMETYPE.valueOf(gameTypeString);
   }
 
-  private GAMETYPE getGameType(){
+  public GAMETYPE getGameType(){
     return game_type;
   }
 }
