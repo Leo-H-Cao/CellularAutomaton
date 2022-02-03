@@ -123,12 +123,12 @@ public class FileReader {
         parseCellNode(curChildNode);
       }
       else if(childNodeName.equals("Color")){
-        childNodeName = parseColorAttribute(curChildNode) + "_" + childNodeName;
+        childNodeName = parseColorAttribute(curChildNode) + "_COLOR";
       }
       if(!childNodeName.equals("Cell") && !childNodeName.equals("#text")) {
         gameData.put(childNodeName, childNodeText);
-//        System.out.print(childNodeName + " ");
-//        System.out.println(childNodeText);
+        System.out.print(childNodeName + " ");
+        System.out.println(childNodeText);
       }
     }
   }
