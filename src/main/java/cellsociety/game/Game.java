@@ -15,6 +15,8 @@ import java.io.IOException;
 public class Game {
 	private static boolean playing = false;
 
+		public static final String CONFIG_PROPERTIES_FILE = "config.properties";
+
     private static Timeline animation;
     private static CellGrid cellGrid;
     private static ViewController viewController;
@@ -22,7 +24,7 @@ public class Game {
     public Game(double SECOND_DELAY, Stage stage) {
         PropertiesLoader propertiesLoader = new PropertiesLoader();
         try{
-          propertiesLoader.getPropValues();
+          propertiesLoader.getPropValues(CONFIG_PROPERTIES_FILE);
         }
         catch (IOException e){
           System.out.println(e);

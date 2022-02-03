@@ -18,14 +18,18 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+
+/**
+ * Converts current cell state to XML file and exports as a local file
+ *
+ * @author Leo Cao
+ */
 public class XMLExport {
 
-  public static final String TYPE_ATTR_TEXT = "type";
-  public static final String X_ATTR_TEXT = "x";
-  public static final String Y_ATTR_TEXT = "y";
   public static final String XML_FILE_NAME = "data/test.xml";
   public static final String ROOT_TAG = "CellSociety";
   public static final String PARSER_EXCEPTION_MSG = "UsersXML: Error trying to instantiate DocumentBuilder ";
+  public static final String XML_CONFIG_FILE = "xml.properties";
 
   private Element rootElement;
   private Document dom;
@@ -83,9 +87,9 @@ public class XMLExport {
     String cellTypeString = celltype.toString();
     String cellX = String.valueOf(cell.getX());
     String cellY = String.valueOf(cell.getY());
-    element.setAttribute(TYPE_ATTR_TEXT,cellTypeString);
-    element.setAttribute(X_ATTR_TEXT, cellX);
-    element.setAttribute(Y_ATTR_TEXT, cellY);
+    element.setAttribute("type",cellTypeString);
+    element.setAttribute("x", cellX);
+    element.setAttribute("y", cellY);
     rootElement.appendChild(element);
   }
 
