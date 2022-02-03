@@ -1,11 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.cell.Type.CELLTYPE;
-import cellsociety.io.PropertiesLoader;
-
 import java.util.HashMap;
 
-import static cellsociety.cell.Type.CELLTYPE.*;
+import static cellsociety.cell.CellType.*;
 
 /**
  * This is the Cell type for Schelling Segregation, its next generation method follows the rules that:
@@ -17,7 +14,7 @@ import static cellsociety.cell.Type.CELLTYPE.*;
  */
 public class SchellingSegCell extends Cell {
 
-    public SchellingSegCell(int x, int y, Type.CELLTYPE cType) {
+    public SchellingSegCell(int x, int y, CellType cType) {
         super(x, y, cType);
         HashMap<String, Object> map = new HashMap<>();
         map.put("Moved", false);
@@ -25,7 +22,7 @@ public class SchellingSegCell extends Cell {
     }
 
     @Override
-    public Type.CELLTYPE getDefault() {
+    public CellType getDefault() {
         return EMPTY;
     }
 

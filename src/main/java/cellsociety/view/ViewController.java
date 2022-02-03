@@ -2,7 +2,7 @@ package cellsociety.view;
 
 import cellsociety.Main;
 import cellsociety.cell.Cell;
-import cellsociety.cell.Type;
+import cellsociety.cell.CellType;
 import cellsociety.game.Game;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,7 +26,7 @@ public class ViewController {
 	private Controls controls;
 	private BorderPane root;
 	private Stage stage;
-	private static Type.CELLTYPE selectedClickType;
+	private static CellType selectedClickType;
 
 	public ViewController(Stage _stage) {
 		gm = new GridManager();
@@ -36,7 +36,7 @@ public class ViewController {
 		stage.setScene(makeScene(Main.DEFAULT_SIZE.width, Main.DEFAULT_SIZE.height));
 		stage.setTitle(Main.TITLE);
 		stage.show();
-		selectedClickType = Type.CELLTYPE.ALIVE;
+		selectedClickType = CellType.ALIVE;
 	}
 
 	public void updateGridPane(Cell[][] cells){
@@ -44,11 +44,11 @@ public class ViewController {
 		root.setCenter(gm.getGrid());
 	}
 
-	public static Type.CELLTYPE getSelectedClickType() {
+	public static CellType getSelectedClickType() {
 		return selectedClickType;
 	}
 
-	public static void setSelectedClickType(Type.CELLTYPE type) {
+	public static void setSelectedClickType(CellType type) {
 		selectedClickType = type;
 	}
 

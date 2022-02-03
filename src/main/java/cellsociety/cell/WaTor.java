@@ -2,10 +2,7 @@ package cellsociety.cell;
 
 import java.util.HashMap;
 
-import cellsociety.cell.Type.CELLTYPE;
-import static cellsociety.cell.Type.CELLTYPE.EMPTY;
-import static cellsociety.cell.Type.CELLTYPE.FISH;
-import static cellsociety.cell.Type.CELLTYPE.SHARK;
+import static cellsociety.cell.CellType.*;
 
 /**
  * This is the Cell Grid Manager for WaTor, its next generation method follows the rules that:
@@ -96,7 +93,7 @@ public class WaTor extends CellGrid {
         }
     }
 
-    private static boolean[] getValidDirections(int x, int y, Type.CELLTYPE destType) {
+    private static boolean[] getValidDirections(int x, int y, CellType destType) {
         boolean[] validDirections = new boolean[4];
         if (inBounds(x, y-1, updatingGrid) && updatingGrid[x][y-1].getType() == destType) validDirections[0] = true;
         if (inBounds(x-1, y, updatingGrid) && updatingGrid[x-1][y].getType() == destType) validDirections[1] = true;
@@ -118,7 +115,7 @@ public class WaTor extends CellGrid {
         return -1;
     }
 
-    private static void updateGrid(int d, int x, int y, CELLTYPE cType, HashMap<String, Object> properties) {
+    private static void updateGrid(int d, int x, int y, CellType cType, HashMap<String, Object> properties) {
         properties.put("Moved", true);
         if (d == -1) updatingGrid[x][y].updateType(cType, properties);
         else if (d == 0) updatingGrid[x][y-1].updateType(cType, properties);

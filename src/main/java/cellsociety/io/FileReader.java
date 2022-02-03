@@ -1,10 +1,11 @@
 package cellsociety.io;
 
 import cellsociety.cell.Cell;
-import cellsociety.cell.Type.CELLTYPE;
-import cellsociety.cell.Type.GAMETYPE;
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import cellsociety.cell.CellType;
+import cellsociety.game.GameType;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -37,7 +38,7 @@ public class FileReader {
   private final DocumentBuilder BUILDER;
   private HashMap<String, String> gameData;
   private ArrayList<Cell> initialState;
-  private GAMETYPE game_type;
+  private GameType game_type;
 
 
 
@@ -139,7 +140,7 @@ public class FileReader {
     int initialX = Integer.parseInt(attributes.getNamedItem("x").getNodeValue());
     int initialY = Integer.parseInt(attributes.getNamedItem("y").getNodeValue());
     String cellType = attributes.getNamedItem("type").getNodeValue();
-    Cell cell = Cell.newGameCell(initialX, initialY, game_type, CELLTYPE.valueOf(cellType));
+    Cell cell = Cell.newGameCell(initialX, initialY, game_type, CellType.valueOf(cellType));
     initialState.add(cell);
   }
 
@@ -159,10 +160,10 @@ public class FileReader {
 
   private void setGameType (Element root) {
     String gameTypeString = root.getAttributes().getNamedItem(GAME_TYPE_ATTRIBUTE).getNodeValue();
-    game_type = GAMETYPE.valueOf(gameTypeString);
+    game_type = GameType.valueOf(gameTypeString);
   }
 
-  public GAMETYPE getGameType(){
+  public GameType getGameType(){
     return game_type;
   }
 }
