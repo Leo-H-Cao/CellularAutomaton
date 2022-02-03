@@ -10,6 +10,7 @@ public enum Type {;
     public enum GAMETYPE {
         GAMEOFLIFE,
         FIRE,
+        PERCOLATION,
         WATOR,
         SCHELLSEG
     }
@@ -21,6 +22,8 @@ public enum Type {;
         EMPTY,
         TREE,
         BURNING,
+        BLOCK,
+        WATER,
         FISH,
         SHARK,
         A,

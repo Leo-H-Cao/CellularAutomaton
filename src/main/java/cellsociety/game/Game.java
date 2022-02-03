@@ -1,10 +1,7 @@
 package cellsociety.game;
 
-import cellsociety.cell.CellGrid;
-import cellsociety.cell.Fire;
-import cellsociety.cell.SchellingSegregation;
+import cellsociety.cell.*;
 import cellsociety.cell.Type.GAMETYPE;
-import cellsociety.cell.WaTor;
 import cellsociety.io.FileReader;
 import cellsociety.io.PropertiesLoader;
 import cellsociety.view.ViewController;
@@ -52,8 +49,8 @@ public class Game {
     private void init() {
         FileReader f = new FileReader();
         f.parseFile("data/SampleComfig1.xml");
-        cellGrid = new SchellingSegregation();
-        cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.SCHELLSEG);
+        cellGrid = new Percolation();
+        cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), GAMETYPE.PERCOLATION);
         cellGrid.initializeCells(f.getInitialState());
         viewController.updateGridPane(cellGrid.getGrid());
     }

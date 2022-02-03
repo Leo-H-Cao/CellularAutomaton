@@ -41,6 +41,8 @@ public class Cell {
                 return new GameOfLifeCell(x, y, cType);
             case FIRE:
                 return new FireCell(x, y, cType);
+            case PERCOLATION:
+                return new PercolationCell(x, y, cType);
             case WATOR:
                 return new WaTorCell(x, y, cType);
             case SCHELLSEG:
