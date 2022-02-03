@@ -40,8 +40,6 @@ public class FileReader {
   private ArrayList<Cell> initialState;
   private GameType game_type;
 
-
-
   /**
    * creates file reader instance
    */
@@ -125,12 +123,12 @@ public class FileReader {
         parseCellNode(curChildNode);
       }
       else if(childNodeName.equals("Color")){
-        childNodeName = childNodeName + " " + parseColorAttribute(curChildNode);
+        childNodeName = parseColorAttribute(curChildNode) + "_COLOR";
       }
       if(!childNodeName.equals("Cell") && !childNodeName.equals("#text")) {
         gameData.put(childNodeName, childNodeText);
-//        System.out.print(childNodeName + " ");
-//        System.out.println(childNodeText);
+        System.out.print(childNodeName + " ");
+        System.out.println(childNodeText);
       }
     }
   }

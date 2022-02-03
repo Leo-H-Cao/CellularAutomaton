@@ -4,6 +4,7 @@ import cellsociety.Main;
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellType;
 import cellsociety.game.Game;
+import cellsociety.io.XMLExport;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -97,7 +98,10 @@ public class ViewController {
 				Game.makeNewGrid(file.toString());
 			}
 		});
-		exportButton = makeButton("Export", System.out::println);
+		exportButton = makeButton("Export", e -> {
+			XMLExport exporter = new XMLExport();
+			exporter.saveToXML();
+		});
 
 		buttonContainer.getChildren().addAll(importButton, exportButton);
 

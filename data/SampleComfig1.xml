@@ -35,8 +35,8 @@
         <Speed>0</Speed>
     </Parameters>
     <ColorScheme>
-        <Color type="0">#ffffff</Color>
-        <Color type="1">#ffff00</Color>
-        <Color type="2">#abcdef</Color>
+        <Color type="TREE">#ffffff</Color>
+        <Color type="BURNING">#ffff00</Color>
+        <Color type="EMPTY">#abcdef</Color>
     </ColorScheme>
 </CellSociety>

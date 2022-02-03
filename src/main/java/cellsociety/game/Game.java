@@ -15,6 +15,8 @@ public class Game {
 	private static boolean playing = false;
 	private static GameType currentGameType;
 
+		public static final String CONFIG_PROPERTIES_FILE = "config.properties";
+
     private static Timeline animation;
     private static CellGrid cellGrid;
     private static ViewController viewController;
@@ -22,6 +24,7 @@ public class Game {
 	private static Dimension DEFAULT_SIZE;
 
     public Game(double SECOND_DELAY, Stage stage) {
+
 	    try {
 		    myResources = ResourceBundle.getBundle("config");
 	    } catch (Exception e) {

@@ -30,7 +30,7 @@ public class Fire extends CellGrid {
         if (type == BURNING) updatingGrid[x][y].updateType(EMPTY);
         else if (type == TREE && hasBurningNeighbor(CellGrid.getNeighbors(x, y))) updatingGrid[x][y].updateType(BURNING);
         else if (type == TREE && (Math.random() < 0.05)) updatingGrid[x][y].updateType(BURNING);
-        else if (type == EMPTY && (Math.random() < 0.30)) updatingGrid[x][y].updateType(TREE);
+        else if (type == EMPTY && (Math.random() < 0.3)) updatingGrid[x][y].updateType(TREE);
         else updatingGrid[x][y].updateType(type);
     }
 

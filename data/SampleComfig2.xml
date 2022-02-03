@@ -19,8 +19,8 @@
     <Parameters>
         <Speed>1</Speed>
         <ColorSceme>
-            <Color type="0">#000000</Color>
-            <Color type="1">#ffff00</Color>
+            <Color type="ALIVE">#000000</Color>
+            <Color type="DEAD">#ffff00</Color>
         </ColorSceme>
     </Parameters>
 </CellSociety>
