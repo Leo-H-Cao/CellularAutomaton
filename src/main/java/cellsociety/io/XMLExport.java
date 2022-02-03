@@ -2,7 +2,6 @@ package cellsociety.io;
 
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellGrid;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import javax.xml.parsers.DocumentBuilder;
@@ -10,7 +9,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -18,17 +16,17 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-public class ExportXML {
+public class XMLExport {
 
   public static final String TYPE_ATTR_TEXT = "type";
   public static final String X_ATTR_TEXT = "x";
   public static final String Y_ATTR_TEXT = "y";
-  public static final String XML_FILE_NAME = "test.xml";
+  public static final String XML_FILE_NAME = "data/test.xml";
 
   private Element rootElement;
   private Document dom;
 
-  public ExportXML(){
+  public XMLExport(){
     createDom();
   }
 

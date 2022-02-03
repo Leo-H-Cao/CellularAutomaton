@@ -4,6 +4,7 @@ import cellsociety.Main;
 import cellsociety.cell.Cell;
 import cellsociety.cell.Type;
 import cellsociety.game.Game;
+import cellsociety.io.XMLExport;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -98,7 +99,8 @@ public class ViewController {
 			}
 		});
 		exportButton = makeButton("Export", e -> {
-			System.out.println(e);
+			XMLExport exporter = new XMLExport();
+			exporter.saveToXML();
 		});
 
 		buttonContainer.getChildren().addAll(importButton, exportButton);
