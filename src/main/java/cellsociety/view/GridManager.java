@@ -49,6 +49,7 @@ public class GridManager {
 						c.setColor(Color.BLACK);
 						break;
 					case ALIVE:
+					case WATER:
 					case FISH:
 					case A:
 						c.setColor(Color.BLUE);
@@ -58,6 +59,8 @@ public class GridManager {
 						break;
 					case BURNING:
 						c.setColor(Color.YELLOW);
+					case BLOCK:
+						c.setColor(Color.GREEN);
 						break;
 					case SHARK:
 					case B:

@@ -1,10 +1,7 @@
 package cellsociety.game;
 
-import cellsociety.cell.CellGrid;
-import cellsociety.cell.Fire;
-import cellsociety.cell.GameOfLife;
+import cellsociety.cell.*;
 import cellsociety.cell.Type.GAMETYPE;
-import cellsociety.cell.WaTor;
 import cellsociety.io.FileReader;
 import cellsociety.io.PropertiesLoader;
 import cellsociety.view.ViewController;

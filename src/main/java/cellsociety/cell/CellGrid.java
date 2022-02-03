@@ -43,6 +43,10 @@ public abstract class CellGrid {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 grid[i][j].updateType(grid[i][j].getDefault());
+//                FOR SCHELLING SEGREGATION TESTING
+//                CELLTYPE randomType = EMPTY;
+//                if (Math.random() > 0.35) randomType = Math.random() > 0.5? A : B;
+//                grid[i][j].updateType(randomType);
             }
         }
         for (Cell c : cells) {
