@@ -1,6 +1,7 @@
 package cellsociety.view;
 
 import cellsociety.game.Game;
+import cellsociety.util.Type;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,6 +13,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.text.Text;
+
+import java.util.Locale;
 
 public class Controls {
 	private Button playButton;
@@ -64,7 +67,6 @@ public class Controls {
 	}
 
 	private Button makeButton(String title, EventHandler<ActionEvent> handler) {
-		// represent all supported image suffixes
 		Button result = new Button();
 		result.setText(title);
 		result.setOnAction(handler);
@@ -72,31 +74,20 @@ public class Controls {
 	}
 
 	private Node makeTypeSelector() {
-		// create a tile pane
-		TilePane r = new TilePane();
+		TilePane ret = new TilePane();
+		Label selectorTitle = new Label("Select Cell Type");
 
-		// create a label
-		Label l = new Label("This is a choice box");
-		Label l1 = new Label("nothing selected");
+		String options[] = { "Alive", "Dead" };
 
-		// string array
-		String st[] = { "Arnab", "Andrew", "Ankit", "None" };
+		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(options));
 
-		// create a choiceBox
-		ChoiceBox c = new ChoiceBox(FXCollections.observableArrayList(st));
-
-		// add a listener
-		// if the item of the list is changed
-		c.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
-			// set the text for the label to the selected item
-			l1.setText(st[new_value.intValue()] + " selected");
+		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
+			ViewController.setSelectedClickType(Type.CELLTYPE.valueOf(options[new_value.intValue()].toUpperCase()));
 		});
 
-		// add ChoiceBox
-		r.getChildren().add(l);
-		r.getChildren().add(c);
-		r.getChildren().add(l1);
+		ret.getChildren().add(selectorTitle);
+		ret.getChildren().add(choiceBox);
 
-		return r;
+		return ret;
 	}
 }

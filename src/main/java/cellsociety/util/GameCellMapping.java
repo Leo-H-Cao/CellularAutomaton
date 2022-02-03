@@ -9,6 +9,6 @@ public class GameCellMapping {
 
 	public GameCellMapping() {
 		mapping.put(Type.GAMETYPE.GAMEOFLIFE, new ArrayList<>(Arrays.asList(Type.CELLTYPE.DEAD, Type.CELLTYPE.ALIVE)));
-		mapping.put(Type.GAMETYPE.GAMEOFLIFE, new ArrayList<>(Arrays.asList(Type.CELLTYPE.DEAD, Type.CELLTYPE.ALIVE)));
+		mapping.put(Type.GAMETYPE.FIRE, new ArrayList<>(Arrays.asList(Type.CELLTYPE.EMPTY, Type.CELLTYPE.BURNING, Type.CELLTYPE.TREE)));
 	}
 }
