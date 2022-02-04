@@ -35,7 +35,7 @@ public class Game {
 				Integer.parseInt(Game.getProperties().getString("DEFAULT_HEIGHT")));
 
         viewController = new ViewController(stage);
-	    makeNewGrid("data/SampleComfig2.xml");
+	    makeNewGrid("data/SampleComfig1.xml");
 		//makeNewGrid("data/defaultGameState.xml");
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
