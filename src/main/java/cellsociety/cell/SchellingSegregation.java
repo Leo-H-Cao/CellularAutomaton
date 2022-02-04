@@ -1,32 +1,44 @@
 package cellsociety.cell;
 
-import java.util.HashMap;
+import java.util.Map;
 
+import static cellsociety.cell.CellProperties.MOVED;
 import static cellsociety.cell.CellType.*;
 
-public class SchellingSegregation extends CellGrid {
+/**
+ * This is the Cell type for Schelling Segregation, its next generation method follows the rules that:
+ * Agents desire a fraction F_ideal of their neighborhood (eight adjacent agents) to be from the same group as them
+ * If the fraction of agents not including empty spaces F_real < F_ideal
+ * Agents will attempt to relocate to a spot where F_real >= F_ideal
+ *
+ * @author Zack Schrage
+ */
+public class SchellingSegregation extends CellGridME {
 
     private static Cell[][] updatingGrid;
 
     @Override
     public void nextGeneration() {
-        updatingGrid = initializeUpdateGridME();
-        updatePositons();
+        updatingGrid = initializeUpdateGrid();
+        updatePositions();
         setGrid(updatingGrid);
     }
 
-    private void updatePositons() {
+    private void updatePositions() {
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
-                HashMap<String, Object> properties = updatingGrid[i][j].getProperties();
-                if (updatingGrid[i][j].getType() != EMPTY && !(boolean) properties.get("Moved")) {
+                Map<CellProperties, Object> properties = updatingGrid[i][j].getProperties();
+                if (updatingGrid[i][j].getType() != EMPTY && !(boolean) properties.get(MOVED)) {
                     CellType type = updatingGrid[i][j].getType();
                     double fReal = fReal(CellGrid.getNeighbors(i, j), type);
-                    if (fReal > 0.5) continue;
+                    if (fReal > 0.5) {
+                        continue;
+                    }
                     int d = bestDirection(getValidDirections(i, j, EMPTY), fReal);
-                    updateGrid(d, i, j, type, properties);
-                    if (d >= 0) updateGrid(-1, i, j, EMPTY, properties);
-
+                    updateGrid(updatingGrid, d, i, j, type, properties);
+                    if (d >= 0) {
+                        updateGrid(updatingGrid,-1, i, j, EMPTY, properties);
+                    }
                 }
             }
         }
@@ -70,21 +82,4 @@ public class SchellingSegregation extends CellGrid {
         return -1;
     }
 
-    private static void updateGrid(int d, int x, int y, CellType cType, HashMap<String, Object> properties) {
-        properties.put("Moved", true);
-        if (d == -1) updatingGrid[x][y].updateType(cType, properties);
-        if (d == 0) updatingGrid[x-1][y-1].updateType(cType, properties);
-        if (d == 1) updatingGrid[x][y-1].updateType(cType, properties);
-        if (d == 2) updatingGrid[x+1][y-1].updateType(cType, properties);
-        if (d == 3) updatingGrid[x-1][y].updateType(cType, properties);
-        if (d == 4) updatingGrid[x+1][y].updateType(cType, properties);
-        if (d == 5) updatingGrid[x-1][y+1].updateType(cType, properties);
-        if (d == 6) updatingGrid[x][y+1].updateType(cType, properties);
-        if (d == 7) updatingGrid[x+1][y+1].updateType(cType, properties);
-    }
-
-    private static boolean inBounds(int x, int y) {
-        if (x < 0 || x >= updatingGrid.length || y < 0 || y >= updatingGrid[0].length) return false;
-        return true;
-    }
 }

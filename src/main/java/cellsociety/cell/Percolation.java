@@ -2,7 +2,7 @@ package cellsociety.cell;
 
 import static cellsociety.cell.CellType.*;
 
-public class Percolation extends CellGrid {
+public class Percolation extends CellGridSE {
 
     private static Cell[][] updatingGrid;
 
@@ -18,14 +18,9 @@ public class Percolation extends CellGrid {
     }
 
     private static void updateState(int x, int y, CellType type) {
-        if (inBounds(x-1, y, updatingGrid) && CellGrid.getGrid()[x-1][y].getType() == type) updatingGrid[x][y].updateType(type);
-        if (inBounds(x+1, y, updatingGrid) && CellGrid.getGrid()[x+1][y].getType() == type) updatingGrid[x][y].updateType(type);
-        if (inBounds(x, y-1, updatingGrid) && CellGrid.getGrid()[x][y-1].getType() == type) updatingGrid[x][y].updateType(type);
-    }
-
-    private static boolean inBounds(int x, int y, Cell[][] updatingGrid) {
-        if (x < 0 || x >= updatingGrid.length || y < 0 || y >= updatingGrid[0].length) return false;
-        return true;
+        if (inBounds(x-1, y) && CellGrid.getGrid()[x-1][y].getType() == type) updatingGrid[x][y].updateType(type);
+        if (inBounds(x+1, y) && CellGrid.getGrid()[x+1][y].getType() == type) updatingGrid[x][y].updateType(type);
+        if (inBounds(x, y-1) && CellGrid.getGrid()[x][y-1].getType() == type) updatingGrid[x][y].updateType(type);
     }
 
 }

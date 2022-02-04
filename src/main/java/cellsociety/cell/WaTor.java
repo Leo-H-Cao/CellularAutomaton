@@ -1,7 +1,11 @@
 package cellsociety.cell;
 
-import java.util.HashMap;
+import cellsociety.game.Game;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import static cellsociety.cell.CellProperties.*;
 import static cellsociety.cell.CellType.*;
 
 /**
@@ -16,13 +20,13 @@ import static cellsociety.cell.CellType.*;
  *
  * @author Zack Schrage
  */
-public class WaTor extends CellGrid {
+public class WaTor extends CellGridME {
 
     private static Cell[][] updatingGrid;
 
     @Override
     public void nextGeneration() {
-        updatingGrid = initializeUpdateGridME();
+        updatingGrid = initializeUpdateGrid();
         updateSharks();
         updateFish();
         setGrid(updatingGrid);
@@ -31,35 +35,21 @@ public class WaTor extends CellGrid {
     private void updateSharks() {
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
-                HashMap<String, Object> properties = updatingGrid[i][j].getProperties();
-                if (updatingGrid[i][j].getType() == SHARK && !(boolean)properties.get("Moved")) {
-                    if ((int)properties.get("Energy") == 0) {
-                        updateGrid(-1, i, j, EMPTY, properties);
+                Map<CellProperties, Object> properties = updatingGrid[i][j].getProperties();
+                if (updatingGrid[i][j].getType() == SHARK && !(boolean)properties.get(MOVED)) {
+                    if ((int)properties.get(ENERGY) == 0) {
+                        updateGrid(updatingGrid, -1, i, j, EMPTY, properties);
                         continue;
                     }
                     int d = randomDirection(getValidDirections(i, j, FISH));
                     if (d >= 0) {
-                        properties.put("Energy", (int)properties.get("Energy") + 3);
+                        properties.put(ENERGY, (int)properties.get(ENERGY) + 1);
                     }
-                    else d = randomDirection(getValidDirections(i, j, EMPTY));
-                    //Update Properties
-                    boolean reproduce = false;
-                    properties.put("Reproduce", (int)properties.get("Reproduce") + 1);
-                    properties.put("Energy", (int)properties.get("Energy") - 1);
-                    if ((int) properties.get("Reproduce") > 5) {
-                        properties.put("Reproduce", 0);
-                        reproduce = true;
+                    else {
+                        d = randomDirection(getValidDirections(i, j, EMPTY));
+                        properties.put(ENERGY, (int)properties.get(ENERGY) - 1);
                     }
-                    //Update position
-                    updateGrid(d, i, j, SHARK, properties);
-                    if (reproduce) {
-                        HashMap<String, Object> props = new HashMap<String, Object>();
-                        props.put("Moved", false);
-                        props.put("Reproduce", 0);
-                        props.put("Energy", 5);
-                        updateGrid(-1, i, j, FISH, props);
-                    }
-                    else if (d >= 0) updateGrid(-1, i, j, EMPTY, properties);
+                    move(d, i, j, properties, SHARK);
                 }
             }
         }
@@ -68,65 +58,70 @@ public class WaTor extends CellGrid {
     private void updateFish() {
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
-                HashMap<String, Object> properties = updatingGrid[i][j].getProperties();
-                if (updatingGrid[i][j].getType() == FISH && !(boolean) properties.get("Moved")) {
+                Map<CellProperties, Object> properties = updatingGrid[i][j].getProperties();
+                if (updatingGrid[i][j].getType() == FISH && !(boolean) properties.get(MOVED)) {
                     int d = randomDirection(getValidDirections(i, j, EMPTY));
-                    boolean reproduce = false;
-                    properties.put("Reproduce", (int) properties.get("Reproduce") + 1);
-                    if ((int) properties.get("Reproduce") > 5) {
-                        properties.put("Reproduce", 0);
-                        reproduce = true;
-                    }
-                    //Update position
-                    updateGrid(d, i, j, FISH, properties);
-                    if (reproduce) {
-                        HashMap<String, Object> props = new HashMap<String, Object>();
-                        props.put("Moved", false);
-                        props.put("Reproduce", 0);
-                        props.put("Energy", 5);
-                        updateGrid(-1, i, j, FISH, props);
-                    }
-                    else if (d >= 0) updateGrid(-1, i, j, EMPTY, properties);
-
+                    move(d, i, j, properties, FISH);
                 }
             }
         }
     }
 
     private static boolean[] getValidDirections(int x, int y, CellType destType) {
-        boolean[] validDirections = new boolean[4];
-        if (inBounds(x, y-1, updatingGrid) && updatingGrid[x][y-1].getType() == destType) validDirections[0] = true;
-        if (inBounds(x-1, y, updatingGrid) && updatingGrid[x-1][y].getType() == destType) validDirections[1] = true;
-        if (inBounds(x+1, y, updatingGrid) && updatingGrid[x+1][y].getType() == destType) validDirections[2] = true;
-        if (inBounds(x, y+1, updatingGrid) && updatingGrid[x][y+1].getType() == destType) validDirections[3] = true;
+        boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))];
+        if (inBounds(x, y-1) && updatingGrid[x][y-1].getType() == destType) validDirections[1] = true;
+        if (inBounds(x-1, y) && updatingGrid[x-1][y].getType() == destType) validDirections[3] = true;
+        if (inBounds(x+1, y) && updatingGrid[x+1][y].getType() == destType) validDirections[4] = true;
+        if (inBounds(x, y+1) && updatingGrid[x][y+1].getType() == destType) validDirections[6] = true;
         return validDirections;
     }
 
     private static int randomDirection(boolean[] validDirections) {
         int count = 0;
         for (int i = 0; i < validDirections.length; i++) {
-            if (validDirections[i]) count++;
+            if (validDirections[i]) {
+                count++;
+            }
         }
         int random = (int)(Math.random() * count);
         for (int i = 0; i < validDirections.length; i++) {
-            if (validDirections[i] && random > 0) random--;
-            else if (validDirections[i] && random == 0) return i;
+            if (validDirections[i] && random > 0) {
+                random--;
+            }
+            else if (validDirections[i] && random == 0) {
+                return i;
+            }
         }
         return -1;
     }
 
-    private static void updateGrid(int d, int x, int y, CellType cType, HashMap<String, Object> properties) {
-        properties.put("Moved", true);
-        if (d == -1) updatingGrid[x][y].updateType(cType, properties);
-        else if (d == 0) updatingGrid[x][y-1].updateType(cType, properties);
-        else if (d == 1) updatingGrid[x-1][y].updateType(cType, properties);
-        else if (d == 2) updatingGrid[x+1][y].updateType(cType, properties);
-        else if (d == 3) updatingGrid[x][y+1].updateType(cType, properties);
+    private void move(int d, int i, int j, Map<CellProperties, Object> properties, CellType cType) {
+        boolean reproduce = checkReproduction(properties);
+        updateGrid(updatingGrid, d, i, j, cType, properties);
+        if (reproduce) {
+            properties = resetProperties();
+            updateGrid(updatingGrid, -1, i, j, cType, properties);
+        }
+        else if (d >= 0) {
+            updateGrid(updatingGrid, -1, i, j, EMPTY, properties);
+        }
     }
 
-    private static boolean inBounds(int x, int y, Cell[][] updatingGrid) {
-        if (x < 0 || x >= updatingGrid.length || y < 0 || y >= updatingGrid[0].length) return false;
-        return true;
+    private static boolean checkReproduction(Map<CellProperties, Object> properties) {
+        if ((int) properties.get(REPRODUCE) > 5) {
+            properties.put(REPRODUCE, 0);
+            return true;
+        }
+        properties.put(REPRODUCE, (int) properties.get(REPRODUCE) + 1);
+        return false;
+    }
+
+    private static Map<CellProperties, Object> resetProperties() {
+        Map<CellProperties, Object> props = new HashMap<CellProperties, Object>();
+        props.put(MOVED, false);
+        props.put(REPRODUCE, 0);
+        props.put(ENERGY, 5);
+        return props;
     }
 
 }

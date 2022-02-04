@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<CellSociety game="SCHELLSEG">
-    <Title>Cell Society - Schell Segregation Example</Title>
+<CellSociety game="WATOR">
+    <Title>Cell Society</Title>
     <Authors>
         <Author>Leo Cao</Author>
         <Author>Nolan Gelinas</Author>
@@ -8,35 +8,39 @@
     </Authors>
     <Description>Description Here</Description>
     <Dimensions>
-        <Width>40</Width>
-        <Height>40</Height>
+        <Width>20</Width>
+        <Height>20</Height>
     </Dimensions>
     <InitialCellState>
-        <Cell x="5" y="5" type="A"/>
-        <Cell x="6" y="5" type="A"/>
-        <Cell x="7" y="5" type="B"/>
-        <Cell x="10" y="10" type="B"/>
-        <Cell x="11" y="10" type="B"/>
-        <Cell x="12" y="10" type="B"/>
-        <Cell x="12" y="9" type="B"/>
-        <Cell x="11" y="8" type="B"/>
-        <Cell x="8" y="8" type="B"/>
-        <Cell x="9" y="8" type="B"/>
-        <Cell x="10" y="8" type="B"/>
-        <Cell x="10" y="7" type="A"/>
-        <Cell x="10" y="3" type="B"/>
-        <Cell x="10" y="4" type="B"/>
-        <Cell x="10" y="5" type="B"/>
-        <Cell x="10" y="13" type="A"/>
-        <Cell x="9" y="10" type="B"/>
-        <Cell x="8" y="5" type="B"/>
+        <Cell x="5" y="5" type="FISH"/>
+        <Cell x="6" y="5" type="SHARK"/>
+        <Cell x="7" y="5" type="FISH"/>
+        <Cell x="10" y="10" type="FISH"/>
+        <Cell x="11" y="10" type="FISH"/>
+        <Cell x="12" y="10" type="FISH"/>
+        <Cell x="12" y="9" type="FISH"/>
+        <Cell x="11" y="8" type="SHARK"/>
+        <Cell x="8" y="8" type="FISH"/>
+        <Cell x="9" y="8" type="FISH"/>
+        <Cell x="10" y="8" type="FISH"/>
+        <Cell x="10" y="7" type="SHARK"/>
+        <Cell x="10" y="3" type="FISH"/>
+        <Cell x="10" y="4" type="SHARK"/>
+        <Cell x="10" y="5" type="FISH"/>
+        <Cell x="10" y="13" type="SHARK"/>
+        <Cell x="9" y="10" type="FISH"/>
+        <Cell x="7" y="1" type="FISH"/>
+        <Cell x="7" y="6" type="FISH"/>
+        <Cell x="7" y="7" type="FISH"/>
+        <Cell x="7" y="8" type="FISH"/>
+        <Cell x="7" y="9" type="FISH"/>
     </InitialCellState>
     <Parameters>
         <Speed>0</Speed>
     </Parameters>
     <ColorScheme>
-        <Color type="A">#00ffff</Color>
-        <Color type="B">#ffff00</Color>
-        <Color type="EMPTY">#000000</Color>
+        <Color type="TREE">#ffffff</Color>
+        <Color type="BURNING">#ffff00</Color>
+        <Color type="EMPTY">#abcdef</Color>
     </ColorScheme>
 </CellSociety>
