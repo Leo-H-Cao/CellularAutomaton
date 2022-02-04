@@ -11,7 +11,7 @@ import static cellsociety.cell.CellType.*;
  *
  * @author Zack Schrage
  */
-public class GameOfLife extends CellGrid {
+public class GameOfLife extends CellGridSE {
 
     private static Cell[][] updatingGrid;
 

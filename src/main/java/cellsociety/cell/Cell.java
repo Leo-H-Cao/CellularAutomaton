@@ -4,6 +4,7 @@ import cellsociety.game.GameType;
 import static cellsociety.cell.CellType.*;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * This class outlines the primary attributes of a Cell:
@@ -18,13 +19,13 @@ public class Cell {
     private int x;
     private int y;
     private CellType cType;
-    private HashMap<String, Object> properties;
+    private Map<CellProperties, Object> properties;
 
     public Cell(int x, int y, CellType cType) {
         this.x = x;
         this.y = y;
         this.cType = cType;
-        properties = new HashMap<String, Object>();
+        properties = new HashMap<CellProperties, Object>();
     }
 
     /**
@@ -87,7 +88,7 @@ public class Cell {
      * @param cType a cells new type
      * @param properties array of properties
      */
-    public void updateType(CellType cType, HashMap<String, Object> properties) {
+    public void updateType(CellType cType, Map<CellProperties, Object> properties) {
         this.cType = cType;
         this.properties = properties;
     }
@@ -96,7 +97,7 @@ public class Cell {
      * Getter method for a cells private properties
      * @return properties array of a cells objects
      */
-    public HashMap<String, Object> getProperties() {
+    public Map<CellProperties, Object> getProperties() {
         return properties;
     }
 
@@ -104,7 +105,7 @@ public class Cell {
      * Setter method for a cells private properties
      * @param properties array of a cells objects
      */
-    public void setProperties(HashMap<String, Object> properties) {
+    public void setProperties(Map<CellProperties, Object> properties) {
         this.properties = properties;
     }
 

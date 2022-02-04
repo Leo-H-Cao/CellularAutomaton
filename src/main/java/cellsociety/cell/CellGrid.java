@@ -1,10 +1,14 @@
 package cellsociety.cell;
 
 import cellsociety.game.GameType;
-import java.util.ArrayList;
-import java.util.HashMap;
+import cellsociety.game.NeighborhoodType;
 
+import java.util.ArrayList;
+import java.util.Map;
+
+import static cellsociety.cell.CellProperties.*;
 import static cellsociety.cell.CellType.*;
+import static cellsociety.game.NeighborhoodType.*;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -17,6 +21,7 @@ public abstract class CellGrid {
 
     private static Cell[][] grid;
     private static GameType gametype;
+    private static NeighborhoodType neighborhoodType;
 
     /**
      * Initializes a grid of cells with the appropriate type given the game being played
@@ -33,6 +38,7 @@ public abstract class CellGrid {
                 grid[i][j] = Cell.newGameCell(i, j, gType, NULL);
             }
         }
+        neighborhoodType = SQUARE_MOORE;
     }
 
     /**
@@ -44,7 +50,7 @@ public abstract class CellGrid {
             for (int j = 0; j < grid[0].length; j++) {
                 grid[i][j].updateType(grid[i][j].getDefault());
 //                FOR SCHELLING SEGREGATION TESTING
-//                CELLTYPE randomType = EMPTY;
+//                CellType randomType = EMPTY;
 //                if (Math.random() > 0.35) randomType = Math.random() > 0.5? A : B;
 //                grid[i][j].updateType(randomType);
             }
@@ -54,39 +60,39 @@ public abstract class CellGrid {
         }
     }
 
-    /**
-     * Initializes a new grid of cells to be used by the next generation function that it can update as it loops over it
-     * The current grid gets overwritten by this grid
-     * @return a new update grid
-     */
-    public static Cell[][] initializeUpdateGrid() {
-        Cell[][] updatingGrid = new Cell[grid.length][grid[0].length];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[0].length; j++) {
-                updatingGrid[i][j] = Cell.newGameCell(i, j, gametype, grid[i][j].getType());
-            }
-        }
-        return updatingGrid;
+    public static boolean inBounds(int x, int y) {
+        if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) return false;
+        return true;
     }
 
-    /**
-     * Initializes a new grid of cells to be used by the next generation function
-     * This forcibly sets the moved property to be false for games with moving entities
-     * The current grid gets overwritten by this grid
-     * @return a new update grid with the moved property as false
-     */
-    public static Cell[][] initializeUpdateGridME() {
-        Cell[][] grid = getGrid();
-        Cell[][]  updatingGrid = new Cell[grid.length][grid[0].length];
-        for (int i = 0; i < updatingGrid.length; i++) {
-            for (int j = 0; j < updatingGrid[0].length; j++) {
-                updatingGrid[i][j] = Cell.newGameCell(i, j, getGameType(), grid[i][j].getType());
-                HashMap<String, Object> properties = grid[i][j].getProperties();
-                properties.put("Moved", false);
-                updatingGrid[i][j].setProperties(properties);
-            }
+    public static void updateGrid(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
+        properties.put(MOVED, true);
+        switch (neighborhoodType) {
+            case SQUARE_MOORE -> updateGridSquareNeighbors(updatingGrid, d, x, y, cType, properties);
+            case SQUARE_NEUMANN -> updateGridSquareNeighbors(updatingGrid, d, x, y, cType, properties);
+            case TRIANGULAR_MOORE -> updateGridTriangularNeighbors(updatingGrid, d, x, y, cType, properties);
+            case TRIANGULAR_NEUMANN -> updateGridTriangularNeighbors(updatingGrid, d, x, y, cType, properties);
         }
-        return updatingGrid;
+    }
+
+    public static void updateGridSquareNeighbors(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
+        switch (d) {
+            case -1 -> updatingGrid[x][y].updateType(cType, properties);
+            case 0 -> updatingGrid[x - 1][y - 1].updateType(cType, properties);
+            case 1 -> updatingGrid[x][y - 1].updateType(cType, properties);
+            case 2 -> updatingGrid[x + 1][y - 1].updateType(cType, properties);
+            case 3 -> updatingGrid[x - 1][y].updateType(cType, properties);
+            case 4 -> updatingGrid[x + 1][y].updateType(cType, properties);
+            case 5 -> updatingGrid[x - 1][y + 1].updateType(cType, properties);
+            case 6 -> updatingGrid[x][y + 1].updateType(cType, properties);
+            case 7 -> updatingGrid[x + 1][y + 1].updateType(cType, properties);
+        }
+    }
+
+    public static void updateGridTriangularNeighbors(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
+        switch (d) {
+            case -1 -> updatingGrid[x][y].updateType(cType, properties);
+        }
     }
 
     /**

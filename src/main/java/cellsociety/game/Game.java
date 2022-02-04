@@ -15,7 +15,7 @@ public class Game {
 	private static boolean playing = false;
 	private static GameType currentGameType;
 
-		public static final String CONFIG_PROPERTIES_FILE = "config.properties";
+	public static final String CONFIG_PROPERTIES_FILE = "config.properties";
 
     private static Timeline animation;
     private static CellGrid cellGrid;
@@ -35,7 +35,8 @@ public class Game {
 				Integer.parseInt(Game.getProperties().getString("DEFAULT_HEIGHT")));
 
         viewController = new ViewController(stage);
-	    makeNewGrid("data/defaultGameState.xml");
+	    makeNewGrid("data/SampleComfig1.xml");
+		//makeNewGrid("data/defaultGameState.xml");
         animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
