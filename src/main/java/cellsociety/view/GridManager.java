@@ -59,7 +59,8 @@ public class GridManager {
 						c.setColor(Color.GREEN);
 						break;
 					case BURNING:
-						c.setColor(Color.CORAL);
+						c.setColor(Color.YELLOW);
+						break;
 					case BLOCK:
 						c.setColor(Color.GREEN);
 						break;

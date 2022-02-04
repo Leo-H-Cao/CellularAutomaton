@@ -25,7 +25,7 @@ public class Cell {
         this.x = x;
         this.y = y;
         this.cType = cType;
-        properties = new HashMap<CellProperties, Object>();
+        properties = new HashMap<>();
     }
 
     /**
