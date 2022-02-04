@@ -23,7 +23,7 @@ public class ViewController {
 	private Button importButton;
 	private Button exportButton;
 	private final GridManager gm;
-	private final Controls controls;
+	private Controls controls;
 	private BorderPane root;
 	private final Stage stage;
 	private static CellType selectedClickType;
@@ -36,7 +36,6 @@ public class ViewController {
 		stage.setScene(makeScene(Game.getDefaultSize().width, Game.getDefaultSize().height));
 		stage.setTitle(Main.TITLE);
 		stage.show();
-		selectedClickType = CellType.ALIVE;
 	}
 
 	public void updateGridPane(Cell[][] cells){
@@ -93,7 +92,8 @@ public class ViewController {
 			fileChooser.setTitle("Open Resource File");
 			File file = fileChooser.showOpenDialog(stage);
 			if(file != null) {
-				Game.makeNewGrid(file.toString());
+				Game.importNewFile(file.toString());
+				root.setBottom(controls.makeControls());
 			}
 		});
 		exportButton = makeButton("Export", System.out::println);

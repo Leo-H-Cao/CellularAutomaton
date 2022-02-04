@@ -8,7 +8,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
-import java.lang.reflect.Field;
 import java.util.MissingResourceException;
 
 public class GridManager {
@@ -54,8 +53,9 @@ public class GridManager {
 				try {
 					color = Color.valueOf(Game.getDefaultProperties().getString(String.format("%s_COLOR", type)));
 				} catch (MissingResourceException e) {
-					System.out.println("CANNOT FIND COLOR " + type);
-					color = Color.valueOf(Game.getDefaultProperties().getString("DEFAULT_COLOR"));
+					String DEFAULT_COLOR = Game.getDefaultProperties().getString("DEFAULT_COLOR");
+					System.out.println(String.format("CANNOT FIND COLOR %s \nReverting to DEFAULT_COLOR: %s ",type, DEFAULT_COLOR));
+					color = Color.valueOf(DEFAULT_COLOR);
 				}
 
 				c.setColor(color);

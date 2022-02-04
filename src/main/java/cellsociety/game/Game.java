@@ -2,7 +2,6 @@ package cellsociety.game;
 
 import cellsociety.cell.*;
 import cellsociety.io.FileReader;
-import cellsociety.view.GameCellMapping;
 import cellsociety.view.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -15,6 +14,7 @@ import java.util.ResourceBundle;
 public class Game {
 	private static boolean playing = false;
 	private static GameType currentGameType;
+	private static FileReader currentFile;
 
     private static Timeline animation;
     private static CellGrid cellGrid;
@@ -27,25 +27,25 @@ public class Game {
 	    try {
 		    myDefaults = ResourceBundle.getBundle("DEFAULTS");
 	    } catch (Exception e) {
-			e.printStackTrace();
-        }
+		    e.printStackTrace();
+	    }
 
-		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
+	    setCurrentFile(myDefaults.getString("FILEPATH"));
+	    DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
 				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
+	    viewController = new ViewController(stage);
 
-        viewController = new ViewController(stage);
-	    makeNewGrid("data/defaultGameState.xml");
-        animation = new Timeline();
+	    cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+	    cellGrid.initializeCells(currentFile.getInitialState());
+	    renderGrid();
+
+	    animation = new Timeline();
         animation.setCycleCount(Timeline.INDEFINITE);
         animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
     }
 
 	public static ResourceBundle getDefaultProperties() {
 		return myDefaults;
-	}
-
-	public static boolean getPlaying() {
-		return playing;
 	}
 
 	public static Dimension getDefaultSize() {
@@ -65,10 +65,14 @@ public class Game {
 		playing = !playing;
 	}
 
-	public static void makeNewGrid(String filePath) {
-		FileReader f = new FileReader();
-		f.parseFile(filePath);
-		currentGameType = f.getGameType();
+	public static void renderGrid() {
+		viewController.updateGridPane(CellGrid.getGrid());
+	}
+
+	private static void setCurrentFile(String filePath) {
+		currentFile = new FileReader();
+		currentFile.parseFile(filePath);
+		currentGameType = currentFile.getGameType();
 		switch(currentGameType) {
 			case GAMEOFLIFE -> cellGrid = new GameOfLife();
 			case FIRE -> cellGrid = new Fire();
@@ -77,13 +81,14 @@ public class Game {
 			case SCHELLSEG -> cellGrid = new SchellingSegregation();
 			case default -> cellGrid = null;
 		}
-		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), currentGameType);
-		cellGrid.initializeCells(f.getInitialState());
-		renderGrid();
 	}
 
-	public static void renderGrid() {
-		viewController.updateGridPane(CellGrid.getGrid());
+	public static void importNewFile(String filePath) {
+		setCurrentFile(filePath);
+
+		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		cellGrid.initializeCells(currentFile.getInitialState());
+		renderGrid();
 	}
 
     public static void step() {

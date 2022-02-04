@@ -1,6 +1,5 @@
 package cellsociety.view;
 
-import cellsociety.cell.Cell;
 import cellsociety.cell.CellType;
 import cellsociety.game.Game;
 import javafx.collections.FXCollections;
@@ -15,26 +14,26 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
-import static cellsociety.cell.CellType.*;
 
 public class Controls {
 	private Button playButton;
 	private Button stepButton;
 	private static GameCellMapping myGameCellMapping;
 
-	public Node makeControls() {
+	public Controls() {
 		myGameCellMapping = new GameCellMapping();
-		GridPane ret = new GridPane();
-		HBox leftBox = new HBox();
-		HBox centerBox = new HBox();
-		HBox rightBox = new HBox();
 		playButton = makeButton("Play", (e) -> {
 			Game.toggleSimulation();
 			togglePlayButtonState((Button) e.getSource());
 		});
 		stepButton = makeButton("Step", (e) -> Game.step());
+	}
+
+	public Node makeControls() {
+		GridPane ret = new GridPane();
+		HBox leftBox = new HBox();
+		HBox centerBox = new HBox();
+		HBox rightBox = new HBox();
 
 		centerBox.getChildren().addAll(playButton, stepButton);
 		centerBox.setAlignment(Pos.CENTER);
@@ -84,11 +83,14 @@ public class Controls {
 		TilePane ret = new TilePane();
 		Label selectorTitle = new Label("Select Cell Type");
 
-		ArrayList<CellType> selectionTypes = new ArrayList<>(Arrays.asList(A, B ));
+		System.out.println(myGameCellMapping.MAP.get(Game.getCurrentGameType()));
+
+		ArrayList<CellType> selectionTypes = myGameCellMapping.MAP.get(Game.getCurrentGameType());
 
 		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(selectionTypes));
 
 		choiceBox.setValue(selectionTypes.get(0).toString());
+		ViewController.setSelectedClickType(selectionTypes.get(0));
 
 		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
 			ViewController.setSelectedClickType(selectionTypes.get(new_value.intValue()));
