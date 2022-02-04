@@ -83,6 +83,8 @@ public class Controls {
 		TilePane ret = new TilePane();
 		Label selectorTitle = new Label("Select Cell Type");
 
+		System.out.println(myGameCellMapping.MAP.get(Game.getCurrentGameType()));
+
 		ArrayList<CellType> selectionTypes = myGameCellMapping.MAP.get(Game.getCurrentGameType());
 
 		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(selectionTypes));

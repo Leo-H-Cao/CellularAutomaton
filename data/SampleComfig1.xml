@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <CellSociety game="SCHELLSEG">
-    <Title>Cell Society - Schell Segregation Example</Title>
+    <Title>Cell Society</Title>
     <Authors>
         <Author>Leo Cao</Author>
         <Author>Nolan Gelinas</Author>
@@ -8,8 +8,8 @@
     </Authors>
     <Description>Description Here</Description>
     <Dimensions>
-        <Width>40</Width>
-        <Height>40</Height>
+        <Width>20</Width>
+        <Height>20</Height>
     </Dimensions>
     <InitialCellState>
         <Cell x="5" y="5" type="A"/>
@@ -35,8 +35,8 @@
         <Speed>0</Speed>
     </Parameters>
     <ColorScheme>
-        <Color type="A">#00ffff</Color>
-        <Color type="B">#ffff00</Color>
-        <Color type="EMPTY">#000000</Color>
+        <Color type="TREE">#ffffff</Color>
+        <Color type="BURNING">#ffff00</Color>
+        <Color type="EMPTY">#abcdef</Color>
     </ColorScheme>
 </CellSociety>

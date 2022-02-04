@@ -1,9 +1,16 @@
 package cellsociety.io;
 
 import cellsociety.cell.Cell;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import cellsociety.cell.CellType;
 import cellsociety.game.GameType;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -11,8 +18,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 
 /**
@@ -78,6 +83,8 @@ public class FileReader {
         String nodeText = curNode.getTextContent();
         if(!nodeName.equals("#text")){
             gameData.put(nodeName, nodeText);
+//            System.out.print(nodeName +" ");
+//            System.out.println(nodeText);
         }
       }
     }
@@ -118,7 +125,7 @@ public class FileReader {
       else if(childNodeName.equals("Color")){
         childNodeName = parseColorAttribute(curChildNode) + "_COLOR";
       }
-      if(!(childNodeName.equals("Cell") || childNodeName.equals("#text"))) {
+      if(!childNodeName.equals("Cell") && !childNodeName.equals("#text")) {
         gameData.put(childNodeName, childNodeText);
         System.out.print(childNodeName + " ");
         System.out.println(childNodeText);
