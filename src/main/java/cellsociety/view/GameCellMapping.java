@@ -1,6 +1,7 @@
-package cellsociety.game;
+package cellsociety.view;
 
 import cellsociety.cell.CellType;
+import cellsociety.game.GameType;
 
 import java.util.*;
 
@@ -17,5 +18,9 @@ public class GameCellMapping {
 		map.put(PERCOLATION, new ArrayList<>(Arrays.asList(BLOCK, WATER)));
 		map.put(WATOR, new ArrayList<>(Arrays.asList(EMPTY, FISH, SHARK)));
 		map.put(SCHELLSEG, new ArrayList<>(Arrays.asList(EMPTY, A, B)));
+	}
+
+	public static Map getMap() {
+		return map;
 	}
 }

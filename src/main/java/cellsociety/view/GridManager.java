@@ -8,6 +8,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+import java.lang.reflect.Field;
+import java.util.MissingResourceException;
+
 public class GridManager {
 	private static GridPane grid;
 	private static int cellWidth, cellHeight;
@@ -15,7 +18,7 @@ public class GridManager {
 
 	public GridManager() {
 		grid = new GridPane();
-		gridGap = Double.parseDouble(Game.getProperties().getString("GRID_GAP"));
+		gridGap = Double.parseDouble(Game.getDefaultProperties().getString("GRID_GAP"));
 		grid.setHgap(gridGap);
 		grid.setVgap(gridGap);
 	}
@@ -44,34 +47,48 @@ public class GridManager {
 		for (int i = 0; i < g.length; i++) {
 			for (int j = 0; j < g[0].length; j++) {
 				CellNode c = new CellNode(g[i][j]);
-				switch (g[i][j].getType()) {
-					case EMPTY:
-					case DEAD:
-						c.setColor(Color.BLACK);
-						break;
-					case ALIVE:
-					case WATER:
-					case FISH:
-					case A:
-						c.setColor(Color.BLUE);
-						break;
-					case TREE:
-						c.setColor(Color.GREEN);
-						break;
-					case BURNING:
-						c.setColor(Color.YELLOW);
-					case BLOCK:
-						c.setColor(Color.GREEN);
-						break;
-					case SHARK:
-					case B:
-						c.setColor(Color.RED);
-						break;
-					case NULL:
-						c.setColor(Color.BROWN);
-					default:
-						c.setColor(Color.BLACK);
+
+				Color color;
+				String type = g[i][j].getType().toString();
+
+				try {
+					color = Color.valueOf(Game.getDefaultProperties().getString(String.format("%s_COLOR", type)));
+				} catch (MissingResourceException e) {
+					System.out.println("CANNOT FIND COLOR " + type);
+					color = Color.valueOf(Game.getDefaultProperties().getString("DEFAULT_COLOR"));
 				}
+
+				c.setColor(color);
+
+
+//				switch (g[i][j].getType()) {
+//					case EMPTY:
+//					case DEAD:
+//						c.setColor(Color.BLACK);
+//						break;
+//					case ALIVE:
+//					case WATER:
+//					case FISH:
+//					case A:
+//						c.setColor(Color.BLUE);
+//						break;
+//					case TREE:
+//						c.setColor(Color.GREEN);
+//						break;
+//					case BURNING:
+//						c.setColor(Color.YELLOW);
+//					case BLOCK:
+//						c.setColor(Color.GREEN);
+//						break;
+//					case SHARK:
+//					case B:
+//						c.setColor(Color.RED);
+//						break;
+//					case NULL:
+//						c.setColor(Color.BROWN);
+//					default:
+//						c.setColor(Color.BLACK);
+//				}
 				grid.add(c.getNode(), i, j);
 			}
 		}

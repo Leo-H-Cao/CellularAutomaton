@@ -2,6 +2,7 @@ package cellsociety.game;
 
 import cellsociety.cell.*;
 import cellsociety.io.FileReader;
+import cellsociety.view.GameCellMapping;
 import cellsociety.view.ViewController;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -18,18 +19,19 @@ public class Game {
     private static Timeline animation;
     private static CellGrid cellGrid;
     private static ViewController viewController;
-	private static ResourceBundle myResources;
+	private static ResourceBundle myDefaults;
 	private static Dimension DEFAULT_SIZE;
+
 
     public Game(double SECOND_DELAY, Stage stage) {
 	    try {
-		    myResources = ResourceBundle.getBundle("config");
+		    myDefaults = ResourceBundle.getBundle("DEFAULTS");
 	    } catch (Exception e) {
 			e.printStackTrace();
         }
 
-		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getProperties().getString("DEFAULT_WIDTH")),
-				Integer.parseInt(Game.getProperties().getString("DEFAULT_HEIGHT")));
+		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
+				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
 
         viewController = new ViewController(stage);
 	    makeNewGrid("data/defaultGameState.xml");
@@ -38,8 +40,8 @@ public class Game {
         animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
     }
 
-	public static ResourceBundle getProperties() {
-		return myResources;
+	public static ResourceBundle getDefaultProperties() {
+		return myDefaults;
 	}
 
 	public static boolean getPlaying() {
