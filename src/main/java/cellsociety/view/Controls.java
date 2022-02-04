@@ -63,6 +63,15 @@ public class Controls {
 		return ret;
 	}
 
+	private static void togglePlayButtonState(Button b) {
+		if(b.getText().equals("Play")) {
+			b.setText("Pause");
+		}
+		else {
+			b.setText("Play");
+		}
+	}
+
 	private Button makeButton(String title, EventHandler<ActionEvent> handler) {
 		Button result = new Button();
 		result.setText(title);

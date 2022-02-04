@@ -11,7 +11,7 @@ import javafx.scene.paint.Color;
 public class GridManager {
 	private static GridPane grid;
 	private static int cellWidth, cellHeight;
-	private final double gridGap;
+	private static double gridGap;
 
 	public GridManager() {
 		grid = new GridPane();
@@ -34,7 +34,7 @@ public class GridManager {
 		return ret;
 	}
 
-	public void update(Cell[][] g) {
+	public static void update(Cell[][] g) {
 		int verticalPadding = 100;
 		cellWidth = (int) (Game.getDefaultSize().width / g.length - gridGap - 1);
 		cellHeight = (int) (Math.round((Game.getDefaultSize().height - verticalPadding) / g[0].length) - gridGap - 1);

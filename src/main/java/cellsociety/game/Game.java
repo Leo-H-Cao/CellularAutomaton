@@ -81,7 +81,7 @@ public class Game {
 	}
 
 	public static void renderGrid() {
-		viewController.updateGridPane(cellGrid.getGrid());
+		viewController.updateGridPane(CellGrid.getGrid());
 	}
 
     public static void step() {

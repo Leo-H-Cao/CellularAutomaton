@@ -55,7 +55,6 @@ public class ViewController {
 	private Scene makeScene (int width, int height) {
 		root = new BorderPane();
 
-		// must be first since other panels may refer to page
 		root.setCenter(gm.getGrid());
 		root.setTop(makeTopDisplay());
 		root.setBottom(controls.makeControls());
@@ -111,9 +110,7 @@ public class ViewController {
 		return layout;
 	}
 
-	// makes a button using either an image or a label
 	private Button makeButton (String label, EventHandler<ActionEvent> handler) {
-		// represent all supported image suffixes
 		Button result = new Button();
 		result.setText(label);
 		result.setOnAction(handler);

@@ -25,7 +25,7 @@ public abstract class CellGrid {
      * @param height of the cell grid
      * @param gType game being played
      */
-    public static void initializeGrid(int width, int height, GameType gType) {
+    public void initializeGrid(int width, int height, GameType gType) {
         gametype = gType;
         grid = new Cell[width][height];
         for (int i = 0; i < width; i++) {
@@ -39,7 +39,7 @@ public abstract class CellGrid {
      * Initializes the cells on the grid to their default states given a game type and
      * takes in a list of cells to initialize onto the board
      */
-    public static void initializeCells(ArrayList<Cell> cells) {
+    public void initializeCells(ArrayList<Cell> cells) {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 grid[i][j].updateType(grid[i][j].getDefault());
@@ -59,7 +59,7 @@ public abstract class CellGrid {
      * The current grid gets overwritten by this grid
      * @return a new update grid
      */
-    public static Cell[][] initializeUpdateGrid() {
+    public Cell[][] initializeUpdateGrid() {
         Cell[][] updatingGrid = new Cell[grid.length][grid[0].length];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
@@ -75,7 +75,7 @@ public abstract class CellGrid {
      * The current grid gets overwritten by this grid
      * @return a new update grid with the moved property as false
      */
-    public static Cell[][] initializeUpdateGridME() {
+    public Cell[][] initializeUpdateGridME() {
         Cell[][] grid = getGrid();
         Cell[][]  updatingGrid = new Cell[grid.length][grid[0].length];
         for (int i = 0; i < updatingGrid.length; i++) {

@@ -15,7 +15,7 @@ public class GameOfLifeCell extends Cell {
 
     @Override
     public CellType getDefault() {
-        return DEAD;
+        return EMPTY;
     }
 
 }
