@@ -68,7 +68,7 @@ public class WaTor extends CellGridME {
     }
 
     private static boolean[] getValidDirections(int x, int y, CellType destType) {
-        boolean[] validDirections = new boolean[Integer.parseInt(Game.getProperties().getString("SQUARE_NEIGHBORS_COUNT"))];
+        boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))];
         if (inBounds(x, y-1) && updatingGrid[x][y-1].getType() == destType) validDirections[1] = true;
         if (inBounds(x-1, y) && updatingGrid[x-1][y].getType() == destType) validDirections[3] = true;
         if (inBounds(x+1, y) && updatingGrid[x+1][y].getType() == destType) validDirections[4] = true;

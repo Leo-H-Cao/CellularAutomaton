@@ -14,40 +14,45 @@ import java.util.ResourceBundle;
 public class Game {
 	private static boolean playing = false;
 	private static GameType currentGameType;
+	private static FileReader currentFile;
 
 	public static final String CONFIG_PROPERTIES_FILE = "config.properties";
 
-    private static Timeline animation;
-    private static CellGrid cellGrid;
-    private static ViewController viewController;
-	private static ResourceBundle myResources;
+	private static Timeline animation;
+	private static CellGrid cellGrid;
+	private static ViewController viewController;
+	private static ResourceBundle myDefaults;
 	private static Dimension DEFAULT_SIZE;
 
-    public Game(double SECOND_DELAY, Stage stage) {
 
-	    try {
-		    myResources = ResourceBundle.getBundle("config");
-	    } catch (Exception e) {
+	public Game(double SECOND_DELAY, Stage stage) {
+
+		try {
+			myDefaults = ResourceBundle.getBundle("DEFAULTS");
+		} catch (Exception e) {
 			e.printStackTrace();
-        }
+		}
 
-		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getProperties().getString("DEFAULT_WIDTH")),
-				Integer.parseInt(Game.getProperties().getString("DEFAULT_HEIGHT")));
+		setCurrentFile(myDefaults.getString("FILEPATH"));
+		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
+				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
+		viewController = new ViewController(stage);
 
-        viewController = new ViewController(stage);
-	    makeNewGrid("data/SampleComfig1.xml");
-		//makeNewGrid("data/defaultGameState.xml");
-        animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
-    }
+		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		cellGrid.initializeCells(currentFile.getInitialState());
+		renderGrid();
 
-	public static ResourceBundle getProperties() {
-		return myResources;
+		animation = new Timeline();
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
 	}
 
-	public static boolean getPlaying() {
-		return playing;
+	public static FileReader getCurrentFile() {
+		return currentFile;
+	}
+
+	public static ResourceBundle getDefaultProperties() {
+		return myDefaults;
 	}
 
 	public static Dimension getDefaultSize() {
@@ -67,10 +72,14 @@ public class Game {
 		playing = !playing;
 	}
 
-	public static void makeNewGrid(String filePath) {
-		FileReader f = new FileReader();
-		f.parseFile(filePath);
-		currentGameType = f.getGameType();
+	public static void renderGrid() {
+		viewController.updateGridPane(CellGrid.getGrid());
+	}
+
+	private static void setCurrentFile(String filePath) {
+		currentFile = new FileReader();
+		currentFile.parseFile(filePath);
+		currentGameType = currentFile.getGameType();
 		switch(currentGameType) {
 			case GAMEOFLIFE -> cellGrid = new GameOfLife();
 			case FIRE -> cellGrid = new Fire();
@@ -79,20 +88,21 @@ public class Game {
 			case SCHELLSEG -> cellGrid = new SchellingSegregation();
 			case default -> cellGrid = null;
 		}
-		cellGrid.initializeGrid(Integer.parseInt(f.getGameData().get("Width")), Integer.parseInt(f.getGameData().get("Height")), currentGameType);
-		cellGrid.initializeCells(f.getInitialState());
+	}
+
+	public static void importNewFile(String filePath) {
+		setCurrentFile(filePath);
+
+		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		cellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 	}
 
-	public static void renderGrid() {
-		viewController.updateGridPane(cellGrid.getGrid());
+	public static void step() {
+		//Updates the 2D Array in Cell
+		cellGrid.nextGeneration();
+
+		// Display current cellGrid
+		renderGrid();
 	}
-
-    public static void step() {
-	    //Updates the 2D Array in Cell
-	    cellGrid.nextGeneration();
-
-	    // Display current cellGrid
-	    renderGrid();
-    }
 }
