@@ -47,6 +47,10 @@ public class Game {
         animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
     }
 
+	public static FileReader getCurrentFile() {
+		return currentFile;
+	}
+
 	public static ResourceBundle getDefaultProperties() {
 		return myDefaults;
 	}

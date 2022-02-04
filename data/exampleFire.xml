@@ -15,9 +15,10 @@
     </InitialCellState>
     <Parameters>
         <Speed>1</Speed>
-        <ColorSceme>
-            <Color type="ALIVE">#000000</Color>
-            <Color type="DEAD">#ffff00</Color>
-        </ColorSceme>
     </Parameters>
+    <ColorSceme>
+        <Color type="EMPTY">#000000</Color>
+        <Color type="BURNING">#ffff00</Color>
+        <Color type="TREE">#ff0000</Color>
+    </ColorSceme>
 </CellSociety>

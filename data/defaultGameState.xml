@@ -23,8 +23,8 @@
         <Speed>0</Speed>
     </Parameters>
     <ColorScheme>
-        <Color type="TREE">#ffffff</Color>
-        <Color type="BURNING">#ffff00</Color>
-        <Color type="EMPTY">#abcdef</Color>
+        <Color type="ALIVE">#00ffff</Color>
+        <Color type="EMPTY">#000000</Color>
+        <Color type="DEAD">#000000</Color>
     </ColorScheme>
 </CellSociety>
