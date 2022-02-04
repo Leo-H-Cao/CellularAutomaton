@@ -8,14 +8,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
 
+import java.util.MissingResourceException;
+
 public class GridManager {
 	private static GridPane grid;
 	private static int cellWidth, cellHeight;
-	private final double gridGap;
+	private static double gridGap;
 
 	public GridManager() {
 		grid = new GridPane();
-		gridGap = Double.parseDouble(Game.getProperties().getString("GRID_GAP"));
+		gridGap = Double.parseDouble(Game.getDefaultProperties().getString("GRID_GAP"));
 		grid.setHgap(gridGap);
 		grid.setVgap(gridGap);
 	}
@@ -34,7 +36,7 @@ public class GridManager {
 		return ret;
 	}
 
-	public void update(Cell[][] g) {
+	public static void update(Cell[][] g) {
 		int verticalPadding = 100;
 		cellWidth = (int) (Game.getDefaultSize().width / g.length - gridGap - 1);
 		cellHeight = (int) (Math.round((Game.getDefaultSize().height - verticalPadding) / g[0].length) - gridGap - 1);
@@ -44,34 +46,49 @@ public class GridManager {
 		for (int i = 0; i < g.length; i++) {
 			for (int j = 0; j < g[0].length; j++) {
 				CellNode c = new CellNode(g[i][j]);
-				switch (g[i][j].getType()) {
-					case EMPTY:
-					case DEAD:
-						c.setColor(Color.BLACK);
-						break;
-					case ALIVE:
-					case WATER:
-					case FISH:
-					case A:
-						c.setColor(Color.BLUE);
-						break;
-					case TREE:
-						c.setColor(Color.GREEN);
-						break;
-					case BURNING:
-						c.setColor(Color.YELLOW);
-					case BLOCK:
-						c.setColor(Color.GREEN);
-						break;
-					case SHARK:
-					case B:
-						c.setColor(Color.RED);
-						break;
-					case NULL:
-						c.setColor(Color.BROWN);
-					default:
-						c.setColor(Color.BLACK);
+
+				Color color;
+				String type = g[i][j].getType().toString();
+
+				try {
+					color = Color.valueOf(Game.getDefaultProperties().getString(String.format("%s_COLOR", type)));
+				} catch (MissingResourceException e) {
+					String DEFAULT_COLOR = Game.getDefaultProperties().getString("DEFAULT_COLOR");
+					System.out.println(String.format("CANNOT FIND COLOR %s \nReverting to DEFAULT_COLOR: %s ",type, DEFAULT_COLOR));
+					color = Color.valueOf(DEFAULT_COLOR);
 				}
+
+				c.setColor(color);
+
+
+//				switch (g[i][j].getType()) {
+//					case EMPTY:
+//					case DEAD:
+//						c.setColor(Color.BLACK);
+//						break;
+//					case ALIVE:
+//					case WATER:
+//					case FISH:
+//					case A:
+//						c.setColor(Color.BLUE);
+//						break;
+//					case TREE:
+//						c.setColor(Color.GREEN);
+//						break;
+//					case BURNING:
+//						c.setColor(Color.YELLOW);
+//					case BLOCK:
+//						c.setColor(Color.GREEN);
+//						break;
+//					case SHARK:
+//					case B:
+//						c.setColor(Color.RED);
+//						break;
+//					case NULL:
+//						c.setColor(Color.BROWN);
+//					default:
+//						c.setColor(Color.BLACK);
+//				}
 				grid.add(c.getNode(), i, j);
 			}
 		}

@@ -13,27 +13,27 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 
+import java.util.ArrayList;
+
 public class Controls {
 	private Button playButton;
 	private Button stepButton;
+	private static GameCellMapping myGameCellMapping;
+
+	public Controls() {
+		myGameCellMapping = new GameCellMapping();
+		playButton = makeButton("Play", (e) -> {
+			Game.toggleSimulation();
+			togglePlayButtonState((Button) e.getSource());
+		});
+		stepButton = makeButton("Step", (e) -> Game.step());
+	}
 
 	public Node makeControls() {
 		GridPane ret = new GridPane();
 		HBox leftBox = new HBox();
 		HBox centerBox = new HBox();
 		HBox rightBox = new HBox();
-		playButton = makeButton("Play", (e) -> {
-			Game.toggleSimulation();
-			if(e.getTarget() instanceof Button) {
-				Button b = (Button) e.getTarget();
-				if(Game.getPlaying()) {
-					b.setText("Pause");
-				} else {
-					b.setText("Play");
-				}
-			}
-		});
-		stepButton = makeButton("Step", (e) -> Game.step());
 
 		centerBox.getChildren().addAll(playButton, stepButton);
 		centerBox.setAlignment(Pos.CENTER);
@@ -63,6 +63,15 @@ public class Controls {
 		return ret;
 	}
 
+	private static void togglePlayButtonState(Button b) {
+		if(b.getText().equals("Play")) {
+			b.setText("Pause");
+		}
+		else {
+			b.setText("Play");
+		}
+	}
+
 	private Button makeButton(String title, EventHandler<ActionEvent> handler) {
 		Button result = new Button();
 		result.setText(title);
@@ -74,12 +83,17 @@ public class Controls {
 		TilePane ret = new TilePane();
 		Label selectorTitle = new Label("Select Cell Type");
 
-		String options[] = { "Alive", "Dead" };
+		System.out.println(myGameCellMapping.MAP.get(Game.getCurrentGameType()));
 
-		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(options));
+		ArrayList<CellType> selectionTypes = myGameCellMapping.MAP.get(Game.getCurrentGameType());
+
+		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(selectionTypes));
+
+		choiceBox.setValue(selectionTypes.get(0).toString());
+		ViewController.setSelectedClickType(selectionTypes.get(0));
 
 		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
-			ViewController.setSelectedClickType(CellType.valueOf(options[new_value.intValue()].toUpperCase()));
+			ViewController.setSelectedClickType(selectionTypes.get(new_value.intValue()));
 		});
 
 		ret.getChildren().add(selectorTitle);

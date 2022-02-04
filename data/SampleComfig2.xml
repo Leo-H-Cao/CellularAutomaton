@@ -1,20 +1,17 @@
 <?xml version="1.0"?>
-<CellSociety game="GAMEOFLIFE">
-    <Title>Cell Society</Title>
+<CellSociety game="FIRE">
+    <Title>Cell Society - Fire Example</Title>
     <Authors>
         <Author>Leo Cao</Author>
         <Author>Nolan Gelinas</Author>
         <Author>Zack Schrage</Author>
     </Authors>
-    <GameType>Game Of Life</GameType>
-    <Description>Description Here</Description>
+    <Description>Basic initially empty Fire game. Playing the simulation will generate trees and fires.</Description>
     <Dimentions>
-        <Width>20</Width>
-        <Height>20</Height>
+        <Width>50</Width>
+        <Height>50</Height>
     </Dimentions>
     <InitialCellState>
-        <Cell x="0" y="0" type="ALIVE"/>
-        <Cell x="1" y="1" type="ALIVE"/>
     </InitialCellState>
     <Parameters>
         <Speed>1</Speed>

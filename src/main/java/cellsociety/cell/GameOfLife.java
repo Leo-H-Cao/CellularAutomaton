@@ -48,5 +48,4 @@ public class GameOfLife extends CellGrid {
         }
         return liveNeighbors;
     }
-
 }
