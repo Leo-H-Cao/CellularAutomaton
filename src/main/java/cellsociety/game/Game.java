@@ -16,36 +16,36 @@ public class Game {
 	private static GameType currentGameType;
 	private static FileReader currentFile;
 
-		public static final String CONFIG_PROPERTIES_FILE = "config.properties";
+	public static final String CONFIG_PROPERTIES_FILE = "config.properties";
 
-    private static Timeline animation;
-    private static CellGrid cellGrid;
-    private static ViewController viewController;
+	private static Timeline animation;
+	private static CellGrid cellGrid;
+	private static ViewController viewController;
 	private static ResourceBundle myDefaults;
 	private static Dimension DEFAULT_SIZE;
 
 
-    public Game(double SECOND_DELAY, Stage stage) {
+	public Game(double SECOND_DELAY, Stage stage) {
 
-	    try {
-		    myDefaults = ResourceBundle.getBundle("DEFAULTS");
-	    } catch (Exception e) {
-		    e.printStackTrace();
-	    }
+		try {
+			myDefaults = ResourceBundle.getBundle("DEFAULTS");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-	    setCurrentFile(myDefaults.getString("FILEPATH"));
-	    DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
+		setCurrentFile(myDefaults.getString("FILEPATH"));
+		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
 				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
-	    viewController = new ViewController(stage);
+		viewController = new ViewController(stage);
 
-	    cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
-	    cellGrid.initializeCells(currentFile.getInitialState());
-	    renderGrid();
+		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		cellGrid.initializeCells(currentFile.getInitialState());
+		renderGrid();
 
-	    animation = new Timeline();
-        animation.setCycleCount(Timeline.INDEFINITE);
-        animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
-    }
+		animation = new Timeline();
+		animation.setCycleCount(Timeline.INDEFINITE);
+		animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
+	}
 
 	public static FileReader getCurrentFile() {
 		return currentFile;
@@ -98,11 +98,11 @@ public class Game {
 		renderGrid();
 	}
 
-    public static void step() {
-	    //Updates the 2D Array in Cell
-	    cellGrid.nextGeneration();
+	public static void step() {
+		//Updates the 2D Array in Cell
+		cellGrid.nextGeneration();
 
-	    // Display current cellGrid
-	    renderGrid();
-    }
+		// Display current cellGrid
+		renderGrid();
+	}
 }

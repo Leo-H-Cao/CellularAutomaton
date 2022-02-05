@@ -11,7 +11,7 @@ import static cellsociety.cell.CellType.*;
  *
  * @author Zack Schrage
  */
-public class Fire extends CellGrid {
+public class Fire extends CellGridSE {
 
     private static Cell[][] updatingGrid;
 
