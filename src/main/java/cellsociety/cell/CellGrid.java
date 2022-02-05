@@ -68,10 +68,8 @@ public abstract class CellGrid {
     public static void updateGrid(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
         properties.put(MOVED, true);
         switch (neighborhoodType) {
-            case SQUARE_MOORE -> updateGridSquareNeighbors(updatingGrid, d, x, y, cType, properties);
-            case SQUARE_NEUMANN -> updateGridSquareNeighbors(updatingGrid, d, x, y, cType, properties);
-            case TRIANGULAR_MOORE -> updateGridTriangularNeighbors(updatingGrid, d, x, y, cType, properties);
-            case TRIANGULAR_NEUMANN -> updateGridTriangularNeighbors(updatingGrid, d, x, y, cType, properties);
+            case SQUARE_MOORE, SQUARE_NEUMANN -> updateGridSquareNeighbors(updatingGrid, d, x, y, cType, properties);
+            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN -> updateGridTriangularNeighbors(updatingGrid, d, x, y, cType, properties);
         }
     }
 

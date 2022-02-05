@@ -20,11 +20,11 @@
         <Cell x="11" y="8" type="ALIVE"/>
     </InitialCellState>
     <Parameters>
-        <Speed>0</Speed>
+        <Speed>1</Speed>
     </Parameters>
     <ColorScheme>
         <Color type="ALIVE">#00ffff</Color>
-        <Color type="EMPTY">#000000</Color>
+        <Color type="EMPTY">#222222</Color>
         <Color type="DEAD">#000000</Color>
     </ColorScheme>
 </CellSociety>
