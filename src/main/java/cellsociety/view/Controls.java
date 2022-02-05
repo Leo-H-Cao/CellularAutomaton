@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.*;
 
 import java.util.ArrayList;
@@ -44,6 +45,17 @@ public class Controls {
 		HBox.setMargin(typeSelector, new Insets(0,0,0,20));
 		leftBox.getChildren().add(typeSelector);
 		centerBox.setAlignment(Pos.CENTER);
+
+		Slider gameSpeedSlider = new Slider();
+
+		gameSpeedSlider.setMin(Double.parseDouble(Game.getDefaultProperties().getString("MIN_GAME_SPEED")));
+		gameSpeedSlider.setMax(Double.parseDouble(Game.getDefaultProperties().getString("MAX_GAME_SPEED")));
+		gameSpeedSlider.setValue(Game.getCurrentGameSpeed());
+
+
+		gameSpeedSlider.valueProperty().addListener((observable, oldValue, newValue) -> Game.setSpeed(newValue.doubleValue()));
+
+		rightBox.getChildren().add(gameSpeedSlider);
 
 		ret.add(leftBox, 0, 0);
 		ret.add(centerBox, 1, 0);

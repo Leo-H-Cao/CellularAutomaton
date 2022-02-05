@@ -36,7 +36,7 @@
         <Cell x="7" y="9" type="FISH"/>
     </InitialCellState>
     <Parameters>
-        <Speed>0</Speed>
+        <Speed>1</Speed>
     </Parameters>
     <ColorScheme>
         <Color type="SHARK">#000000</Color>

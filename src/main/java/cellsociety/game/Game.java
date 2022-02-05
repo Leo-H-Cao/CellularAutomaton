@@ -16,6 +16,7 @@ public class Game {
 	private static boolean playing = false;
 	private static GameType currentGameType;
 	private static FileReader currentFile;
+	private static double currentGameSpeed;
 
 	public static final String CONFIG_PROPERTIES_FILE = "config.properties";
 
@@ -27,14 +28,13 @@ public class Game {
 
 
 	public Game(Stage stage) {
-
 		try {
 			myDefaults = ResourceBundle.getBundle("DEFAULTS");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		setCurrentFile(myDefaults.getString("FILEPATH"));
+		openFile(myDefaults.getString("FILEPATH"));
 		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
 				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
 		viewController = new ViewController(stage);
@@ -43,7 +43,7 @@ public class Game {
 		CellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 
-		timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> step()));
+		timeline = new Timeline(new KeyFrame(Duration.seconds(Double.parseDouble(Game.getDefaultProperties().getString("DEFAULT_DELAY"))), event -> step()));
 		timeline.setCycleCount(Animation.INDEFINITE);
 	}
 
@@ -63,6 +63,8 @@ public class Game {
 		return currentGameType;
 	}
 
+	public static double getCurrentGameSpeed() {return currentGameSpeed;}
+
 	public static void toggleSimulation() {
 		if(playing) {
 			timeline.pause();
@@ -76,10 +78,16 @@ public class Game {
 		viewController.updateGridPane(CellGrid.getGrid());
 	}
 
-	private static void setCurrentFile(String filePath) {
+	public static void setSpeed(double s) {
+		currentGameSpeed = s;
+		timeline.setRate(s);
+	}
+
+	private static void openFile(String filePath) {
 		currentFile = new FileReader();
 		currentFile.parseFile(filePath);
 		currentGameType = currentFile.getGameType();
+		currentGameSpeed = Double.parseDouble(currentFile.getGameData().get("Speed"));
 		switch(currentGameType) {
 			case GAMEOFLIFE -> cellGrid = new GameOfLife();
 			case FIRE -> cellGrid = new Fire();
@@ -91,7 +99,7 @@ public class Game {
 	}
 
 	public static void importNewFile(String filePath) {
-		setCurrentFile(filePath);
+		openFile(filePath);
 
 		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
 		cellGrid.initializeCells(currentFile.getInitialState());
