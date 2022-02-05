@@ -24,7 +24,7 @@
     </Parameters>
     <ColorScheme>
         <Color type="ALIVE">#00ffff</Color>
-        <Color type="EMPTY">#000000</Color>
+        <Color type="EMPTY">#222222</Color>
         <Color type="DEAD">#000000</Color>
     </ColorScheme>
 </CellSociety>

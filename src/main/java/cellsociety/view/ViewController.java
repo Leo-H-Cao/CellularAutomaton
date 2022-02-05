@@ -1,6 +1,5 @@
 package cellsociety.view;
 
-import cellsociety.Main;
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellType;
 import cellsociety.game.Game;
@@ -35,7 +34,6 @@ public class ViewController {
 
 		stage = _stage;
 		stage.setScene(makeScene(Game.getDefaultSize().width, Game.getDefaultSize().height));
-		stage.setTitle(Main.TITLE);
 		stage.show();
 	}
 
@@ -60,6 +58,10 @@ public class ViewController {
 		root.setBottom(controls.makeControls());
 
 		Scene scene = new Scene(root, width, height);
+		stage.titleProperty().bind(
+				scene.widthProperty().asString().
+						concat(" : ").
+						concat(scene.heightProperty().asString()));
 		return scene;
 	}
 
