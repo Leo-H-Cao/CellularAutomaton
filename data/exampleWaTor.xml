@@ -39,8 +39,8 @@
         <Speed>0</Speed>
     </Parameters>
     <ColorScheme>
-        <Color type="TREE">#ffffff</Color>
-        <Color type="BURNING">#ffff00</Color>
+        <Color type="SHARK">#000000</Color>
+        <Color type="FISH">#ffff00</Color>
         <Color type="EMPTY">#abcdef</Color>
     </ColorScheme>
 </CellSociety>
