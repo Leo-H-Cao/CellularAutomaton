@@ -3,6 +3,7 @@ package cellsociety.game;
 import cellsociety.cell.*;
 import cellsociety.io.FileReader;
 import cellsociety.view.ViewController;
+import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
@@ -18,14 +19,14 @@ public class Game {
 
 	public static final String CONFIG_PROPERTIES_FILE = "config.properties";
 
-	private static Timeline animation;
+	private static Timeline timeline;
 	private static CellGrid cellGrid;
 	private static ViewController viewController;
 	private static ResourceBundle myDefaults;
 	private static Dimension DEFAULT_SIZE;
 
 
-	public Game(double SECOND_DELAY, Stage stage) {
+	public Game(Stage stage) {
 
 		try {
 			myDefaults = ResourceBundle.getBundle("DEFAULTS");
@@ -38,13 +39,12 @@ public class Game {
 				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
 		viewController = new ViewController(stage);
 
-		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
-		cellGrid.initializeCells(currentFile.getInitialState());
+		CellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		CellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 
-		animation = new Timeline();
-		animation.setCycleCount(Timeline.INDEFINITE);
-		animation.getKeyFrames().add(new KeyFrame(Duration.seconds(SECOND_DELAY), e -> step()));
+		timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> step()));
+		timeline.setCycleCount(Animation.INDEFINITE);
 	}
 
 	public static FileReader getCurrentFile() {
@@ -65,9 +65,9 @@ public class Game {
 
 	public static void toggleSimulation() {
 		if(playing) {
-			animation.pause();
+			timeline.pause();
 		} else {
-			animation.play();
+			timeline.play();
 		}
 		playing = !playing;
 	}
