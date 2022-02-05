@@ -1,6 +1,7 @@
 package cellsociety.cell;
 
 import static cellsociety.cell.CellType.*;
+import static cellsociety.game.NeighborhoodType.*;
 
 /**
  * This is the Cell Grid Manager for Fire, its next generation method follows the rules that:
@@ -35,10 +36,28 @@ public class Fire extends CellGridSE {
     }
 
     private static boolean hasBurningNeighbor(CellType[][] neighborsType) {
+        switch(getNeighborhoodType()) {
+            case SQUARE_MOORE, SQUARE_NEUMANN, default:
+                return hasBurningSquareNeighbor(neighborsType, getNeighborhoodType()==SQUARE_NEUMANN);
+            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN:
+                return hasBurningTriangularNeighbor(neighborsType, getNeighborhoodType()==TRIANGULAR_NEUMANN);
+        }
+    }
+
+    private static boolean hasBurningSquareNeighbor(CellType[][] neighborsType, boolean isNeumann) {
         if (neighborsType[0][1] == BURNING) return true;
         if (neighborsType[1][0] == BURNING) return true;
         if (neighborsType[1][2] == BURNING) return true;
         if (neighborsType[2][1] == BURNING) return true;
+        if (isNeumann) return false;
+        if (neighborsType[0][0] == BURNING) return true;
+        if (neighborsType[0][2] == BURNING) return true;
+        if (neighborsType[2][0] == BURNING) return true;
+        if (neighborsType[2][2] == BURNING) return true;
+        return false;
+    }
+
+    private static boolean hasBurningTriangularNeighbor(CellType[][] neighborsType, boolean isNeumann) {
         return false;
     }
 

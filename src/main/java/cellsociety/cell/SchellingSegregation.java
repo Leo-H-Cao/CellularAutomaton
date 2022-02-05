@@ -1,5 +1,7 @@
 package cellsociety.cell;
 
+import cellsociety.game.Game;
+
 import java.util.Map;
 
 import static cellsociety.cell.CellProperties.MOVED;
@@ -53,21 +55,32 @@ public class SchellingSegregation extends CellGridME {
                 if (neighbors[i][j] != NULL) den++;
             }
         }
-        return type == A ? countA/8.0 : 1.0-(countA/den);
+        return type == A ? countA/den : 1.0-(countA/den);
     }
 
-    private static double[] getValidDirections(int x, int y, CellType type) {
-        double[] validDirections = new double[8];
-        if (inBounds(x-1, y-1) && updatingGrid[x-1][y-1].getType() == EMPTY) validDirections[0] = fReal(CellGrid.getNeighbors(x-1, y-1), type);
+    private static double[] getValidDirections(int x, int y, CellType destType) {
+        switch(getNeighborhoodType()) {
+            case SQUARE_MOORE:
+                return getValidDirectionsSquare(x, y, destType, false);
+            case SQUARE_NEUMANN, default:
+                return getValidDirectionsSquare(x, y, destType, true);
+        }
+    }
+
+    private static double[] getValidDirectionsSquare(int x, int y, CellType type, boolean neumannSquare) {
+        double[] validDirections = new double[Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))];
         if (inBounds(x, y-1) && updatingGrid[x][y-1].getType() == EMPTY) validDirections[1] = fReal(CellGrid.getNeighbors(x, y-1), type);
-        if (inBounds(x+1, y-1) && updatingGrid[x+1][y-1].getType() == EMPTY) validDirections[2] = fReal(CellGrid.getNeighbors(x+1, y-1), type);
         if (inBounds(x-1, y) && updatingGrid[x-1][y].getType() == EMPTY) validDirections[3] = fReal(CellGrid.getNeighbors(x-1, y), type);
         if (inBounds(x+1, y) && updatingGrid[x+1][y].getType() == EMPTY) validDirections[4] = fReal(CellGrid.getNeighbors(x+1, y), type);
-        if (inBounds(x-1, y+1) && updatingGrid[x-1][y+1].getType() == EMPTY) validDirections[5] = fReal(CellGrid.getNeighbors(x-1, y+1), type);
         if (inBounds(x, y+1) && updatingGrid[x][y+1].getType() == EMPTY) validDirections[6] = fReal(CellGrid.getNeighbors(x, y+1), type);
+        if (neumannSquare) return validDirections;
+        if (inBounds(x-1, y-1) && updatingGrid[x-1][y-1].getType() == EMPTY) validDirections[0] = fReal(CellGrid.getNeighbors(x-1, y-1), type);
+        if (inBounds(x+1, y-1) && updatingGrid[x+1][y-1].getType() == EMPTY) validDirections[2] = fReal(CellGrid.getNeighbors(x+1, y-1), type);
+        if (inBounds(x-1, y+1) && updatingGrid[x-1][y+1].getType() == EMPTY) validDirections[5] = fReal(CellGrid.getNeighbors(x-1, y+1), type);
         if (inBounds(x+1, y+1) && updatingGrid[x+1][y+1].getType() == EMPTY) validDirections[7] = fReal(CellGrid.getNeighbors(x+1, y+1), type);
         return validDirections;
     }
+
 
     private static int bestDirection(double[] validDirections, double fReal) {
         int count = 0;

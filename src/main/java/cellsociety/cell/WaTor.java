@@ -68,11 +68,25 @@ public class WaTor extends CellGridME {
     }
 
     private static boolean[] getValidDirections(int x, int y, CellType destType) {
+        switch(getNeighborhoodType()) {
+            case SQUARE_MOORE:
+                return getValidDirectionsSquare(x, y, destType, false);
+            case SQUARE_NEUMANN, default:
+                return getValidDirectionsSquare(x, y, destType, true);
+        }
+    }
+
+    private static boolean[] getValidDirectionsSquare(int x, int y, CellType destType, boolean neumannSquare) {
         boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))];
         if (inBounds(x, y-1) && updatingGrid[x][y-1].getType() == destType) validDirections[1] = true;
         if (inBounds(x-1, y) && updatingGrid[x-1][y].getType() == destType) validDirections[3] = true;
         if (inBounds(x+1, y) && updatingGrid[x+1][y].getType() == destType) validDirections[4] = true;
         if (inBounds(x, y+1) && updatingGrid[x][y+1].getType() == destType) validDirections[6] = true;
+        if (neumannSquare) return validDirections;
+        if (inBounds(x-1, y-1) && updatingGrid[x-1][y-1].getType() == destType) validDirections[0] = true;
+        if (inBounds(x+1, y-1) && updatingGrid[x+1][y-1].getType() == destType) validDirections[2] = true;
+        if (inBounds(x-1, y+1) && updatingGrid[x-1][y+1].getType() == destType) validDirections[5] = true;
+        if (inBounds(x+1, y+1) && updatingGrid[x+1][y+1].getType() == destType) validDirections[7] = true;
         return validDirections;
     }
 
