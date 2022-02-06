@@ -63,6 +63,11 @@ public class GameOfLife extends CellGridSE {
 
     private static int countLiveTriangularNeighbors(CellType[][] neighborsType, boolean isNeumann) {
         int liveNeighbors = 0;
+        for (int i = 0; i < neighborsType.length; i++) {
+            for (int j= 0; j < neighborsType[0].length; j++) {
+                if (neighborsType[i][j] == ALIVE) liveNeighbors++;
+            }
+        }
         return liveNeighbors;
     }
 

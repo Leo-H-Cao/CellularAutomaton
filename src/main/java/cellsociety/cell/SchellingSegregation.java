@@ -18,6 +18,7 @@ import static cellsociety.cell.CellType.*;
 public class SchellingSegregation extends CellGridME {
 
     private static Cell[][] updatingGrid;
+    private static double fIdeal = 0.5;
 
     @Override
     public void nextGeneration() {
@@ -33,7 +34,7 @@ public class SchellingSegregation extends CellGridME {
                 if (updatingGrid[i][j].getType() != EMPTY && !(boolean) properties.get(MOVED)) {
                     CellType type = updatingGrid[i][j].getType();
                     double fReal = fReal(CellGrid.getNeighbors(i, j), type);
-                    if (fReal > 0.5) {
+                    if (fReal > fIdeal) {
                         continue;
                     }
                     int d = bestDirection(getValidDirections(i, j, EMPTY), fReal);

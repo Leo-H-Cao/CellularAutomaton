@@ -7,6 +7,7 @@ import java.util.Map;
 
 import static cellsociety.cell.CellProperties.*;
 import static cellsociety.cell.CellType.*;
+import static cellsociety.game.NeighborhoodType.*;
 
 /**
  * This is the Cell Grid Manager for WaTor, its next generation method follows the rules that:
@@ -23,6 +24,8 @@ import static cellsociety.cell.CellType.*;
 public class WaTor extends CellGridME {
 
     private static Cell[][] updatingGrid;
+    private static int reproductionCounter = 5;
+    private static int energyCounter = 5;
 
     @Override
     public void nextGeneration() {
@@ -38,12 +41,12 @@ public class WaTor extends CellGridME {
                 Map<CellProperties, Object> properties = updatingGrid[i][j].getProperties();
                 if (updatingGrid[i][j].getType() == SHARK && !(boolean)properties.get(MOVED)) {
                     if ((int)properties.get(ENERGY) == 0) {
-                        updateGrid(updatingGrid, -1, i, j, EMPTY, properties);
+                        updateGrid(updatingGrid, 4, i, j, EMPTY, properties);
                         continue;
                     }
                     int d = randomDirection(getValidDirections(i, j, FISH));
-                    if (d >= 0) {
-                        properties.put(ENERGY, (int)properties.get(ENERGY) + 1);
+                    if (d != 4) {
+                        properties.put(ENERGY, (int)properties.get(ENERGY) + 2);
                     }
                     else {
                         d = randomDirection(getValidDirections(i, j, EMPTY));
@@ -69,15 +72,27 @@ public class WaTor extends CellGridME {
 
     private static boolean[] getValidDirections(int x, int y, CellType destType) {
         switch(getNeighborhoodType()) {
-            case SQUARE_MOORE:
-                return getValidDirectionsSquare(x, y, destType, false);
-            case SQUARE_NEUMANN, default:
-                return getValidDirectionsSquare(x, y, destType, true);
+            case SQUARE_MOORE, SQUARE_NEUMANN, default:
+                return getValidDirectionsSquare(x, y, destType, getNeighborhoodType() == SQUARE_NEUMANN);
+            case TRIANGULAR_MOORE: TRIANGULAR_NEUMANN:
+                return getValidDirectionsTriangular(x, y, destType, getNeighborhoodType() == TRIANGULAR_NEUMANN);
         }
     }
 
-    private static boolean[] getValidDirectionsSquare(int x, int y, CellType destType, boolean neumannSquare) {
+    private static boolean[] getValidDirectionsSquare(int x, int y, CellType destType, boolean isNeumann) {
         boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))];
+        CellType[][] neighborsType = CellGrid.getNeighbors(x, y);
+        for (int i = 0; i < neighborsType.length; i++) {
+            for (int j = 0; j < neighborsType[0].length; j++) {
+                if (isNeumann && (i+j)%2 == 0) continue;
+                if (neighborsType[i][j] == destType) validDirections[(i*3)+j] = true;
+            }
+        }
+        return validDirections;
+    }
+
+    private static boolean[] getValidDirectionsTriangular(int x, int y, CellType destType, boolean neumannSquare) {
+        boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))];
         if (inBounds(x, y-1) && updatingGrid[x][y-1].getType() == destType) validDirections[1] = true;
         if (inBounds(x-1, y) && updatingGrid[x-1][y].getType() == destType) validDirections[3] = true;
         if (inBounds(x+1, y) && updatingGrid[x+1][y].getType() == destType) validDirections[4] = true;
@@ -106,7 +121,7 @@ public class WaTor extends CellGridME {
                 return i;
             }
         }
-        return -1;
+        return 4;
     }
 
     private void move(int d, int i, int j, Map<CellProperties, Object> properties, CellType cType) {
@@ -114,10 +129,10 @@ public class WaTor extends CellGridME {
         updateGrid(updatingGrid, d, i, j, cType, properties);
         if (reproduce) {
             properties = resetProperties();
-            updateGrid(updatingGrid, -1, i, j, cType, properties);
+            updateGrid(updatingGrid, 4, i, j, cType, properties);
         }
-        else if (d >= 0) {
-            updateGrid(updatingGrid, -1, i, j, EMPTY, properties);
+        else if (d != 4) {
+            updateGrid(updatingGrid, 4, i, j, EMPTY, properties);
         }
     }
 

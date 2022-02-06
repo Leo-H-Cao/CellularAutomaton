@@ -13,34 +13,38 @@ public class Percolation extends CellGridSE {
         updatingGrid = initializeUpdateGrid();
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
-                if (updatingGrid[i][j].getType() != BLOCK) updateState(i, j, WATER);
+                if (hasFloodedNeighbor(CellGrid.getNeighbors(i, j)) && updatingGrid[i][j].getType() != BLOCK) updatingGrid[i][j].updateType(WATER);
             }
         }
         setGrid(updatingGrid);
     }
 
-    private static void updateState(int x, int y, CellType type) {
+    private static boolean hasFloodedNeighbor(CellType[][] neighborsType) {
         switch(getNeighborhoodType()) {
             case SQUARE_MOORE, SQUARE_NEUMANN, default:
-                updateStateSquare(x, y, type, getNeighborhoodType()==SQUARE_NEUMANN);
-                break;
+                return hasFloodedSquareNeighbor(neighborsType, getNeighborhoodType()==SQUARE_NEUMANN);
             case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN:
-                updateStateTriangular(x, y, type, getNeighborhoodType()==TRIANGULAR_NEUMANN);
-                break;
+                return hasFloodedTriangularNeighbor(neighborsType, getNeighborhoodType()==TRIANGULAR_NEUMANN);
         }
     }
 
-    private static void updateStateSquare(int x, int y, CellType type, boolean isNeumann) {
-        if (inBounds(x-1, y) && CellGrid.getGrid()[x-1][y].getType() == type) updatingGrid[x][y].updateType(type);
-        if (inBounds(x+1, y) && CellGrid.getGrid()[x+1][y].getType() == type) updatingGrid[x][y].updateType(type);
-        if (inBounds(x, y-1) && CellGrid.getGrid()[x][y-1].getType() == type) updatingGrid[x][y].updateType(type);
-        if (isNeumann) return;
-        if (inBounds(x-1, y-1) && CellGrid.getGrid()[x-1][y-1].getType() == type) updatingGrid[x][y].updateType(type);
-        if (inBounds(x+1, y-1) && CellGrid.getGrid()[x+1][y-1].getType() == type) updatingGrid[x][y].updateType(type);
+    private static boolean hasFloodedSquareNeighbor(CellType[][] neighborsType, boolean isNeumann) {
+        for (int i = 0; i < neighborsType.length; i++) {
+            for (int j= 0; j < neighborsType[0].length - 1; j++) {
+                if (isNeumann && (i+j)%2 == 0) continue;
+                if (neighborsType[i][j] == WATER) return true;
+            }
+        }
+        return false;
     }
 
-    private static void updateStateTriangular(int x, int y, CellType type, boolean isNeumann) {
-        if (inBounds(x-1, y) && CellGrid.getGrid()[x-1][y].getType() == type) updatingGrid[x][y].updateType(type);
+    private static boolean hasFloodedTriangularNeighbor(CellType[][] neighborsType, boolean isNeumann) {
+        for (int i = 0; i < neighborsType.length; i++) {
+            for (int j= 0; j < neighborsType[0].length - 1; j++) {
+                if (neighborsType[i][j] == WATER) return true;
+            }
+        }
+        return false;
     }
 
 }
