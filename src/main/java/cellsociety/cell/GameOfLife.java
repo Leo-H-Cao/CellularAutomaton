@@ -29,7 +29,7 @@ public class GameOfLife extends CellGridSE {
     }
 
     private static void updateState(int x, int y, CellType type) {
-        int liveNeighbors = countLiveNeighbors(CellGrid.getNeighbors(x, y));
+        int liveNeighbors = countLiveNeighbors(CellGrid.getNeighbors(x, y, getGrid()));
         if (type == ALIVE) {
             if (liveNeighbors < 2) updatingGrid[x][y].updateType(DEAD);
             else if (liveNeighbors == 2 || liveNeighbors == 3) updatingGrid[x][y].updateType(ALIVE);

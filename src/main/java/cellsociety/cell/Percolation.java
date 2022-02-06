@@ -13,7 +13,7 @@ public class Percolation extends CellGridSE {
         updatingGrid = initializeUpdateGrid();
         for (int i = 0; i < updatingGrid.length; i++) {
             for (int j = 0; j < updatingGrid[0].length; j++) {
-                if (hasFloodedNeighbor(CellGrid.getNeighbors(i, j)) && updatingGrid[i][j].getType() != BLOCK) updatingGrid[i][j].updateType(WATER);
+                if (hasFloodedNeighbor(CellGrid.getNeighbors(i, j, getGrid())) && updatingGrid[i][j].getType() != BLOCK) updatingGrid[i][j].updateType(WATER);
             }
         }
         setGrid(updatingGrid);

@@ -41,12 +41,12 @@ public class WaTor extends CellGridME {
                 Map<CellProperties, Object> properties = updatingGrid[i][j].getProperties();
                 if (updatingGrid[i][j].getType() == SHARK && !(boolean)properties.get(MOVED)) {
                     if ((int)properties.get(ENERGY) == 0) {
-                        updateGrid(updatingGrid, 4, i, j, EMPTY, properties);
+                        updateGrid(updatingGrid, getNeighborhoodCenter(), i, j, EMPTY, properties);
                         continue;
                     }
                     int d = randomDirection(getValidDirections(i, j, FISH));
-                    if (d != 4) {
-                        properties.put(ENERGY, (int)properties.get(ENERGY) + 2);
+                    if (d != getNeighborhoodCenter()) {
+                        properties.put(ENERGY, (int)properties.get(ENERGY) + 1);
                     }
                     else {
                         d = randomDirection(getValidDirections(i, j, EMPTY));
@@ -73,35 +73,41 @@ public class WaTor extends CellGridME {
     private static boolean[] getValidDirections(int x, int y, CellType destType) {
         switch(getNeighborhoodType()) {
             case SQUARE_MOORE, SQUARE_NEUMANN, default:
-                return getValidDirectionsSquare(x, y, destType, getNeighborhoodType() == SQUARE_NEUMANN);
-            case TRIANGULAR_MOORE: TRIANGULAR_NEUMANN:
-                return getValidDirectionsTriangular(x, y, destType, getNeighborhoodType() == TRIANGULAR_NEUMANN);
+                return getValidDirectionsSquare(CellGrid.getNeighbors(x, y, updatingGrid), destType, getNeighborhoodType() == SQUARE_NEUMANN);
+            case TRIANGULAR_MOORE:
+                return getValidDirectionsTriangular(CellGrid.getNeighbors(x, y, updatingGrid), destType);
+            case TRIANGULAR_NEUMANN:
+                return getValidDirectionsTriangularNeumann(CellGrid.getNeighbors(x, y, updatingGrid), destType, (x+y)%2==0);
         }
     }
 
-    private static boolean[] getValidDirectionsSquare(int x, int y, CellType destType, boolean isNeumann) {
+    private static boolean[] getValidDirectionsSquare(CellType[][] neighborsType, CellType destType, boolean isNeumann) {
         boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))];
-        CellType[][] neighborsType = CellGrid.getNeighbors(x, y);
         for (int i = 0; i < neighborsType.length; i++) {
             for (int j = 0; j < neighborsType[0].length; j++) {
                 if (isNeumann && (i+j)%2 == 0) continue;
-                if (neighborsType[i][j] == destType) validDirections[(i*3)+j] = true;
+                if (neighborsType[i][j] == destType) validDirections[(i*neighborsType.length)+j] = true;
             }
         }
         return validDirections;
     }
 
-    private static boolean[] getValidDirectionsTriangular(int x, int y, CellType destType, boolean neumannSquare) {
+    private static boolean[] getValidDirectionsTriangular(CellType[][] neighborsType, CellType destType) {
         boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))];
-        if (inBounds(x, y-1) && updatingGrid[x][y-1].getType() == destType) validDirections[1] = true;
-        if (inBounds(x-1, y) && updatingGrid[x-1][y].getType() == destType) validDirections[3] = true;
-        if (inBounds(x+1, y) && updatingGrid[x+1][y].getType() == destType) validDirections[4] = true;
-        if (inBounds(x, y+1) && updatingGrid[x][y+1].getType() == destType) validDirections[6] = true;
-        if (neumannSquare) return validDirections;
-        if (inBounds(x-1, y-1) && updatingGrid[x-1][y-1].getType() == destType) validDirections[0] = true;
-        if (inBounds(x+1, y-1) && updatingGrid[x+1][y-1].getType() == destType) validDirections[2] = true;
-        if (inBounds(x-1, y+1) && updatingGrid[x-1][y+1].getType() == destType) validDirections[5] = true;
-        if (inBounds(x+1, y+1) && updatingGrid[x+1][y+1].getType() == destType) validDirections[7] = true;
+        for (int i = 0; i < neighborsType.length; i++) {
+            for (int j = 0; j < neighborsType[0].length; j++) {
+                if (neighborsType[i][j] == destType) validDirections[(i*neighborsType.length)+j] = true;
+            }
+        }
+        return validDirections;
+    }
+
+    private static boolean[] getValidDirectionsTriangularNeumann(CellType[][] neighborsType, CellType destType, boolean orientDown) {
+        boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))];
+        if (neighborsType[1][1] == destType) validDirections[(1*neighborsType.length)+1] = true;
+        if (neighborsType[1][3] == destType) validDirections[(1*neighborsType.length)+3] = true;
+        if (orientDown && neighborsType[0][2] == destType) validDirections[(0*neighborsType.length)+2] = true;
+        if (!orientDown && neighborsType[2][2] == destType) validDirections[(2*neighborsType.length)+2] = true;
         return validDirections;
     }
 
@@ -121,7 +127,7 @@ public class WaTor extends CellGridME {
                 return i;
             }
         }
-        return 4;
+        return getNeighborhoodCenter();
     }
 
     private void move(int d, int i, int j, Map<CellProperties, Object> properties, CellType cType) {
@@ -129,10 +135,10 @@ public class WaTor extends CellGridME {
         updateGrid(updatingGrid, d, i, j, cType, properties);
         if (reproduce) {
             properties = resetProperties();
-            updateGrid(updatingGrid, 4, i, j, cType, properties);
+            updateGrid(updatingGrid, getNeighborhoodCenter(), i, j, cType, properties);
         }
-        else if (d != 4) {
-            updateGrid(updatingGrid, 4, i, j, EMPTY, properties);
+        else if (d != getNeighborhoodCenter()) {
+            updateGrid(updatingGrid, getNeighborhoodCenter(), i, j, EMPTY, properties);
         }
     }
 
