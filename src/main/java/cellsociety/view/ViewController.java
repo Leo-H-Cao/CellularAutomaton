@@ -58,10 +58,7 @@ public class ViewController {
 		root.setBottom(controls.makeControls());
 
 		Scene scene = new Scene(root, width, height);
-		stage.titleProperty().bind(
-				scene.widthProperty().asString().
-						concat(" : ").
-						concat(scene.heightProperty().asString()));
+		scene.getStylesheets().add("stylesheet.css");
 		return scene;
 	}
 
