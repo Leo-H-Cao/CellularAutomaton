@@ -1,12 +1,12 @@
 package cellsociety.view;
 
-import cellsociety.Main;
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellType;
 import cellsociety.game.Game;
 import cellsociety.io.XMLExport;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -35,7 +34,6 @@ public class ViewController {
 
 		stage = _stage;
 		stage.setScene(makeScene(Game.getDefaultSize().width, Game.getDefaultSize().height));
-		stage.setTitle(Main.TITLE);
 		stage.show();
 	}
 
@@ -60,33 +58,15 @@ public class ViewController {
 		root.setBottom(controls.makeControls());
 
 		Scene scene = new Scene(root, width, height);
+		scene.getStylesheets().add("stylesheet.css");
 		return scene;
 	}
 
 	private Node makeTopDisplay() {
-
-		GridPane layout = new GridPane();
-
-		for (int i = 0 ; i < 3 ; i++) {
-			ColumnConstraints cc = new ColumnConstraints();
-			cc.setPercentWidth(100.0/3.0);
-			cc.setHgrow(Priority.ALWAYS);
-			layout.getColumnConstraints().add(cc);
-		}
-
-		Text appTitle = new Text("Society of Cells");
-		appTitle.setFont(new Font("san-serif", 28));
-		appTitle.setTextAlignment(TextAlignment.CENTER);
-		HBox.setHgrow(appTitle, Priority.ALWAYS);
-
-		HBox buttonContainer = new HBox();
-		buttonContainer.setAlignment(Pos.CENTER);
-
-		Region spacerLeft = new Region();
-		HBox.setHgrow(spacerLeft, Priority.ALWAYS);
-
-		Region spacerRight = new Region();
-		HBox.setHgrow(spacerRight, Priority.ALWAYS);
+		GridPane ret = new GridPane();
+		HBox leftBox = new HBox();
+		HBox centerBox = new HBox();
+		HBox rightBox = new HBox();
 
 		importButton = makeButton("Import", e -> {
 			FileChooser fileChooser = new FileChooser();
@@ -102,16 +82,33 @@ public class ViewController {
 			exporter.saveToXML();
 		});
 
-		buttonContainer.getChildren().addAll(importButton, exportButton);
+		Text appTitle = new Text("Society of Cells");
+		appTitle.setFont(new Font("san-serif", 28));
 
-		layout.add(buttonContainer, 0, 0);
-		layout.add(appTitle, 1, 0);
-		layout.add(spacerRight, 2, 0);
+		leftBox.getChildren().addAll(importButton, exportButton);
+		leftBox.setAlignment(Pos.CENTER);
+		HBox.setMargin(importButton,new Insets(20,10,20,0));
+		HBox.setMargin(exportButton,new Insets(20,0,20,10));
 
-		HBox ret = new HBox();
-		ret.getChildren().add(layout);
+		centerBox.getChildren().add(appTitle);
+		centerBox.setAlignment(Pos.CENTER);
 
-		return layout;
+		ret.add(leftBox, 0, 0);
+		ret.add(centerBox, 1, 0);
+		ret.add(rightBox, 2, 0);
+
+		for (int i = 0 ; i < 3 ; i++) {
+			ColumnConstraints cc = new ColumnConstraints();
+			cc.setPercentWidth(100.0/3.0);
+			cc.setHgrow(Priority.ALWAYS);
+			ret.getColumnConstraints().add(cc);
+		}
+
+		RowConstraints rc = new RowConstraints();
+		rc.setVgrow(Priority.ALWAYS);
+		ret.getRowConstraints().add(rc);
+
+		return ret;
 	}
 
 	private Button makeButton (String label, EventHandler<ActionEvent> handler) {

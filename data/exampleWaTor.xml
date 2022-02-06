@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <CellSociety game="WATOR">
-    <Title>Cell Society</Title>
+    <Title>Cell Society - WaTor Example</Title>
     <Authors>
         <Author>Leo Cao</Author>
         <Author>Nolan Gelinas</Author>
@@ -36,11 +36,11 @@
         <Cell x="7" y="9" type="FISH"/>
     </InitialCellState>
     <Parameters>
-        <Speed>0</Speed>
+        <Speed>1</Speed>
     </Parameters>
     <ColorScheme>
-        <Color type="TREE">#ffffff</Color>
-        <Color type="BURNING">#ffff00</Color>
+        <Color type="SHARK">#000000</Color>
+        <Color type="FISH">#ffff00</Color>
         <Color type="EMPTY">#abcdef</Color>
     </ColorScheme>
 </CellSociety>
