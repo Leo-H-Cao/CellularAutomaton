@@ -18,6 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import javax.swing.JFileChooser;
 
 public class ViewController {
 	private Button importButton;
@@ -67,9 +68,9 @@ public class ViewController {
 		HBox leftBox = new HBox();
 		HBox centerBox = new HBox();
 		HBox rightBox = new HBox();
+		FileChooser fileChooser = new FileChooser();
 
 		importButton = makeButton("Import", e -> {
-			FileChooser fileChooser = new FileChooser();
 			fileChooser.setTitle("Open Resource File");
 			File file = fileChooser.showOpenDialog(stage);
 			if(file != null) {
@@ -78,8 +79,12 @@ public class ViewController {
 			}
 		});
 		exportButton = makeButton("Export", e -> {
-			XMLExport exporter = new XMLExport();
-			exporter.saveToXML();
+			fileChooser.setTitle("Save Resource File");
+			File file = fileChooser.showSaveDialog(stage);
+			if(file != null){
+				XMLExport exporter = new XMLExport(file);
+				exporter.saveToXML();
+			}
 		});
 
 		Text appTitle = new Text("Society of Cells");
