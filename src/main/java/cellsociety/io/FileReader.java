@@ -3,6 +3,7 @@ package cellsociety.io;
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellType;
 import cellsociety.game.GameType;
+import java.util.Map;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -31,7 +32,7 @@ public class FileReader {
   public static final String VALID_ROOT_TAG = "CellSociety";
 
   private final DocumentBuilder BUILDER;
-  private HashMap<String, String> gameData;
+  private Map<String, String> gameData;
   private ArrayList<Cell> initialState;
   private GameType game_type;
 
@@ -120,8 +121,6 @@ public class FileReader {
       }
       if(!(childNodeName.equals("Cell") || childNodeName.equals("#text"))) {
         gameData.put(childNodeName, childNodeText);
-        System.out.print(childNodeName + " ");
-        System.out.println(childNodeText);
       }
     }
   }
@@ -141,7 +140,7 @@ public class FileReader {
     return nodeAttributes;
   }
 
-  public HashMap<String, String> getGameData(){
+  public Map<String, String> getGameData(){
     return gameData;
   }
 
