@@ -4,9 +4,10 @@ import cellsociety.cell.Cell;
 import cellsociety.cell.CellGrid;
 import cellsociety.cell.CellType;
 import cellsociety.game.Game;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -27,15 +28,15 @@ import org.w3c.dom.Element;
  * @author Leo Cao
  */
 public class XMLExport {
-
-  public static final String XML_FILE_NAME = "data/test.xml";
   public static final String ROOT_TAG = "CellSociety";
   public static final String PARSER_EXCEPTION_MSG = "UsersXML: Error trying to instantiate DocumentBuilder ";
 
   private Element rootElement;
   private Document dom;
+  private File saveDirectory ;
 
-  public XMLExport(){
+  public XMLExport(File file){
+    saveDirectory = file;
     createDom();
   }
 
@@ -75,7 +76,7 @@ public class XMLExport {
 
       // send DOM to file
       tr.transform(new DOMSource(dom),
-          new StreamResult(new FileOutputStream(XML_FILE_NAME)));
+          new StreamResult(new FileOutputStream(saveDirectory.getPath())));
 
     } catch (TransformerException te) {
       System.out.println(te.getMessage());
@@ -85,7 +86,7 @@ public class XMLExport {
   }
 
   private void writeGameData(){
-    HashMap<String,String> curGameData = Game.getCurrentFile().getGameData();
+    Map<String,String> curGameData = Game.getCurrentFile().getGameData();
     for(Entry<String, String> data : curGameData.entrySet()){
       Element element = dom.createElement(data.getKey());
       element.appendChild(dom.createTextNode(data.getValue()));
