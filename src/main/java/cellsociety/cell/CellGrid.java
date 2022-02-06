@@ -137,7 +137,7 @@ public abstract class CellGrid {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 try {
-                    neighbors[i][j] = grid[x - 1 + i][y - 1 + j].getType();
+                    neighbors[i][j] = grid[x - (n/2) + i][y - (n/2) + j].getType();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     neighbors[i][j] = NULL;
                 }
@@ -148,13 +148,13 @@ public abstract class CellGrid {
     }
 
     private static CellType[][] getTriangularNeighbors(int x, int y, Cell[][] grid) {
-        int m = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_WIDTH"));
-        int n = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_HEIGHT"));
+        int m = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_HEIGHT"));
+        int n = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_WIDTH"));
         CellType[][] neighbors = new CellType[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
                 try {
-                    neighbors[i][j] = grid[x - (m/2) + i][y - (n/2) + j].getType();
+                    neighbors[i][j] = grid[x - (n/2) + i][y - (m/2) + j].getType();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     neighbors[i][j] = NULL;
                 }
@@ -162,12 +162,12 @@ public abstract class CellGrid {
         }
         neighbors[m/2][n/2] = NULL;
         if ((x+y)%2 == 0) {
-            neighbors[0][n-1] = NULL;
+            neighbors[m-1][0] = NULL;
             neighbors[m-1][n-1] = NULL;
         }
         else {
             neighbors[0][0] = NULL;
-            neighbors[m-1][0] = NULL;
+            neighbors[0][n-1] = NULL;
         }
         return neighbors;
     }
