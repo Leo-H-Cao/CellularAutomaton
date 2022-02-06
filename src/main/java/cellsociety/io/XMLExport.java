@@ -3,8 +3,11 @@ package cellsociety.io;
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellGrid;
 import cellsociety.cell.CellType;
+import cellsociety.game.Game;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -49,6 +52,7 @@ public class XMLExport {
   }
 
   public void saveToXML(){
+    writeGameData();
     Cell[][] curCellGrid = CellGrid.getGrid();
     for(int i = 0; i < curCellGrid.length; i++){
       for(int j = 0; j < curCellGrid[0].length; j++){
@@ -77,6 +81,15 @@ public class XMLExport {
       System.out.println(te.getMessage());
     } catch (IOException ioe) {
       System.out.println(ioe.getMessage());
+    }
+  }
+
+  private void writeGameData(){
+    HashMap<String,String> curGameData = Game.getCurrentFile().getGameData();
+    for(Entry<String, String> data : curGameData.entrySet()){
+      Element element = dom.createElement(data.getKey());
+      element.appendChild(dom.createTextNode(data.getValue()));
+      rootElement.appendChild(element);
     }
   }
 
