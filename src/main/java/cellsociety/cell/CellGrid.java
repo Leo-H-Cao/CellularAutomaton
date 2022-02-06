@@ -1,5 +1,6 @@
 package cellsociety.cell;
 
+import cellsociety.game.Game;
 import cellsociety.game.GameType;
 import cellsociety.game.NeighborhoodType;
 
@@ -22,10 +23,10 @@ public abstract class CellGrid {
     private static Cell[][] grid;
     private static GameType gametype;
     private static NeighborhoodType neighborhoodType;
+    private static int neighborhoodCenter;
 
     /**
      * Initializes a grid of cells with the appropriate type given the game being played
-     *
      * @param width of the cell grid
      * @param height of the cell grid
      * @param gType game being played
@@ -39,6 +40,7 @@ public abstract class CellGrid {
             }
         }
         neighborhoodType = SQUARE_MOORE;
+        assignNeighborhoodCenter();
     }
 
     /**
@@ -60,11 +62,16 @@ public abstract class CellGrid {
         }
     }
 
-    public static boolean inBounds(int x, int y) {
-        if (x < 0 || x >= grid.length || y < 0 || y >= grid[0].length) return false;
-        return true;
-    }
-
+    /**
+     * Updates an updatingGrid at a particular location with a specified type and properties
+     * Depending on the neighborhood type, the updatingGrid will be updated accordingly
+     * @param updatingGrid the grid to be updated
+     * @param d a directional offset
+     * @param x central x coordinate
+     * @param y central y coordinate
+     * @param cType new cell type
+     * @param properties new cell properties
+     */
     public static void updateGrid(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
         properties.put(MOVED, true);
         switch (neighborhoodType) {
@@ -73,47 +80,107 @@ public abstract class CellGrid {
         }
     }
 
-    public static void updateGridSquareNeighbors(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
+    private static void updateGridSquareNeighbors(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
         switch (d) {
-            case -1 -> updatingGrid[x][y].updateType(cType, properties);
             case 0 -> updatingGrid[x - 1][y - 1].updateType(cType, properties);
-            case 1 -> updatingGrid[x][y - 1].updateType(cType, properties);
-            case 2 -> updatingGrid[x + 1][y - 1].updateType(cType, properties);
-            case 3 -> updatingGrid[x - 1][y].updateType(cType, properties);
-            case 4 -> updatingGrid[x + 1][y].updateType(cType, properties);
-            case 5 -> updatingGrid[x - 1][y + 1].updateType(cType, properties);
-            case 6 -> updatingGrid[x][y + 1].updateType(cType, properties);
-            case 7 -> updatingGrid[x + 1][y + 1].updateType(cType, properties);
+            case 1 -> updatingGrid[x - 1][y].updateType(cType, properties);
+            case 2 -> updatingGrid[x - 1][y + 1].updateType(cType, properties);
+            case 3 -> updatingGrid[x][y - 1].updateType(cType, properties);
+            case 4 -> updatingGrid[x][y].updateType(cType, properties);
+            case 5 -> updatingGrid[x][y + 1].updateType(cType, properties);
+            case 6 -> updatingGrid[x + 1][y - 1].updateType(cType, properties);
+            case 7 -> updatingGrid[x + 1][y].updateType(cType, properties);
+            case 8 -> updatingGrid[x + 1][y + 1].updateType(cType, properties);
         }
     }
 
-    public static void updateGridTriangularNeighbors(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
+    private static void updateGridTriangularNeighbors(Cell[][] updatingGrid, int d, int x, int y, CellType cType, Map<CellProperties, Object> properties) {
         switch (d) {
-            case -1 -> updatingGrid[x][y].updateType(cType, properties);
+            case 0 -> updatingGrid[x - 1][y - 2].updateType(cType, properties);
+            case 1 -> updatingGrid[x - 1][y - 1].updateType(cType, properties);
+            case 2 -> updatingGrid[x - 1][y].updateType(cType, properties);
+            case 3 -> updatingGrid[x - 1][y + 1].updateType(cType, properties);
+            case 4 -> updatingGrid[x - 1][y + 2].updateType(cType, properties);
+            case 5 -> updatingGrid[x][y - 2].updateType(cType, properties);
+            case 6 -> updatingGrid[x][y - 1].updateType(cType, properties);
+            case 7 -> updatingGrid[x][y].updateType(cType, properties);
+            case 8 -> updatingGrid[x][y + 1].updateType(cType, properties);
+            case 9 -> updatingGrid[x][y + 2].updateType(cType, properties);
+            case 10 -> updatingGrid[x + 1][y - 2].updateType(cType, properties);
+            case 11 -> updatingGrid[x + 1][y - 1].updateType(cType, properties);
+            case 12 -> updatingGrid[x + 1][y].updateType(cType, properties);
+            case 13 -> updatingGrid[x + 1][y + 1].updateType(cType, properties);
+            case 14 -> updatingGrid[x + 1][y + 2].updateType(cType, properties);
         }
     }
 
     /**
-     * Returns a cells 8 neighboring cell types.
-     * If a cell is on the edge than cells that would be out of bounds are set to NULL cells
-     * Its central cell, itself, is also set to NULL
+     * Returns a CellType grid of a particular cell's neighborhood.
+     * If a cell is on the edge then the cell's out of bounds neighbor would set to the NULL type
+     * The cell itself is not considered a neighbor of itself, so it will also be set to NULL
      * @param x coordinate of the cell
      * @param y coordinate of the cell
      * @return its neighboring cell types
      */
-    public static CellType[][] getNeighbors(int x, int y) {
-        CellType[][] neighbors = new CellType[3][3];
-        for (int i = 0; i < neighbors.length; i++) {
-            for (int j = 0; j < neighbors[0].length; j++) {
+    public static CellType[][] getNeighbors(int x, int y, Cell[][] grid) {
+        switch (neighborhoodType) {
+            case SQUARE_MOORE, SQUARE_NEUMANN, default:
+                return getSquareNeighbors(x, y, grid);
+            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN:
+                return getTriangularNeighbors(x, y, grid);
+        }
+    }
+
+    private static CellType[][] getSquareNeighbors(int x, int y, Cell[][] grid) {
+        int n = Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_WIDTH"));
+        CellType[][] neighbors = new CellType[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
                 try {
-                    neighbors[i][j] = grid[x - 1 + i][y - 1 + j].getType();
+                    neighbors[i][j] = grid[x - (n/2) + i][y - (n/2) + j].getType();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     neighbors[i][j] = NULL;
                 }
             }
         }
-        neighbors[1][1] = NULL;
+        neighbors[n/2][n/2] = NULL;
         return neighbors;
+    }
+
+    private static CellType[][] getTriangularNeighbors(int x, int y, Cell[][] grid) {
+        int m = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_HEIGHT"));
+        int n = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_WIDTH"));
+        CellType[][] neighbors = new CellType[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                try {
+                    neighbors[i][j] = grid[x - (n/2) + i][y - (m/2) + j].getType();
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    neighbors[i][j] = NULL;
+                }
+            }
+        }
+        neighbors[m/2][n/2] = NULL;
+        if ((x+y)%2 == 0) {
+            neighbors[m-1][0] = NULL;
+            neighbors[m-1][n-1] = NULL;
+        }
+        else {
+            neighbors[0][0] = NULL;
+            neighbors[0][n-1] = NULL;
+        }
+        return neighbors;
+    }
+
+    private static void assignNeighborhoodCenter() {
+        switch(neighborhoodType) {
+            case SQUARE_MOORE, SQUARE_NEUMANN, default:
+                neighborhoodCenter = Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))/2;
+                break;
+            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN:
+                neighborhoodCenter = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))/2;
+                break;
+        }
     }
 
     /**
@@ -137,6 +204,20 @@ public abstract class CellGrid {
      * @return game type
      */
     public static GameType getGameType() { return gametype; }
+
+    /**
+     * Getter method for the neighborhood type
+     * @return neighborhood type
+     */
+    public static NeighborhoodType getNeighborhoodType() { return neighborhoodType; }
+
+    /**
+     * Getter method for the central coordinate of the neighborhood
+     * @return neighborhood center
+     */
+    public static int getNeighborhoodCenter() {
+        return neighborhoodCenter;
+    }
 
     /**
      * Each next generation is a function of the current generation and since the rules surrounding

@@ -1,6 +1,7 @@
 package cellsociety.cell;
 
 import static cellsociety.cell.CellType.*;
+import static cellsociety.game.NeighborhoodType.*;
 
 /**
  * This is the Cell Grid Manager for Fire, its next generation method follows the rules that:
@@ -14,6 +15,8 @@ import static cellsociety.cell.CellType.*;
 public class Fire extends CellGridSE {
 
     private static Cell[][] updatingGrid;
+    private static double treeCombustProbability = 0.05;
+    private static double treeGrowthProbability = 0.3;
 
     @Override
     public void nextGeneration() {
@@ -28,17 +31,37 @@ public class Fire extends CellGridSE {
 
     private static void updateState(int x, int y, CellType type) {
         if (type == BURNING) updatingGrid[x][y].updateType(EMPTY);
-        else if (type == TREE && hasBurningNeighbor(CellGrid.getNeighbors(x, y))) updatingGrid[x][y].updateType(BURNING);
-        else if (type == TREE && (Math.random() < 0.05)) updatingGrid[x][y].updateType(BURNING);
-        else if (type == EMPTY && (Math.random() < 0.3)) updatingGrid[x][y].updateType(TREE);
+        else if (type == TREE && hasBurningNeighbor(CellGrid.getNeighbors(x, y, getGrid()))) updatingGrid[x][y].updateType(BURNING);
+        else if (type == TREE && (Math.random() < treeCombustProbability)) updatingGrid[x][y].updateType(BURNING);
+        else if (type == EMPTY && (Math.random() < treeGrowthProbability)) updatingGrid[x][y].updateType(TREE);
         else updatingGrid[x][y].updateType(type);
     }
 
     private static boolean hasBurningNeighbor(CellType[][] neighborsType) {
-        if (neighborsType[0][1] == BURNING) return true;
-        if (neighborsType[1][0] == BURNING) return true;
-        if (neighborsType[1][2] == BURNING) return true;
-        if (neighborsType[2][1] == BURNING) return true;
+        switch(getNeighborhoodType()) {
+            case SQUARE_MOORE, SQUARE_NEUMANN, default:
+                return hasBurningSquareNeighbor(neighborsType, getNeighborhoodType()==SQUARE_NEUMANN);
+            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN:
+                return hasBurningTriangularNeighbor(neighborsType, getNeighborhoodType()==TRIANGULAR_NEUMANN);
+        }
+    }
+
+    private static boolean hasBurningSquareNeighbor(CellType[][] neighborsType, boolean isNeumann) {
+        for (int i = 0; i < neighborsType.length; i++) {
+            for (int j= 0; j < neighborsType[0].length; j++) {
+                if (isNeumann && (i+j)%2 == 0) continue;
+                if (neighborsType[i][j] == BURNING) return true;
+            }
+        }
+        return false;
+    }
+
+    private static boolean hasBurningTriangularNeighbor(CellType[][] neighborsType, boolean isNeumann) {
+        for (int i = 0; i < neighborsType.length; i++) {
+            for (int j= 0; j < neighborsType[0].length; j++) {
+                if (neighborsType[i][j] == BURNING) return true;
+            }
+        }
         return false;
     }
 
