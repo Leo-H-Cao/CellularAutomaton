@@ -3,6 +3,13 @@ package cellsociety.cell;
 import static cellsociety.cell.CellType.*;
 import static cellsociety.game.NeighborhoodType.SQUARE_NEUMANN;
 
+/**
+ * This is the Cell Grid Manager for Percolation, its next generation method follows the rules that:
+ * Any block adjacent to or under a water source will become a water source
+ * Blocks can block a water source from spreading and water cannot flow into or through a block
+ *
+ * @author Zack Schrage
+ */
 public class Percolation extends CellGridSE {
 
     @Override

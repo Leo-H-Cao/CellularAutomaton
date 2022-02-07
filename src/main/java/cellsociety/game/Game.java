@@ -31,7 +31,7 @@ public class Game {
 	public Game(Stage stage) {
 		try {
 			myDefaultProperties = ResourceBundle.getBundle("DEFAULTS");
-			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale("en"));
+			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale("zh"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
