@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<CellSociety game="PERCOLATION">
+    <Title>Cell Society - Fire Example</Title>
+    <Authors>
+        <Author>Leo Cao</Author>
+        <Author>Nolan Gelinas</Author>
+        <Author>Zack Schrage</Author>
+    </Authors>
+    <Description>Basic initially empty Fire game. Playing the simulation will generate trees and fires.</Description>
+    <Dimentions>
+        <Width>10</Width>
+        <Height>50</Height>
+    </Dimentions>
+    <InitialCellState>
+        <Cell x="5" y="0" type="WATER"/>
+        <Cell x="4" y="0" type="BLOCK"/>
+        <Cell x="6" y="0" type="BLOCK"/>
+        <Cell x="2" y="2" type="BLOCK"/>
+        <Cell x="3" y="2" type="BLOCK"/>
+        <Cell x="4" y="2" type="BLOCK"/>
+        <Cell x="5" y="2" type="BLOCK"/>
+        <Cell x="1" y="5" type="BLOCK"/>
+        <Cell x="2" y="6" type="BLOCK"/>
+        <Cell x="3" y="7" type="BLOCK"/>
+        <Cell x="4" y="8" type="BLOCK"/>
+        <Cell x="5" y="9" type="BLOCK"/>
+        <Cell x="6" y="10" type="BLOCK"/>
+        <Cell x="5" y="11" type="BLOCK"/>
+        <Cell x="6" y="12" type="BLOCK"/>
+    </InitialCellState>
+    <Parameters>
+        <Speed>1</Speed>
+        <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
+    </Parameters>
+    <ColorSceme>
+        <Color type="EMPTY">#000000</Color>
+        <Color type="WATER">#0000ff</Color>
+        <Color type="BLOCK">#0beadc</Color>
+    </ColorSceme>
+</CellSociety>
