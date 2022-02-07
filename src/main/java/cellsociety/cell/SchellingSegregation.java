@@ -21,7 +21,7 @@ public class SchellingSegregation extends CellGridME {
     private static Cell[][] updatingGrid;
 
     public SchellingSegregation(double fIdealParameter){
-        fIdeal = fIdealParameter;
+        double fIdeal = fIdealParameter;
     }
 
     @Override
@@ -101,7 +101,7 @@ public class SchellingSegregation extends CellGridME {
         CellType[][] neighborsType = CellGrid.getNeighbors(x, y, updatingGrid);
         if (neighborsType[1][1] == CellType.EMPTY) validDirections[(neighborsType.length)+1] = fReal(CellGrid.getNeighbors(x-2+1, y-1+1, updatingGrid), updatingGrid[x][y].getType());
         if (neighborsType[1][3] == CellType.EMPTY) validDirections[(neighborsType.length)+3] = fReal(CellGrid.getNeighbors(x-2+1, y-1+3, updatingGrid), updatingGrid[x][y].getType());
-        if (orientDown && neighborsType[0][2] == CellType.EMPTY) validDirections[(0)+2] = fReal(CellGrid.getNeighbors(x - 2, y-1+2, updatingGrid), updatingGrid[x][y].getType());
+        if (orientDown && neighborsType[0][2] == CellType.EMPTY) validDirections[2] = fReal(CellGrid.getNeighbors(x - 2, y-1+2, updatingGrid), updatingGrid[x][y].getType());
         if (!orientDown && neighborsType[2][2] == CellType.EMPTY) validDirections[(2*neighborsType.length)+2] = fReal(CellGrid.getNeighbors(x-2+2, y-1+2, updatingGrid), updatingGrid[x][y].getType());
         return validDirections;
     }
