@@ -31,7 +31,7 @@ public class Game {
 	public Game(Stage stage) {
 		try {
 			myDefaultProperties = ResourceBundle.getBundle("DEFAULTS");
-			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale("en"));
+			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale(myDefaultProperties.getString("LANGUAGE_CODE")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,9 +49,9 @@ public class Game {
 		timeline.setCycleCount(Animation.INDEFINITE);
 	}
 
-	public static void setLocale(String locale) {
+	public static void setLocale(String code) {
 		try {
-			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale(locale));
+			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale(code));
 		} catch (Exception e) {
 			System.out.println("Locale not found");
 		}

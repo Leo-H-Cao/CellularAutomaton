@@ -41,10 +41,8 @@ public class Controls {
 		HBox.setMargin(playButton, new Insets(0,10,20,0));
 		HBox.setMargin(stepButton, new Insets(0,0,20,10));
 
-		Node typeSelector = makeTypeSelector();
-		HBox.setMargin(typeSelector, new Insets(0,0,0,20));
-		leftBox.getChildren().add(typeSelector);
-		leftBox.setAlignment(Pos.BOTTOM_LEFT);
+		leftBox.getChildren().add(makeTypeSelector());
+		leftBox.setAlignment(Pos.CENTER);
 
 		Slider gameSpeedSlider = new Slider();
 
@@ -93,7 +91,7 @@ public class Controls {
 	}
 
 	private Node makeTypeSelector() {
-		TilePane ret = new TilePane();
+		GridPane ret = new GridPane();
 		Label selectorTitle = new Label(Game.getInterfaceProperties().getString("SELECT_CELL_TYPE"));
 		selectorTitle.setId("selector-title");
 
@@ -106,8 +104,8 @@ public class Controls {
 
 		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> ViewController.setSelectedClickType(selectionTypes.get(new_value.intValue())));
 
-		ret.getChildren().add(selectorTitle);
-		ret.getChildren().add(choiceBox);
+		ret.add(selectorTitle, 0, 0);
+		ret.add(choiceBox, 0, 1);
 
 		return ret;
 	}
