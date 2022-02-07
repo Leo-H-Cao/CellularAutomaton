@@ -16,24 +16,37 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 
 public class ViewController {
-	private final GridManager gm;
+	private static GridManager gm;
 	private static InformationPopup myInformationPopup;
-	private final Controls controls;
-	private BorderPane root;
+	private static Controls controls;
+	private static BorderPane root;
 	private static Stage stage;
 	private static CellType selectedClickType;
+	private static Dimension windowSize;
 
 	public ViewController(Stage _stage) {
 		myInformationPopup = new InformationPopup();
 		gm = new GridManager();
 		controls = new Controls();
 
+		windowSize = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
+				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
+
 		stage = _stage;
-		stage.setScene(makeScene(Game.getDefaultSize().width, Game.getDefaultSize().height));
+		stage.setScene(makeScene(windowSize.width, windowSize.height));
 		stage.show();
+	}
+
+	public static void redrawUI() {
+		stage.setScene(makeScene(windowSize.width, windowSize.height));
+	}
+
+	public static Dimension getWindowSize() {
+		return windowSize;
 	}
 
 	public void updateGridPane(Cell[][] cells) {
@@ -55,7 +68,7 @@ public class ViewController {
 		selectedClickType = type;
 	}
 
-	private Scene makeScene(int width, int height) {
+	private static Scene makeScene(int width, int height) {
 		root = new BorderPane();
 
 		root.setCenter(gm.getGrid());
@@ -63,11 +76,17 @@ public class ViewController {
 		root.setBottom(controls.makeControls());
 
 		Scene scene = new Scene(root, width, height);
-		root.getStylesheets().add("stylesheet.css");
+		scene.getStylesheets().add("stylesheet.css");
+		scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
+			windowSize.width = newSceneWidth.intValue();
+		});
+		scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
+			windowSize.height = newSceneHeight.intValue();
+		});
 		return scene;
 	}
 
-	private Node makeTopDisplay() {
+	private static Node makeTopDisplay() {
 		GridPane ret = new GridPane();
 		HBox leftBox = new HBox();
 		HBox centerBox = new HBox();
@@ -123,7 +142,7 @@ public class ViewController {
 		return ret;
 	}
 
-	private Button makeButton(String label, EventHandler<ActionEvent> handler) {
+	private static Button makeButton(String label, EventHandler<ActionEvent> handler) {
 		Button result = new Button();
 		result.setText(label);
 		result.setOnAction(handler);

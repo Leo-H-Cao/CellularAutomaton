@@ -39,8 +39,8 @@ public class GridManager {
 
 	public static void update(Cell[][] g) {
 		int controlsPadding = 150;
-		cellWidth = (int) (Game.getDefaultSize().width / g.length - gridGap - 1);
-		cellHeight = (int) (Math.round((Game.getDefaultSize().height - controlsPadding) / g[0].length) - gridGap - 1);
+		cellWidth = (int) (ViewController.getWindowSize().width / g.length - gridGap - 1);
+		cellHeight = (int) (Math.round((ViewController.getWindowSize().height - controlsPadding) / g[0].length) - gridGap - 1);
 		// reset grid
 		grid.getChildren().clear();
 
