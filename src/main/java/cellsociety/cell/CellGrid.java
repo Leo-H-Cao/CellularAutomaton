@@ -31,15 +31,15 @@ public abstract class CellGrid {
      * @param height of the cell grid
      * @param gType game being played
      */
-    public static void initializeGrid(int width, int height, GameType gType) {
+    public static void initializeGrid(int width, int height, GameType gType, NeighborhoodType nType) {
         gametype = gType;
+        neighborhoodType = nType;
         grid = new Cell[width][height];
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 grid[i][j] = Cell.newGameCell(i, j, gType, NULL);
             }
         }
-        neighborhoodType = SQUARE_MOORE;
         assignNeighborhoodCenter();
     }
 

@@ -24,6 +24,7 @@
     <Parameters>
         <Speed>1</Speed>
         <fIdeal>0.5</fIdeal>
+        <NeighborhoodType>SQUARE_MOORE</NeighborhoodType>
     </Parameters>
     <ColorSceme>
         <Color type="A">#000000</Color>

@@ -17,8 +17,7 @@ public class Game {
 	private static GameType currentGameType;
 	private static FileReader currentFile;
 	private static double currentGameSpeed;
-
-	public static final String CONFIG_PROPERTIES_FILE = "config.properties";
+	private static NeighborhoodType currentNeighborhoodType;
 
 	private static Timeline timeline;
 	private static CellGrid cellGrid;
@@ -39,7 +38,7 @@ public class Game {
 				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
 		viewController = new ViewController(stage);
 
-		CellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		CellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType, currentNeighborhoodType);
 		CellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 
@@ -87,6 +86,7 @@ public class Game {
 		currentFile = new FileReader();
 		currentFile.parseFile(filePath);
 		currentGameType = currentFile.getGameType();
+		currentNeighborhoodType = currentFile.getNeighborhoodType();
 		currentGameSpeed = Double.parseDouble(currentFile.getGameData().get("Speed"));
 		switch(currentGameType) {
 			case GAMEOFLIFE -> cellGrid = new GameOfLife();
@@ -112,8 +112,7 @@ public class Game {
 
 	public static void importNewFile(String filePath) {
 		openFile(filePath);
-
-		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType, currentNeighborhoodType);
 		cellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 	}
