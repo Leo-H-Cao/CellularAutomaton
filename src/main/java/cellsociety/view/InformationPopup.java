@@ -32,6 +32,9 @@ public class InformationPopup {
 		return popup;
 	}
 
+	/**
+	 * @return Node that contains the extra information popup
+	 */
 	private Node makePopup() {
 		StackPane ret = new StackPane();
 		Rectangle background = new Rectangle(400,500, Color.LIGHTGRAY);
@@ -77,6 +80,9 @@ public class InformationPopup {
 		return ret;
 	}
 
+	/**
+	 * @return Node that will show the information popup when clicked
+	 */
 	public Node getButton() {
 		Button ret = new Button(Game.getInterfaceProperties().getString("INFORMATION"));
 		ret.setOnAction((e) -> ViewController.openPopup());

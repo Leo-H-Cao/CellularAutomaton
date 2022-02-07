@@ -29,6 +29,9 @@ public class GridManager {
 		return ret;
 	}
 
+	/**
+	 * @return Centered grid
+	 */
 	public Node getGrid() {
 		HBox ret = new HBox();
 		ret.getChildren().add(grid);
@@ -36,6 +39,11 @@ public class GridManager {
 		return ret;
 	}
 
+	/**
+	 * Updates the GridPane using types and colors externally specified
+	 *
+	 * @param g Model representation of the displayed grid
+	 */
 	public static void update(Cell[][] g) {
 		int controlsPadding = 150;
 		cellWidth = (int) (ViewController.getWindowSize().width / g.length - gridGap - 1);
