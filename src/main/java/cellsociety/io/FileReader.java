@@ -75,12 +75,10 @@ public class FileReader {
 				NodeList curNodeChildren = curNode.getChildNodes();
 				parseChildNode(curNodeChildren);
 			}
-			else {
-				String nodeName = curNode.getNodeName();
-				String nodeText = curNode.getTextContent();
-				if (!nodeName.equals("#text")) {
-					gameData.put(nodeName, nodeText);
-				}
+			String nodeName = curNode.getNodeName();
+			String nodeText = curNode.getTextContent();
+			if (!nodeName.equals("#text")) {
+				gameData.put(nodeName, nodeText);
 			}
 		}
 		setNeighborhoodType();
