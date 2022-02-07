@@ -1,3 +1,10 @@
 Button {
     -fx-padding: 10;
+    -fx-background-color: rgba(47, 226, 190, 0.5);
+    -fx-font-size: 20;
+}
+
+#info-button {
+    -fx-background-color: green;
+    -fx-border-radius: 100;
 }
