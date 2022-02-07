@@ -22,7 +22,9 @@ Zack Schage: Model (cell package)
 
 
 ### Resources Used
+For XML parsing: https://mkyong.com/java/how-to-read-xml-file-in-java-dom-parser/
 
+For exporting to XML file: https://crunchify.com/java-simple-way-to-write-xml-dom-file-in-java/
 
 ### Running the Program
 
@@ -75,6 +77,8 @@ Known Bugs:
 
 Triangular neighborhoods are not fully working for games with mobile entities such as WaTor or Schelling Segregation.
 Triangular neighborhoods are currently not displayed in triangular shaped cells
+
+FileReader cannot parse XML files where nodes have more than one child node
 
 Noteworthy Features:
 
