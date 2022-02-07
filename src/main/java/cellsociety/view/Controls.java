@@ -17,17 +17,11 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 
 public class Controls {
-	private final Button playButton;
-	private final Button stepButton;
 	private static GameCellMapping myGameCellMapping;
 
 	public Controls() {
 		myGameCellMapping = new GameCellMapping();
-		playButton = makeButton(Game.getInterfaceProperties().getString("PLAY"), (e) -> {
-			Game.toggleSimulation();
-			togglePlayButtonState((Button) e.getSource());
-		});
-		stepButton = makeButton(Game.getInterfaceProperties().getString("STEP"), (e) -> Game.step());
+		
 	}
 
 	public Node makeControls() {
@@ -36,15 +30,19 @@ public class Controls {
 		HBox centerBox = new HBox();
 		HBox rightBox = new HBox();
 
+		Button playButton = makeButton(Game.getInterfaceProperties().getString("PLAY"), (e) -> {
+			Game.toggleSimulation();
+			togglePlayButtonState((Button) e.getSource());
+		});
+		Button stepButton = makeButton(Game.getInterfaceProperties().getString("STEP"), (e) -> Game.step());
+
 		centerBox.getChildren().addAll(playButton, stepButton);
 		centerBox.setAlignment(Pos.CENTER);
 		HBox.setMargin(playButton, new Insets(0,10,20,0));
 		HBox.setMargin(stepButton, new Insets(0,0,20,10));
 
-		Node typeSelector = makeTypeSelector();
-		HBox.setMargin(typeSelector, new Insets(0,0,0,20));
-		leftBox.getChildren().add(typeSelector);
-		leftBox.setAlignment(Pos.BOTTOM_LEFT);
+		leftBox.getChildren().add(makeTypeSelector());
+		leftBox.setAlignment(Pos.CENTER);
 
 		Slider gameSpeedSlider = new Slider();
 
@@ -93,9 +91,9 @@ public class Controls {
 	}
 
 	private Node makeTypeSelector() {
-		TilePane ret = new TilePane();
+		GridPane ret = new GridPane();
 		Label selectorTitle = new Label(Game.getInterfaceProperties().getString("SELECT_CELL_TYPE"));
-		selectorTitle.setId("selector-title");
+		selectorTitle.setId("type-selector-title");
 
 		ArrayList<CellType> selectionTypes = myGameCellMapping.MAP.get(Game.getCurrentGameType());
 
@@ -106,8 +104,8 @@ public class Controls {
 
 		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> ViewController.setSelectedClickType(selectionTypes.get(new_value.intValue())));
 
-		ret.getChildren().add(selectorTitle);
-		ret.getChildren().add(choiceBox);
+		ret.add(selectorTitle, 0, 0);
+		ret.add(choiceBox, 0, 1);
 
 		return ret;
 	}
