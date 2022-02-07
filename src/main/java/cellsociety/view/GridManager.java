@@ -38,7 +38,7 @@ public class GridManager {
 	}
 
 	public static void update(Cell[][] g) {
-		int controlsPadding = 140;
+		int controlsPadding = 150;
 		cellWidth = (int) (Game.getDefaultSize().width / g.length - gridGap - 1);
 		cellHeight = (int) (Math.round((Game.getDefaultSize().height - controlsPadding) / g[0].length) - gridGap - 1);
 		// reset grid

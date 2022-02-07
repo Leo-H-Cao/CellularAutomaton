@@ -38,13 +38,13 @@ public class Controls {
 
 		centerBox.getChildren().addAll(playButton, stepButton);
 		centerBox.setAlignment(Pos.CENTER);
-		HBox.setMargin(playButton,new Insets(0,10,20,0));
-		HBox.setMargin(stepButton,new Insets(0,0,20,10));
+		HBox.setMargin(playButton, new Insets(0,10,20,0));
+		HBox.setMargin(stepButton, new Insets(0,0,20,10));
 
 		Node typeSelector = makeTypeSelector();
 		HBox.setMargin(typeSelector, new Insets(0,0,0,20));
 		leftBox.getChildren().add(typeSelector);
-		leftBox.setAlignment(Pos.CENTER);
+		leftBox.setAlignment(Pos.BOTTOM_LEFT);
 
 		Slider gameSpeedSlider = new Slider();
 
@@ -95,6 +95,7 @@ public class Controls {
 	private Node makeTypeSelector() {
 		TilePane ret = new TilePane();
 		Label selectorTitle = new Label(Game.getInterfaceProperties().getString("SELECT_CELL_TYPE"));
+		selectorTitle.setId("selector-title");
 
 		ArrayList<CellType> selectionTypes = myGameCellMapping.MAP.get(Game.getCurrentGameType());
 
