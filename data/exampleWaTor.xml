@@ -36,11 +36,12 @@
         <Cell x="7" y="9" type="FISH"/>
     </InitialCellState>
     <Parameters>
+        <NeighborhoodType>"SQUARE_NEUMANN"</NeighborhoodType>
         <Speed>1</Speed>
     </Parameters>
     <ColorScheme>
-        <Color type="SHARK">#000000</Color>
-        <Color type="FISH">#ffff00</Color>
+        <Color type="SHARK">#ff0000</Color>
+        <Color type="FISH">#0000ff</Color>
         <Color type="EMPTY">#abcdef</Color>
     </ColorScheme>
 </CellSociety>

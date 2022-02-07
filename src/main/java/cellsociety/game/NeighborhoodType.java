@@ -5,5 +5,4 @@ public enum NeighborhoodType {
     SQUARE_NEUMANN,
     TRIANGULAR_MOORE,
     TRIANGULAR_NEUMANN,
-    HEXAGONAL
 }
