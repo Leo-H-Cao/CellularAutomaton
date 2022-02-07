@@ -36,8 +36,15 @@ public class InformationPopup {
 		StackPane ret = new StackPane();
 		Rectangle background = new Rectangle(400,500, Color.LIGHTGRAY);
 		GridPane grid = new GridPane();
-		Text author = new Text();
-		author.setText(Game.getCurrentFile().getGameData().get("Authors"));
+		grid.setVgap(25);
+		Label author = new Label();
+
+		String authorText = "";
+		for(String s : Game.getCurrentFile().getAuthors()) {
+			authorText += s + "\n";
+		}
+
+		author.setText(authorText);
 
 		Rectangle close = new Rectangle(40,30, Color.RED);
 		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> popup.hide());

@@ -9,6 +9,7 @@
 
 #type-selector-title, #language-selector-title, Label {
     -fx-text-fill: black;
+    -fx-text-alignment: center;
 }
 
 .root{

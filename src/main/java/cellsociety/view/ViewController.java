@@ -28,6 +28,10 @@ public class ViewController {
 	private static CellType selectedClickType;
 	private static Dimension windowSize;
 
+
+	/**
+	 * @param _stage stage to be passed from Game
+	 */
 	public ViewController(Stage _stage) {
 		myInformationPopup = new InformationPopup();
 		gm = new GridManager();

@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-
 import java.util.MissingResourceException;
 
 public class GridManager {
