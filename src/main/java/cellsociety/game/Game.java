@@ -100,7 +100,7 @@ public class Game {
 	private static void openFile(String filePath) {
 		currentFile = new FileReader();
 		currentFile.parseFile(filePath);
-		currentFile.printMap();
+//		currentFile.printMap();
 		currentGameType = currentFile.getGameType();
 		currentNeighborhoodType = currentFile.getNeighborhoodType();
 		currentGameSpeed = Double.parseDouble(currentFile.getGameData().get("Speed"));

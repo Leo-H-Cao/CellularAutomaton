@@ -7,7 +7,6 @@ import cellsociety.game.NeighborhoodType;
 import java.util.Map;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
-
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -15,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -28,15 +26,12 @@ import java.util.Map;
 
 public class FileReader {
 
-	public static final String FILE_TYPE_ERROR = "Not an XML file!";
-	public static final String ROOT_TAG_ERROR = "Not a game configuration file, root tag should be 'CellSociety'";
-	public static final String VALID_ROOT_TAG = "CellSociety";
-
 	private final DocumentBuilder BUILDER;
 	private final Map<String, String> gameData;
 	private final ArrayList<Cell> initialState;
 	private GameType game_type;
 	private NeighborhoodType neighborhoodType;
+	private FileValidator validator;
 
 	/**
 	 * creates file reader instance
@@ -45,6 +40,7 @@ public class FileReader {
 		BUILDER = createDocumentBuilder();
 		gameData = new HashMap<>();
 		initialState = new ArrayList<>();
+		validator = new FileValidator();
 	}
 
 	/**
@@ -66,40 +62,28 @@ public class FileReader {
 	 * @param fileName: name of file being read
 	 */
 	public void parseFile(String fileName) {
-		validateFileType(fileName);
+		validator.validateFileType(fileName);
 		Element rootElement = getRootElement(new File(fileName));
-		validateRootTag(rootElement);
+		validator.validateRootTag(rootElement);
 		setGameType(rootElement);
 		NodeList childNodes = rootElement.getChildNodes();
-
 		for (int i = 0; i < childNodes.getLength(); i++) {
 			Node curNode = childNodes.item(i);
 			if (curNode.hasChildNodes()) {
 				NodeList curNodeChildren = curNode.getChildNodes();
 				parseChildNode(curNodeChildren);
-			} else {
-				String nodeName = curNode.getNodeName();
-				String nodeText = curNode.getTextContent();
-				if (!nodeName.equals("#text")) {
-					gameData.put(nodeName, nodeText);
-				}
+			}
+			String nodeName = curNode.getNodeName();
+			String nodeText = curNode.getTextContent();
+			if (!nodeName.equals("#text")) {
+				gameData.put(nodeName, nodeText);
 			}
 		}
 		setNeighborhoodType();
+		validator.checkRequiredValues(game_type, gameData);
+		System.out.println(gameData.get("Authors"));
 	}
 
-	private void validateFileType(String fileName) throws XMLException {
-		String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
-		if (!fileType.equals("xml")) {
-			throw new XMLException(FILE_TYPE_ERROR);
-		}
-	}
-
-	private void validateRootTag(Element root) throws XMLException {
-		if (!root.getNodeName().equals(VALID_ROOT_TAG)) {
-			throw new XMLException(ROOT_TAG_ERROR);
-		}
-	}
 
 	private Element getRootElement(File xmlFile) throws XMLException {
 		try {
