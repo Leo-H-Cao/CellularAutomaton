@@ -77,7 +77,6 @@ examplePercolation1.xml
 
 Triangular neighborhoods are not fully working for games with mobile entities such as WaTor or Schelling Segregation.
 Triangular neighborhoods are currently not displayed in triangular shaped cells
-
 FileReader cannot parse XML files where nodes have more than one child node
 
 ### Noteworthy Features:
