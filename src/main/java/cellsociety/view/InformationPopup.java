@@ -32,12 +32,22 @@ public class InformationPopup {
 		return popup;
 	}
 
+	/**
+	 * @return Node that contains the extra information popup
+	 */
 	private Node makePopup() {
 		StackPane ret = new StackPane();
 		Rectangle background = new Rectangle(400,500, Color.LIGHTGRAY);
 		GridPane grid = new GridPane();
-		Text author = new Text();
-		author.setText(Game.getCurrentFile().getGameData().get("Authors"));
+		grid.setVgap(25);
+		Label author = new Label();
+
+		String authorText = "";
+		for(String s : Game.getCurrentFile().getAuthors()) {
+			authorText += s + "\n";
+		}
+
+		author.setText(authorText);
 
 		Rectangle close = new Rectangle(40,30, Color.RED);
 		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> popup.hide());
@@ -70,6 +80,9 @@ public class InformationPopup {
 		return ret;
 	}
 
+	/**
+	 * @return Node that will show the information popup when clicked
+	 */
 	public Node getButton() {
 		Button ret = new Button(Game.getInterfaceProperties().getString("INFORMATION"));
 		ret.setOnAction((e) -> ViewController.openPopup());

@@ -24,6 +24,9 @@ public class Controls {
 		
 	}
 
+	/**
+	 * @return Node that contains bottom panel of controls
+	 */
 	public Node makeControls() {
 		GridPane ret = new GridPane();
 		HBox leftBox = new HBox();
@@ -83,6 +86,11 @@ public class Controls {
 		}
 	}
 
+	/**
+	 * @param title Name of the button
+	 * @param handler Function to run when button is clicked
+	 * @return Clickable button
+	 */
 	private Button makeButton(String title, EventHandler<ActionEvent> handler) {
 		Button result = new Button();
 		result.setText(title);
@@ -90,6 +98,9 @@ public class Controls {
 		return result;
 	}
 
+	/**
+	 * @return Node that contains the type selector
+	 */
 	private Node makeTypeSelector() {
 		GridPane ret = new GridPane();
 		Label selectorTitle = new Label(Game.getInterfaceProperties().getString("SELECT_CELL_TYPE"));
