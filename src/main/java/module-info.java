@@ -3,8 +3,7 @@ module cellsociety_app {
     requires javafx.controls;
     requires javafx.graphics;
     requires javafx.base;
-    requires javafx.media;
-    requires java.xml;
+	requires java.xml;
 	requires java.desktop;
 
 	// allow other classes to access listed packages in your project

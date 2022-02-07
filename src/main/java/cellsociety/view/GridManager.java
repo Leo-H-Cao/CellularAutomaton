@@ -49,20 +49,20 @@ public class GridManager {
 				CellNode c = new CellNode(g[i][j]);
 
 				Color color;
-				String type = g[i][j].getType().toString();
+				String type = g[i][j].getType().colorString();
 
 				// First try to load a cell color from the current file
 				try {
 					color = Color.valueOf(Game.getCurrentFile().getGameData().get(String.format(COLOR_MATCH_STRING, type)));
 				} catch (Exception e) {
 					// If color is not defined, revert to default color defined in DEFAULT.properties
-					System.out.println(String.format("COLOR %s NOT FOUND IN CONFIGURATION, REVERTING TO DEFAULT", type ));
+					System.out.printf("COLOR %s NOT FOUND IN CONFIGURATION, REVERTING TO DEFAULT%n", type );
 					try {
 						color = Color.valueOf(Game.getDefaultProperties().getString(String.format(COLOR_MATCH_STRING, type)));
 					} catch (MissingResourceException colorNotDefinedException) {
 						// If color hasn't been defined in DEFAULT.properties, revert to DEFAULT_COLOR
 						String DEFAULT_COLOR = Game.getDefaultProperties().getString("DEFAULT_COLOR");
-						System.out.println(String.format(Game.getDefaultProperties().getString("MISSING_COLOR_EXCEPTION_MESSAGE"), type, DEFAULT_COLOR));
+						System.out.printf((Game.getDefaultProperties().getString("MISSING_COLOR_EXCEPTION_MESSAGE")) + "%n", type, DEFAULT_COLOR);
 						color = Color.valueOf(DEFAULT_COLOR);
 					}
 				}

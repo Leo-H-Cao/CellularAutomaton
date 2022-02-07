@@ -16,8 +16,8 @@ import java.util.Map;
  */
 public class Cell {
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
     private CellType cType;
     private Map<CellProperties, Object> properties;
 
@@ -36,19 +36,13 @@ public class Cell {
      * @return a new cell of the specified game and cell type
      */
     public static Cell newGameCell(int x, int y, GameType gType, CellType cType) {
-        switch(gType) {
-            case GAMEOFLIFE:
-                return new GameOfLifeCell(x, y, cType);
-            case FIRE:
-                return new FireCell(x, y, cType);
-            case PERCOLATION:
-                return new PercolationCell(x, y, cType);
-            case WATOR:
-                return new WaTorCell(x, y, cType);
-            case SCHELLSEG:
-                return new SchellingSegCell(x, y, cType);
-        }
-        return null;
+	    return switch (gType) {
+		    case GAMEOFLIFE -> new GameOfLifeCell(x, y, cType);
+		    case FIRE -> new FireCell(x, y, cType);
+		    case PERCOLATION -> new PercolationCell(x, y, cType);
+		    case WATOR -> new WaTorCell(x, y, cType);
+		    case SCHELLSEG -> new SchellingSegCell(x, y, cType);
+	    };
     }
 
     /**

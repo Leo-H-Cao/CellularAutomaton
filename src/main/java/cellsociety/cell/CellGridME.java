@@ -1,12 +1,8 @@
 package cellsociety.cell;
 
-import cellsociety.game.Game;
-
-import java.util.HashMap;
 import java.util.Map;
 
 import static cellsociety.cell.CellProperties.*;
-import static cellsociety.cell.CellType.EMPTY;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world

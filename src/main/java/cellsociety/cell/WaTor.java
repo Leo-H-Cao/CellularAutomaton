@@ -24,8 +24,8 @@ import static cellsociety.game.NeighborhoodType.*;
 public class WaTor extends CellGridME {
 
     private static Cell[][] updatingGrid;
-    private static int reproductionCounter = 5;
-    private static int energyCounter = 5;
+    private static final int reproductionCounter = 5;
+    private static final int energyCounter = 5;
 
     @Override
     public void nextGeneration() {
@@ -71,14 +71,11 @@ public class WaTor extends CellGridME {
     }
 
     private static boolean[] getValidDirections(int x, int y, CellType destType) {
-        switch(getNeighborhoodType()) {
-            case SQUARE_MOORE, SQUARE_NEUMANN, default:
-                return getValidDirectionsSquare(CellGrid.getNeighbors(x, y, updatingGrid), destType, getNeighborhoodType() == SQUARE_NEUMANN);
-            case TRIANGULAR_MOORE:
-                return getValidDirectionsTriangular(CellGrid.getNeighbors(x, y, updatingGrid), destType);
-            case TRIANGULAR_NEUMANN:
-                return getValidDirectionsTriangularNeumann(CellGrid.getNeighbors(x, y, updatingGrid), destType, (x+y)%2==0);
-        }
+        return switch (getNeighborhoodType()) {
+            case SQUARE_MOORE, SQUARE_NEUMANN -> getValidDirectionsSquare(CellGrid.getNeighbors(x, y, updatingGrid), destType, getNeighborhoodType() == SQUARE_NEUMANN);
+            case TRIANGULAR_MOORE -> getValidDirectionsTriangular(CellGrid.getNeighbors(x, y, updatingGrid), destType);
+            case TRIANGULAR_NEUMANN -> getValidDirectionsTriangularNeumann(CellGrid.getNeighbors(x, y, updatingGrid), destType, (x + y) % 2 == 0);
+        };
     }
 
     private static boolean[] getValidDirectionsSquare(CellType[][] neighborsType, CellType destType, boolean isNeumann) {
@@ -104,17 +101,17 @@ public class WaTor extends CellGridME {
 
     private static boolean[] getValidDirectionsTriangularNeumann(CellType[][] neighborsType, CellType destType, boolean orientDown) {
         boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))];
-        if (neighborsType[1][1] == destType) validDirections[(1*neighborsType.length)+1] = true;
-        if (neighborsType[1][3] == destType) validDirections[(1*neighborsType.length)+3] = true;
-        if (orientDown && neighborsType[0][2] == destType) validDirections[(0*neighborsType.length)+2] = true;
+        if (neighborsType[1][1] == destType) validDirections[(neighborsType.length)+1] = true;
+        if (neighborsType[1][3] == destType) validDirections[(neighborsType.length)+3] = true;
+        if (orientDown && neighborsType[0][2] == destType) validDirections[(0)+2] = true;
         if (!orientDown && neighborsType[2][2] == destType) validDirections[(2*neighborsType.length)+2] = true;
         return validDirections;
     }
 
     private static int randomDirection(boolean[] validDirections) {
         int count = 0;
-        for (int i = 0; i < validDirections.length; i++) {
-            if (validDirections[i]) {
+        for (boolean validDirection : validDirections) {
+            if (validDirection) {
                 count++;
             }
         }
@@ -152,7 +149,7 @@ public class WaTor extends CellGridME {
     }
 
     private static Map<CellProperties, Object> resetProperties() {
-        Map<CellProperties, Object> props = new HashMap<CellProperties, Object>();
+        Map<CellProperties, Object> props = new HashMap<>();
         props.put(MOVED, false);
         props.put(REPRODUCE, 0);
         props.put(ENERGY, 5);

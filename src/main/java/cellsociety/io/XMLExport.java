@@ -33,7 +33,7 @@ public class XMLExport {
 
   private Element rootElement;
   private Document dom;
-  private File saveDirectory ;
+  private final File saveDirectory ;
 
   public XMLExport(File file){
     saveDirectory = file;
@@ -55,15 +55,15 @@ public class XMLExport {
   public void saveToXML(){
     writeGameData();
     Cell[][] curCellGrid = CellGrid.getGrid();
-    for(int i = 0; i < curCellGrid.length; i++){
-      for(int j = 0; j < curCellGrid[0].length; j++){
-        Cell curCell = curCellGrid[i][j];
-        CellType cellType = curCell.getType();
-        if(cellType != cellType.NULL && cellType != cellType.EMPTY && cellType != cellType.DEAD){
-          addCell(curCell, cellType);
-        }
-      }
-    }
+	  for (Cell[] cells : curCellGrid) {
+		  for (int j = 0; j < curCellGrid[0].length; j++) {
+			  Cell curCell = cells[j];
+			  CellType cellType = curCell.getType();
+			  if (cellType != CellType.NULL && cellType != CellType.EMPTY && cellType != CellType.DEAD) {
+				  addCell(curCell, cellType);
+			  }
+		  }
+	  }
     dom.appendChild(rootElement);
     sendToFile();
   }
@@ -78,10 +78,8 @@ public class XMLExport {
       tr.transform(new DOMSource(dom),
           new StreamResult(new FileOutputStream(saveDirectory.getPath())));
 
-    } catch (TransformerException te) {
+    } catch (TransformerException | IOException te) {
       System.out.println(te.getMessage());
-    } catch (IOException ioe) {
-      System.out.println(ioe.getMessage());
     }
   }
 

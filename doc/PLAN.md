@@ -73,19 +73,19 @@ curSimulationFile = XMLReader.read(filepath);
 
 #### How do we make updating the display state more efficient, not just going through the entire 2d array and updating every single cell (because for some variations many of the cells will be "off")
 
- * Alernative #1: One solution is to have the cell grid keep track of each cell's position, and update the neighbors of any active cells
+ * Alternative #1: One solution is to have the cell grid keep track of each cell's position, and update the neighbors of any active cells
 
- * Alernative #2: An alternative is to have each cell keep store a list of its neighbors, and then go through each active cell and update its neighbors.
+ * Alternative #2: An alternative is to have each cell keep store a list of its neighbors, and then go through each active cell and update its neighbors.
 
  * Tradeoffs: For the first approach, the grid would be the one keeping track of the coordinates of each cell, while for the second approach the cell itself would be keeping track
-of its location in the grid. Both solutions are viable and it comes down to how much complexity we want in the cell class and which would lead to a better overall design
+of its location in the grid. Both solutions are viable, and it comes down to how much complexity we want in the cell class and which would lead to a better overall design
 
 
 #### How do we handle the different rules for the different games
 
- * Alernative #1: Create an abstract rules class, and every variation of the game's rules would be a subclass of this rules class. Each one would implement/override any methods that it needs.
+ * Alternative #1: Create an abstract rules class, and every variation of the game's rules would be a subclass of this rules class. Each one would implement/override any methods that it needs.
 
- * Alernative #2: Cell can be a super class and it’s subclasses like GameOfLifeCell or FireCell have the right methods that dictate its behavior
+ * Alternative #2: Cell can be a super class and it’s subclasses like GameOfLifeCell or FireCell have the right methods that dictate its behavior
 
  * Trade-offs: The first approach would allow us to take advantage of any rules that are common to multiple games, by simply defining the method in the abstract rules class and any games that do not use that rule can override it.
 However, we are unsure if this is a good use of inheritance because it may result in some unnecessary subclasses if certain games do not have many unique rules. The second approach may be 
