@@ -23,18 +23,20 @@ public class Game {
 	private static Timeline timeline;
 	private static CellGrid cellGrid;
 	private static ViewController viewController;
-	private static ResourceBundle myDefaults;
+	private static ResourceBundle myDefaultProperties;
+	private static ResourceBundle myInterfaceProperties;
 	private static Dimension DEFAULT_SIZE;
 
 
 	public Game(Stage stage) {
 		try {
-			myDefaults = ResourceBundle.getBundle("DEFAULTS", Locale.ENGLISH);
+			myDefaultProperties = ResourceBundle.getBundle("DEFAULTS");
+			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale("en"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		openFile(myDefaults.getString("FILEPATH"));
+		openFile(myDefaultProperties.getString("FILEPATH"));
 		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
 				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
 		viewController = new ViewController(stage);
@@ -47,12 +49,24 @@ public class Game {
 		timeline.setCycleCount(Animation.INDEFINITE);
 	}
 
+	public static void setLocale(String locale) {
+		try {
+			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale(locale));
+		} catch (Exception e) {
+			System.out.println("Locale not found");
+		}
+	}
+
 	public static FileReader getCurrentFile() {
 		return currentFile;
 	}
 
 	public static ResourceBundle getDefaultProperties() {
-		return myDefaults;
+		return myDefaultProperties;
+	}
+
+	public static ResourceBundle getInterfaceProperties() {
+		return myInterfaceProperties;
 	}
 
 	public static Dimension getDefaultSize() {

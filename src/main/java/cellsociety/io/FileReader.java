@@ -28,14 +28,13 @@ import java.util.Map;
 
 public class FileReader {
 
-	private final String GAME_TYPE_ATTRIBUTE = "game";
 	public static final String FILE_TYPE_ERROR = "Not an XML file!";
 	public static final String ROOT_TAG_ERROR = "Not a game configuration file, root tag should be 'CellSociety'";
 	public static final String VALID_ROOT_TAG = "CellSociety";
 
 	private final DocumentBuilder BUILDER;
-	private Map<String, String> gameData;
-	private ArrayList<Cell> initialState;
+	private final Map<String, String> gameData;
+	private final ArrayList<Cell> initialState;
 	private GameType game_type;
 	private NeighborhoodType neighborhoodType;
 
@@ -139,8 +138,7 @@ public class FileReader {
 
 	private String parseColorAttribute(Node colorNode) {
 		NamedNodeMap attributes = colorNode.getAttributes();
-		String nodeAttributes = attributes.getNamedItem("type").getNodeValue();
-		return nodeAttributes;
+		return attributes.getNamedItem("type").getNodeValue();
 	}
 
 	public Map<String, String> getGameData() {
@@ -152,6 +150,7 @@ public class FileReader {
 	}
 
 	private void setGameType(Element root) {
+		String GAME_TYPE_ATTRIBUTE = "game";
 		String gameTypeString = root.getAttributes().getNamedItem(GAME_TYPE_ATTRIBUTE).getNodeValue();
 		game_type = GameType.valueOf(gameTypeString);
 	}

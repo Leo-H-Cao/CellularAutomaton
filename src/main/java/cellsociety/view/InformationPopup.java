@@ -14,7 +14,7 @@ import javafx.stage.Popup;
 
 
 public class InformationPopup {
-	private Popup popup;
+	private final Popup popup;
 
 	public InformationPopup() {
 		popup = new Popup();
@@ -34,9 +34,7 @@ public class InformationPopup {
 		author.setText(Game.getCurrentFile().getGameData().get("Author"));
 
 		Rectangle close = new Rectangle(40,30, Color.RED);
-		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-			popup.hide();
-		});
+		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> popup.hide());
 
 		StackPane.setAlignment(close, Pos.TOP_RIGHT);
 
@@ -55,10 +53,8 @@ public class InformationPopup {
 	}
 
 	public Node getButton() {
-		Button ret = new Button("Information");
-		ret.setOnAction((e) -> {
-			ViewController.openPopup();
-		});
+		Button ret = new Button(Game.getInterfaceProperties().getString("INFORMATION"));
+		ret.setOnAction((e) -> ViewController.openPopup());
 		ret.setId("info-button");
 		return ret;
 	}

@@ -12,7 +12,7 @@
     </properties>
 
     <dependencies>
-        <!-- use latest version of OpenJFX that fixes Mac ARM bug -->
+        <!-- use the latest version of OpenJFX that fixes Mac ARM bug -->
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>

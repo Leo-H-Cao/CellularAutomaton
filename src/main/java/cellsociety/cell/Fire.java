@@ -35,6 +35,8 @@ public class Fire extends CellGridSE {
     }
 
     private static void updateState(int x, int y, CellType type) {
+        double treeGrowthProbability = 0.3;
+        double treeCombustProbability = 0.05;
         if (type == BURNING) updatingGrid[x][y].updateType(EMPTY);
         else if (type == TREE && hasBurningNeighbor(CellGrid.getNeighbors(x, y, getGrid()))) updatingGrid[x][y].updateType(BURNING);
         else if (type == TREE && (Math.random() < treeCombustProbability)) updatingGrid[x][y].updateType(BURNING);
@@ -43,12 +45,10 @@ public class Fire extends CellGridSE {
     }
 
     private static boolean hasBurningNeighbor(CellType[][] neighborsType) {
-        switch(getNeighborhoodType()) {
-            case SQUARE_MOORE, SQUARE_NEUMANN, default:
-                return hasBurningSquareNeighbor(neighborsType, getNeighborhoodType()==SQUARE_NEUMANN);
-            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN:
-                return hasBurningTriangularNeighbor(neighborsType, getNeighborhoodType()==TRIANGULAR_NEUMANN);
-        }
+	    return switch (getNeighborhoodType()) {
+		    case SQUARE_MOORE, SQUARE_NEUMANN -> hasBurningSquareNeighbor(neighborsType, getNeighborhoodType() == SQUARE_NEUMANN);
+		    case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN -> hasBurningTriangularNeighbor(neighborsType);
+	    };
     }
 
     private static boolean hasBurningSquareNeighbor(CellType[][] neighborsType, boolean isNeumann) {
@@ -61,10 +61,10 @@ public class Fire extends CellGridSE {
         return false;
     }
 
-    private static boolean hasBurningTriangularNeighbor(CellType[][] neighborsType, boolean isNeumann) {
-        for (int i = 0; i < neighborsType.length; i++) {
-            for (int j= 0; j < neighborsType[0].length; j++) {
-                if (neighborsType[i][j] == BURNING) return true;
+    private static boolean hasBurningTriangularNeighbor(CellType[][] neighborsType) {
+        for (CellType[] cellTypes : neighborsType) {
+            for (int j = 0; j < neighborsType[0].length; j++) {
+                if (cellTypes[j] == BURNING) return true;
             }
         }
         return false;
