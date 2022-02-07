@@ -38,6 +38,13 @@ public class ViewController {
 
 		stage = _stage;
 		stage.setScene(makeScene(windowSize.width, windowSize.height));
+		String windowTitle;
+		try {
+			windowTitle = Game.getCurrentFile().getGameData().get("Title");
+		} catch (Exception e) {
+			windowTitle = Game.getInterfaceProperties().getString("TITLE");
+		}
+		stage.setTitle(windowTitle);
 		stage.show();
 	}
 
