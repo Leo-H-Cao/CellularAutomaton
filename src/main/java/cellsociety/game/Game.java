@@ -41,7 +41,16 @@ public class Game {
 		CellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 
-		timeline = new Timeline(new KeyFrame(Duration.seconds(Double.parseDouble(Game.getDefaultProperties().getString("DEFAULT_DELAY"))), event -> step()));
+		double delay;
+
+		if(Integer.parseInt(currentFile.getGameData().get("Height")) > 50 ||
+				Integer.parseInt(currentFile.getGameData().get("Width")) > 50) {
+			delay = Double.parseDouble(myDefaultProperties.getString("LARGE_GRID_DELAY"));
+		} else {
+			delay = Double.parseDouble(myDefaultProperties.getString("DEFAULT_DELAY"));
+		}
+
+		timeline = new Timeline(new KeyFrame(Duration.seconds(delay), event -> step()));
 		timeline.setCycleCount(Animation.INDEFINITE);
 	}
 

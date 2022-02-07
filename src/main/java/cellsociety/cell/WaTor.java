@@ -108,7 +108,7 @@ public class WaTor extends CellGridME {
         boolean[] validDirections = new boolean[Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))];
         if (neighborsType[1][1] == destType) validDirections[(neighborsType.length)+1] = true;
         if (neighborsType[1][3] == destType) validDirections[(neighborsType.length)+3] = true;
-        if (orientDown && neighborsType[0][2] == destType) validDirections[(0)+2] = true;
+        if (orientDown && neighborsType[0][2] == destType) validDirections[2] = true;
         if (!orientDown && neighborsType[2][2] == destType) validDirections[(2*neighborsType.length)+2] = true;
         return validDirections;
     }

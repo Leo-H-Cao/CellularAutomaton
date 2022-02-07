@@ -18,7 +18,7 @@ Hours Spent: 42
 
 Leo Cao: File Parsing (io package)
 Nolan Gelinas: View (view package)
-Zack Schage: Model (cell package)
+Zack Schrage: Model (cell package)
 
 
 ### Resources Used
@@ -54,7 +54,7 @@ General Features:
 * Games (and associated properties) loaded via XML
 * Current state of game can be packaged into and exported as an XML
 * XML files with missing information have information loaded from a default .properties file
-* Foreign languages supported via different config_"language code".properties files
+* Foreign languages supported via different config_**\<Language Code\>**.properties files
 * Games can be played on a loop whose speed changes with a speed slider or can be stepped through generation by generation
 * Clicking on the grid can alter the state of the cell, the particular state can be set using a picker
 
@@ -65,24 +65,32 @@ Assumptions or Simplifications:
 
 Assumes the playing space to be finite since the core data structure is a 2D Array
 
-Interesting data files:
+### Interesting data files:
 
-exampleGameOfLife.xml
-exampleFire.xml
-exampleWaTor.xml
-exampleSegregation.xml
-examplePercolation.xml
+exampleGameOfLife1.xml
+exampleFire5.xml
+exampleWaTor1.xml
+exampleSegregation1.xml
+examplePercolation1.xml
 
-Known Bugs:
+### Known Bugs:
 
 Triangular neighborhoods are not fully working for games with mobile entities such as WaTor or Schelling Segregation.
 Triangular neighborhoods are currently not displayed in triangular shaped cells
 FileReader cannot parse XML files where nodes have more than one child node
 
-Noteworthy Features:
+### Noteworthy Features:
+* Time scaling
+* Dynamic coloring
+* Importing and Exporting files
+* Re-skin app with css files
+* Use custom neighbor detection
+* Easily add new languages
 
-Users can click on the grid and make changes to it in real time
 
-
-### Impressions
-
+### Impressions:
+* The app is very stable up to 50 x 50 grids
+  * At very low sim speeds the game can be played at grids of up to 150 x 150
+  * Game will automatically change default simulation scale depending on grid size
+* Clicking is easy but would have been nice if click and dragging worked
+* Model for simulations is very robust and seems accurate in almost all cases
