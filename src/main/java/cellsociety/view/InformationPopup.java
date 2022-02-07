@@ -1,9 +1,12 @@
 package cellsociety.view;
 
 import cellsociety.game.Game;
+import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -11,6 +14,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class InformationPopup {
@@ -43,10 +49,20 @@ public class InformationPopup {
 
 		grid.add(author, 0, 0);
 		grid.add(description, 0, 1);
-
 		grid.setAlignment(Pos.CENTER);
 
-		ret.getChildren().addAll(background, grid, close);
+		ArrayList<String> selectionTypes = new ArrayList<>(Arrays.asList("en", "es"));
+
+		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(selectionTypes));
+
+		choiceBox.setValue(selectionTypes.get(0));
+
+		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) ->
+				Game.setLocale(selectionTypes.get(new_value.intValue())));
+
+		StackPane.setAlignment(choiceBox, Pos.BOTTOM_LEFT);
+
+		ret.getChildren().addAll(background, grid, close, choiceBox);
 
 
 		return ret;

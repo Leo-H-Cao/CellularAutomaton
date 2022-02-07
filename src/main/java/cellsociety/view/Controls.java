@@ -17,17 +17,11 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 
 public class Controls {
-	private final Button playButton;
-	private final Button stepButton;
 	private static GameCellMapping myGameCellMapping;
 
 	public Controls() {
 		myGameCellMapping = new GameCellMapping();
-		playButton = makeButton(Game.getInterfaceProperties().getString("PLAY"), (e) -> {
-			Game.toggleSimulation();
-			togglePlayButtonState((Button) e.getSource());
-		});
-		stepButton = makeButton(Game.getInterfaceProperties().getString("STEP"), (e) -> Game.step());
+		
 	}
 
 	public Node makeControls() {
@@ -35,6 +29,12 @@ public class Controls {
 		HBox leftBox = new HBox();
 		HBox centerBox = new HBox();
 		HBox rightBox = new HBox();
+
+		Button playButton = makeButton(Game.getInterfaceProperties().getString("PLAY"), (e) -> {
+			Game.toggleSimulation();
+			togglePlayButtonState((Button) e.getSource());
+		});
+		Button stepButton = makeButton(Game.getInterfaceProperties().getString("STEP"), (e) -> Game.step());
 
 		centerBox.getChildren().addAll(playButton, stepButton);
 		centerBox.setAlignment(Pos.CENTER);
@@ -93,7 +93,7 @@ public class Controls {
 	private Node makeTypeSelector() {
 		GridPane ret = new GridPane();
 		Label selectorTitle = new Label(Game.getInterfaceProperties().getString("SELECT_CELL_TYPE"));
-		selectorTitle.setId("selector-title");
+		selectorTitle.setId("type-selector-title");
 
 		ArrayList<CellType> selectionTypes = myGameCellMapping.MAP.get(Game.getCurrentGameType());
 

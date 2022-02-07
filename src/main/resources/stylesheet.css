@@ -7,7 +7,7 @@
     -fx-font-family: "Algerian";
 }
 
-#selector-title {
+#type-selector-title, #language-selector-title {
     -fx-text-fill: black;
 }
 
