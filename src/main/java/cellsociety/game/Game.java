@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 import java.awt.*;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Game {
@@ -28,7 +29,7 @@ public class Game {
 
 	public Game(Stage stage) {
 		try {
-			myDefaults = ResourceBundle.getBundle("DEFAULTS");
+			myDefaults = ResourceBundle.getBundle("DEFAULTS", Locale.ENGLISH);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,6 +86,7 @@ public class Game {
 	private static void openFile(String filePath) {
 		currentFile = new FileReader();
 		currentFile.parseFile(filePath);
+		currentFile.printMap();
 		currentGameType = currentFile.getGameType();
 		currentNeighborhoodType = currentFile.getNeighborhoodType();
 		currentGameSpeed = Double.parseDouble(currentFile.getGameData().get("Speed"));
@@ -118,10 +120,7 @@ public class Game {
 	}
 
 	public static void step() {
-		//Updates the 2D Array in Cell
 		cellGrid.nextGeneration();
-
-		// Display current cellGrid
 		renderGrid();
 	}
 }

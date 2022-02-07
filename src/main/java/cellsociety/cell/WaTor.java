@@ -94,10 +94,6 @@ public class WaTor extends CellGridME {
                 if (neighborsType[i][j] == destType) validDirections[(i*neighborsType.length)+j] = true;
             }
         }
-        for (int i = 0; i < validDirections.length; i++) {
-            System.out.println(validDirections[i] + " ");
-        }
-        System.out.println();
         return validDirections;
     }
 

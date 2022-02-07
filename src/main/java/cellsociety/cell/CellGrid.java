@@ -9,7 +9,6 @@ import java.util.Map;
 
 import static cellsociety.cell.CellProperties.*;
 import static cellsociety.cell.CellType.*;
-import static cellsociety.game.NeighborhoodType.*;
 
 /**
  * This class manages the 2D array of Cells that abstractly represents the game's world
@@ -51,10 +50,6 @@ public abstract class CellGrid {
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[0].length; j++) {
                 grid[i][j].updateType(grid[i][j].getDefault());
-//                FOR SCHELLING SEGREGATION TESTING
-//                CellType randomType = EMPTY;
-//                if (Math.random() > 0.35) randomType = Math.random() > 0.5? A : B;
-//                grid[i][j].updateType(randomType);
             }
         }
         for (Cell c : cells) {
@@ -133,16 +128,7 @@ public abstract class CellGrid {
 
     private static CellType[][] getSquareNeighbors(int x, int y, Cell[][] grid) {
         int n = Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_WIDTH"));
-        CellType[][] neighbors = new CellType[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                try {
-                    neighbors[i][j] = grid[x - (n/2) + i][y - (n/2) + j].getType();
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    neighbors[i][j] = NULL;
-                }
-            }
-        }
+        CellType[][] neighbors = generateNeighborsArray(n, n, x, y, grid);
         neighbors[n/2][n/2] = NULL;
         return neighbors;
     }
@@ -150,6 +136,20 @@ public abstract class CellGrid {
     private static CellType[][] getTriangularNeighbors(int x, int y, Cell[][] grid) {
         int m = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_HEIGHT"));
         int n = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_WIDTH"));
+        CellType[][] neighbors = generateNeighborsArray(m, n, x, y, grid);
+        neighbors[m/2][n/2] = NULL;
+        if ((x+y)%2 == 0) {
+            neighbors[m-1][0] = NULL;
+            neighbors[m-1][n-1] = NULL;
+        }
+        else {
+            neighbors[0][0] = NULL;
+            neighbors[0][n-1] = NULL;
+        }
+        return neighbors;
+    }
+
+    private static CellType[][] generateNeighborsArray(int m, int n, int x, int y, Cell[][] grid) {
         CellType[][] neighbors = new CellType[m][n];
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -159,15 +159,6 @@ public abstract class CellGrid {
                     neighbors[i][j] = NULL;
                 }
             }
-        }
-        neighbors[m/2][n/2] = NULL;
-        if ((x+y)%2 == 0) {
-            neighbors[m-1][0] = NULL;
-            neighbors[m-1][n-1] = NULL;
-        }
-        else {
-            neighbors[0][0] = NULL;
-            neighbors[0][n-1] = NULL;
         }
         return neighbors;
     }
