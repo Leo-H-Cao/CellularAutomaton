@@ -53,7 +53,7 @@ public class InformationPopup {
 		grid.add(description, 0, 1);
 		grid.setAlignment(Pos.CENTER);
 
-		ArrayList<String> selectionTypes = new ArrayList<>(Arrays.asList("en", "es"));
+		ArrayList<String> selectionTypes = new ArrayList<>(Arrays.asList("en", "es", "fr"));
 
 		ChoiceBox choiceBox = new ChoiceBox(FXCollections.observableArrayList(selectionTypes));
 
