@@ -15,7 +15,7 @@ public class CellNode extends Node {
 	 * @param c Pointer to the cell that this cellNode represents
 	 */
 	public CellNode(Cell c) {
-		int[] dimensions = GridManager.getCellDimensions();
+		double[] dimensions = GridManager.getCellDimensions();
 		double width = dimensions[0];
 		double height = dimensions[1];
 		cell = c;

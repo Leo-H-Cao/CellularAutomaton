@@ -50,10 +50,6 @@ public abstract class CellGrid {
         for (Cell[] value : grid) {
             for (int j = 0; j < grid[0].length; j++) {
                 value[j].updateType(value[j].getDefault());
-//                if (Math.random()<0.5) {
-//                    if (Math.random() < 0.5) value[j].updateType(A);
-//                    else value[j].updateType(B);
-//                }
             }
         }
         for (Cell c : cells) {

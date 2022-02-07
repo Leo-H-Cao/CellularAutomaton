@@ -12,7 +12,7 @@ import java.util.MissingResourceException;
 public class GridManager {
 	public static final String COLOR_MATCH_STRING = "%s_COLOR";
 	private static GridPane grid;
-	private static int cellWidth, cellHeight;
+	private static double cellWidth, cellHeight;
 	private static double gridGap;
 
 	public GridManager() {
@@ -22,8 +22,8 @@ public class GridManager {
 		grid.setVgap(gridGap);
 	}
 
-	public static int[] getCellDimensions() {
-		int[] ret = new int[2];
+	public static double[] getCellDimensions() {
+		double[] ret = new double[2];
 		ret[0] = cellWidth;
 		ret[1] = cellHeight;
 		return ret;
@@ -45,9 +45,9 @@ public class GridManager {
 	 * @param g Model representation of the displayed grid
 	 */
 	public static void update(Cell[][] g) {
-		int controlsPadding = 150;
-		cellWidth = (int) (ViewController.getWindowSize().width / g.length - gridGap - 1);
-		cellHeight = (int) (Math.round((ViewController.getWindowSize().height - controlsPadding) / g[0].length) - gridGap - 1);
+		int controlsPadding = 175;
+		cellWidth = ViewController.getWindowSize().width / (double) g.length - gridGap;
+		cellHeight = (ViewController.getWindowSize().height - controlsPadding) / (double) g[0].length - gridGap;
 		// reset grid
 		grid.getChildren().clear();
 

@@ -8,8 +8,8 @@
     </Authors>
     <Description>Basic initially empty Fire game. Playing the simulation will generate trees and fires.</Description>
     <Dimentions>
-        <Width>100</Width>
-        <Height>100</Height>
+        <Width>120</Width>
+        <Height>120</Height>
     </Dimentions>
     <InitialCellState>
     </InitialCellState>

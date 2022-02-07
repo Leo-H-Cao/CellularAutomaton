@@ -88,12 +88,8 @@ public class ViewController {
 
 		Scene scene = new Scene(root, width, height);
 		scene.getStylesheets().add("stylesheet.css");
-		scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> {
-			windowSize.width = newSceneWidth.intValue();
-		});
-		scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> {
-			windowSize.height = newSceneHeight.intValue();
-		});
+		scene.widthProperty().addListener((observableValue, oldSceneWidth, newSceneWidth) -> windowSize.width = newSceneWidth.intValue());
+		scene.heightProperty().addListener((observableValue, oldSceneHeight, newSceneHeight) -> windowSize.height = newSceneHeight.intValue());
 		return scene;
 	}
 

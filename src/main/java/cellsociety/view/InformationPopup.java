@@ -12,7 +12,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Popup;
 
 import java.util.ArrayList;
@@ -42,12 +41,12 @@ public class InformationPopup {
 		grid.setVgap(25);
 		Label author = new Label();
 
-		String authorText = "";
+		StringBuilder authorText = new StringBuilder();
 		for(String s : Game.getCurrentFile().getAuthors()) {
-			authorText += s + "\n";
+			authorText.append(s).append("\n");
 		}
 
-		author.setText(authorText);
+		author.setText(authorText.toString());
 
 		Rectangle close = new Rectangle(40,30, Color.RED);
 		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> popup.hide());

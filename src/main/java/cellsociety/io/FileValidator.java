@@ -2,12 +2,9 @@ package cellsociety.io;
 
 
 import cellsociety.game.GameType;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
 import org.w3c.dom.Element;
+
+import java.util.*;
 
 /**
  * Validates file format and required values
@@ -21,9 +18,9 @@ public class FileValidator {
   public static final String VALID_ROOT_TAG = "CellSociety";
   public static final String NEIGHBORHOOD_TYPE = "NeighborhoodType";
 
-  private ResourceBundle requiredResourceBundle;
+  private final ResourceBundle requiredResourceBundle;
   private HashSet<String> requiredValues;
-  private ResourceBundle defaults;
+  private final ResourceBundle defaults;
 
 
   public FileValidator(){
@@ -43,7 +40,7 @@ public class FileValidator {
     }
   }
 
-  public boolean checkRequiredValues(GameType game, Map<String, String> gameData){
+  public void checkRequiredValues(GameType game, Map<String, String> gameData){
     String[] requiredValuesArray = requiredResourceBundle.getString(game.toString()).split(" ");
     requiredValues = new HashSet<>(Arrays.asList(requiredValuesArray));
     for(String param : gameData.keySet()){
@@ -52,9 +49,7 @@ public class FileValidator {
     if(requiredValues.size() != 0){
       System.out.println(requiredResourceBundle.getString("FAIL_MESSAGE"));
       setDefaultValues(game, gameData);
-      return false;
     }
-    return true;
   }
 
   private void setDefaultValues(GameType game, Map<String, String> gameData){

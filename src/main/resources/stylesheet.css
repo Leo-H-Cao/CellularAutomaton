@@ -12,6 +12,7 @@
     -fx-text-alignment: center;
 }
 
+/*noinspection CssUnusedSymbol*/
 .root{
     -fx-font-size: 18pt;
     -fx-font-family: "Tahoma";

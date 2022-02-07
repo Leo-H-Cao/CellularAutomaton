@@ -4,9 +4,9 @@ import cellsociety.cell.Cell;
 import cellsociety.cell.CellType;
 import cellsociety.game.GameType;
 import cellsociety.game.NeighborhoodType;
-import java.util.Map;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
+
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -31,8 +32,8 @@ public class FileReader {
 	private final ArrayList<Cell> initialState;
 	private GameType game_type;
 	private NeighborhoodType neighborhoodType;
-	private FileValidator validator;
-	private ArrayList<String> authors;
+	private final FileValidator validator;
+	private final ArrayList<String> authors;
 
 	/**
 	 * creates file reader instance
@@ -110,13 +111,10 @@ public class FileReader {
 			Node curChildNode = childNodes.item(j);
 			String childNodeName = curChildNode.getNodeName();
 			String childNodeText = curChildNode.getTextContent();
-			if (childNodeName.equals("Cell")) {
-				parseCellNode(curChildNode);
-			} else if (childNodeName.equals("Color")) {
-				childNodeName = parseColorAttribute(curChildNode) + "_COLOR";
-			}
-			else if(childNodeName.equals("Author")){
-				authors.add(childNodeText);
+			switch (childNodeName) {
+				case "Cell" -> parseCellNode(curChildNode);
+				case "Color" -> childNodeName = parseColorAttribute(curChildNode) + "_COLOR";
+				case "Author" -> authors.add(childNodeText);
 			}
 			if (!(childNodeName.equals("Cell") || childNodeName.equals("#text"))) {
 				gameData.put(childNodeName, childNodeText);

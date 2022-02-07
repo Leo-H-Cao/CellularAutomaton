@@ -18,7 +18,7 @@ Hours Spent: 42
 
 Leo Cao: File Parsing (io package)
 Nolan Gelinas: View (view package)
-Zack Schage: Model (cell package)
+Zack Schrage: Model (cell package)
 
 
 ### Resources Used
@@ -54,7 +54,7 @@ General Features:
 * Games (and associated properties) loaded via XML
 * Current state of game can be packaged into and exported as an XML
 * XML files with missing information have information loaded from a default .properties file
-* Foreign languages supported via different config_<language code>.properties files
+* Foreign languages supported via different config_**\<Language Code\>**.properties files
 * Games can be played on a loop whose speed changes with a speed slider or can be stepped through generation by generation
 * Clicking on the grid can alter the state of the cell, the particular state can be set using a picker
 
@@ -65,7 +65,7 @@ Assumptions or Simplifications:
 
 Assumes the playing space to be finite since the core data structure is a 2D Array
 
-Interesting data files:
+### Interesting data files:
 
 exampleGameOfLife.xml
 exampleFire.xml
@@ -73,15 +73,17 @@ exampleWaTor.xml
 exampleSegregation.xml
 examplePercolation.xml
 
-Known Bugs:
+### Known Bugs:
 
 Triangular neighborhoods are not fully working for games with mobile entities such as WaTor or Schelling Segregation.
 Triangular neighborhoods are currently not displayed in triangular shaped cells
 
 FileReader cannot parse XML files where nodes have more than one child node
 
-Noteworthy Features:
+### Noteworthy Features:
 
 
-### Impressions
+### Impressions:
+* The app is very stable up to 100 x 100 grids
+  * At very low sim speeds, games of up to 500
 
