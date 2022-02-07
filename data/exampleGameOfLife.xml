@@ -20,6 +20,7 @@
         <Cell x="11" y="8" type="ALIVE"/>
     </InitialCellState>
     <Parameters>
+        <NeighborhoodType>SQUARE_MOORE</NeighborhoodType>
         <Speed>1</Speed>
     </Parameters>
     <ColorScheme>

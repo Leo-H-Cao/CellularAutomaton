@@ -21,6 +21,10 @@ public class SchellingSegregation extends CellGridME {
     private static Cell[][] updatingGrid;
     private static double fIdeal = 0.6;
 
+    public SchellingSegregation(double fIdealParameter){
+        fIdeal = fIdealParameter;
+    }
+
     @Override
     public void nextGeneration() {
         updatingGrid = initializeUpdateGrid();
@@ -76,6 +80,7 @@ public class SchellingSegregation extends CellGridME {
         CellType[][] neighborsType = CellGrid.getNeighbors(x, y, updatingGrid);
         for (int i = 0; i < neighborsType.length; i++) {
             for (int j = 0; j < neighborsType[0].length; j++) {
+                System.out.println(neighborsType[i][j]);
                 if (isNeumann && (i+j)%2 == 0) continue;
                 if (neighborsType[i][j] == EMPTY) validDirections[(i*neighborsType.length)+j] = fReal(CellGrid.getNeighbors(x-1+i, y-1+j, updatingGrid), updatingGrid[x][y].getType());
             }

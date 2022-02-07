@@ -20,6 +20,7 @@
     </InitialCellState>
     <Parameters>
         <Speed>1</Speed>
+        <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
     </Parameters>
     <ColorSceme>
         <Color type="EMPTY">#000000</Color>
