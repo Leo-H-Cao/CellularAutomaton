@@ -19,13 +19,16 @@ public class FileValidator {
   public static final String FILE_TYPE_ERROR = "Not an XML file!";
   public static final String ROOT_TAG_ERROR = "Not a game configuration file, root tag should be 'CellSociety'";
   public static final String VALID_ROOT_TAG = "CellSociety";
+  public static final String NEIGHBORHOOD_TYPE = "NeighborhoodType";
 
   private ResourceBundle requiredResourceBundle;
   private HashSet<String> requiredValues;
+  private ResourceBundle defaults;
 
 
   public FileValidator(){
     requiredResourceBundle = ResourceBundle.getBundle("xmlrequiredvalues", Locale.ENGLISH);
+    defaults =  ResourceBundle.getBundle("DEFAULTS", Locale.ENGLISH);
   }
   public void validateFileType(String fileName) throws XMLException {
     String fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
@@ -48,9 +51,22 @@ public class FileValidator {
     }
     if(requiredValues.size() != 0){
       System.out.println(requiredResourceBundle.getString("FAIL_MESSAGE"));
+      setDefaultValues(game, gameData);
       return false;
     }
     return true;
+  }
+
+  private void setDefaultValues(GameType game, Map<String, String> gameData){
+    for(String missing: requiredValues){
+      if(missing.equals(NEIGHBORHOOD_TYPE)){
+        missing = game.toString()+NEIGHBORHOOD_TYPE;
+        gameData.put(NEIGHBORHOOD_TYPE, defaults.getString(missing));
+      }
+      else{
+        gameData.put(missing, defaults.getString(missing));
+      }
+    }
   }
 
 }
