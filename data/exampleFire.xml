@@ -15,6 +15,9 @@
     </InitialCellState>
     <Parameters>
         <Speed>1</Speed>
+        <TreeCombustProbability>0.05</TreeCombustProbability>
+        <TreeGrowthProbability>0.3</TreeGrowthProbability>
+        <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
     </Parameters>
     <ColorSceme>
         <Color type="EMPTY">#000000</Color>

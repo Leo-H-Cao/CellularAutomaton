@@ -3,6 +3,8 @@ package cellsociety.io;
 import cellsociety.cell.Cell;
 import cellsociety.cell.CellType;
 import cellsociety.game.GameType;
+import cellsociety.game.NeighborhoodType;
+import java.util.Map;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
@@ -34,6 +36,7 @@ public class FileReader {
 	private final Map<String, String> gameData;
 	private final ArrayList<Cell> initialState;
 	private GameType game_type;
+	private NeighborhoodType neighborhoodType;
 
 	/**
 	 * creates file reader instance
@@ -82,6 +85,7 @@ public class FileReader {
 				}
 			}
 		}
+		setNeighborhoodType();
 	}
 
 	private void validateFileType(String fileName) throws XMLException {
@@ -151,8 +155,17 @@ public class FileReader {
 		game_type = GameType.valueOf(gameTypeString);
 	}
 
+	private void setNeighborhoodType() {
+		String neighborhoodTypeString = gameData.get("NeighborhoodType");
+		neighborhoodType = NeighborhoodType.valueOf(neighborhoodTypeString);
+	}
+
 	public GameType getGameType() {
 		return game_type;
+	}
+
+	public NeighborhoodType getNeighborhoodType() {
+		return neighborhoodType;
 	}
 
 	public void printMap() {
