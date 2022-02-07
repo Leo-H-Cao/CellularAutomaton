@@ -19,7 +19,7 @@ import static cellsociety.game.NeighborhoodType.*;
 public class SchellingSegregation extends CellGridME {
 
     private static Cell[][] updatingGrid;
-    private static double fIdeal = 0.5;
+    private static double fIdeal = 0.6;
 
     @Override
     public void nextGeneration() {
@@ -54,10 +54,10 @@ public class SchellingSegregation extends CellGridME {
         for (int i = 0; i < neighbors.length; i++) {
             for (int j = 0; j < neighbors[0].length; j++) {
                 if (neighbors[i][j] == A) countA++;
-                if (neighbors[i][j] != NULL) den++;
+                if (neighbors[i][j] != EMPTY) den++;
             }
         }
-        return type == A ? countA/den : 1.0-(countA/den);
+        return type == A ? countA/den : (den - countA/den);
     }
 
     private static double[] getValidDirections(int x, int y, CellType destType) {

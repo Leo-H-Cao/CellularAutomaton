@@ -39,7 +39,7 @@ public class Game {
 				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
 		viewController = new ViewController(stage);
 
-		CellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		CellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType, NeighborhoodType.SQUARE_NEUMANN);
 		CellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 
@@ -101,16 +101,13 @@ public class Game {
 	public static void importNewFile(String filePath) {
 		openFile(filePath);
 
-		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType);
+		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType, NeighborhoodType.SQUARE_NEUMANN);
 		cellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 	}
 
 	public static void step() {
-		//Updates the 2D Array in Cell
 		cellGrid.nextGeneration();
-
-		// Display current cellGrid
 		renderGrid();
 	}
 }
