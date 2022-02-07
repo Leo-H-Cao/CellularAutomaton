@@ -44,7 +44,7 @@ public class Controls {
 		Node typeSelector = makeTypeSelector();
 		HBox.setMargin(typeSelector, new Insets(0,0,0,20));
 		leftBox.getChildren().add(typeSelector);
-		centerBox.setAlignment(Pos.CENTER);
+		leftBox.setAlignment(Pos.CENTER);
 
 		Slider gameSpeedSlider = new Slider();
 
@@ -56,6 +56,7 @@ public class Controls {
 		gameSpeedSlider.valueProperty().addListener((observable, oldValue, newValue) -> Game.setSpeed(newValue.doubleValue()));
 
 		rightBox.getChildren().add(gameSpeedSlider);
+		rightBox.setAlignment(Pos.CENTER);
 
 		ret.add(leftBox, 0, 0);
 		ret.add(centerBox, 1, 0);
