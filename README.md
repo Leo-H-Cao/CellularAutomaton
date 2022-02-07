@@ -54,7 +54,7 @@ General Features:
 * Games (and associated properties) loaded via XML
 * Current state of game can be packaged into and exported as an XML
 * XML files with missing information have information loaded from a default .properties file
-* Foreign languages supported via different config_<language code>.properties files
+* Foreign languages supported via different config_"language code".properties files
 * Games can be played on a loop whose speed changes with a speed slider or can be stepped through generation by generation
 * Clicking on the grid can alter the state of the cell, the particular state can be set using a picker
 
@@ -77,10 +77,11 @@ Known Bugs:
 
 Triangular neighborhoods are not fully working for games with mobile entities such as WaTor or Schelling Segregation.
 Triangular neighborhoods are currently not displayed in triangular shaped cells
-
 FileReader cannot parse XML files where nodes have more than one child node
 
 Noteworthy Features:
+
+Users can click on the grid and make changes to it in real time
 
 
 ### Impressions
