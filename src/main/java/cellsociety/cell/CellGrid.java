@@ -47,9 +47,9 @@ public abstract class CellGrid {
      * takes in a list of cells to initialize onto the board
      */
     public static void initializeCells(ArrayList<Cell> cells) {
-        for (int i = 0; i < grid.length; i++) {
+        for (Cell[] value : grid) {
             for (int j = 0; j < grid[0].length; j++) {
-                grid[i][j].updateType(grid[i][j].getDefault());
+                value[j].updateType(value[j].getDefault());
             }
         }
         for (Cell c : cells) {
@@ -118,12 +118,10 @@ public abstract class CellGrid {
      * @return its neighboring cell types
      */
     public static CellType[][] getNeighbors(int x, int y, Cell[][] grid) {
-        switch (neighborhoodType) {
-            case SQUARE_MOORE, SQUARE_NEUMANN, default:
-                return getSquareNeighbors(x, y, grid);
-            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN:
-                return getTriangularNeighbors(x, y, grid);
-        }
+        return switch (neighborhoodType) {
+            case SQUARE_MOORE, SQUARE_NEUMANN -> getSquareNeighbors(x, y, grid);
+            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN -> getTriangularNeighbors(x, y, grid);
+        };
     }
 
     private static CellType[][] getSquareNeighbors(int x, int y, Cell[][] grid) {
@@ -164,13 +162,9 @@ public abstract class CellGrid {
     }
 
     private static void assignNeighborhoodCenter() {
-        switch(neighborhoodType) {
-            case SQUARE_MOORE, SQUARE_NEUMANN, default:
-                neighborhoodCenter = Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))/2;
-                break;
-            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN:
-                neighborhoodCenter = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))/2;
-                break;
+        switch (neighborhoodType) {
+            case SQUARE_MOORE, SQUARE_NEUMANN, default -> neighborhoodCenter = Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT")) / 2;
+            case TRIANGULAR_MOORE, TRIANGULAR_NEUMANN -> neighborhoodCenter = Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT")) / 2;
         }
     }
 

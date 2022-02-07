@@ -17,17 +17,17 @@ import javafx.scene.layout.*;
 import java.util.ArrayList;
 
 public class Controls {
-	private Button playButton;
-	private Button stepButton;
+	private final Button playButton;
+	private final Button stepButton;
 	private static GameCellMapping myGameCellMapping;
 
 	public Controls() {
 		myGameCellMapping = new GameCellMapping();
-		playButton = makeButton("Play", (e) -> {
+		playButton = makeButton(Game.getInterfaceProperties().getString("PLAY"), (e) -> {
 			Game.toggleSimulation();
 			togglePlayButtonState((Button) e.getSource());
 		});
-		stepButton = makeButton("Step", (e) -> Game.step());
+		stepButton = makeButton(Game.getInterfaceProperties().getString("STEP"), (e) -> Game.step());
 	}
 
 	public Node makeControls() {
@@ -38,13 +38,13 @@ public class Controls {
 
 		centerBox.getChildren().addAll(playButton, stepButton);
 		centerBox.setAlignment(Pos.CENTER);
-		HBox.setMargin(playButton,new Insets(0,10,20,0));
-		HBox.setMargin(stepButton,new Insets(0,0,20,10));
+		HBox.setMargin(playButton, new Insets(0,10,20,0));
+		HBox.setMargin(stepButton, new Insets(0,0,20,10));
 
 		Node typeSelector = makeTypeSelector();
 		HBox.setMargin(typeSelector, new Insets(0,0,0,20));
 		leftBox.getChildren().add(typeSelector);
-		leftBox.setAlignment(Pos.CENTER);
+		leftBox.setAlignment(Pos.BOTTOM_LEFT);
 
 		Slider gameSpeedSlider = new Slider();
 
@@ -77,11 +77,11 @@ public class Controls {
 	}
 
 	private static void togglePlayButtonState(Button b) {
-		if(b.getText().equals("Play")) {
-			b.setText("Pause");
+		if(b.getText().equals(Game.getInterfaceProperties().getString("PLAY"))) {
+			b.setText(Game.getInterfaceProperties().getString("PAUSE"));
 		}
 		else {
-			b.setText("Play");
+			b.setText(Game.getInterfaceProperties().getString("PLAY"));
 		}
 	}
 
@@ -94,7 +94,8 @@ public class Controls {
 
 	private Node makeTypeSelector() {
 		TilePane ret = new TilePane();
-		Label selectorTitle = new Label("Select Cell Type");
+		Label selectorTitle = new Label(Game.getInterfaceProperties().getString("SELECT_CELL_TYPE"));
+		selectorTitle.setId("selector-title");
 
 		ArrayList<CellType> selectionTypes = myGameCellMapping.MAP.get(Game.getCurrentGameType());
 
@@ -103,9 +104,7 @@ public class Controls {
 		choiceBox.setValue(selectionTypes.get(0).toString());
 		ViewController.setSelectedClickType(selectionTypes.get(0));
 
-		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> {
-			ViewController.setSelectedClickType(selectionTypes.get(new_value.intValue()));
-		});
+		choiceBox.getSelectionModel().selectedIndexProperty().addListener((ov, value, new_value) -> ViewController.setSelectedClickType(selectionTypes.get(new_value.intValue())));
 
 		ret.getChildren().add(selectorTitle);
 		ret.getChildren().add(choiceBox);

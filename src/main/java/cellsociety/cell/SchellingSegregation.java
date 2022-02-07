@@ -19,10 +19,9 @@ import static cellsociety.game.NeighborhoodType.*;
 public class SchellingSegregation extends CellGridME {
 
     private static Cell[][] updatingGrid;
-    private static double fIdeal = 0.6;
 
     public SchellingSegregation(double fIdealParameter){
-        fIdeal = fIdealParameter;
+        double fIdeal = fIdealParameter;
     }
 
     @Override
@@ -40,8 +39,9 @@ public class SchellingSegregation extends CellGridME {
                     CellType type = updatingGrid[i][j].getType();
                     double fReal = fReal(CellGrid.getNeighbors(i, j, updatingGrid), type);
                     int d = getNeighborhoodCenter();
+                    double fIdeal = 0.6;
                     if (fReal < fIdeal) {
-                        d = bestDirection(getValidDirections(i, j, EMPTY), fReal);
+                        d = bestDirection(getValidDirections(i, j), fReal);
                     }
                     updateGrid(updatingGrid, d, i, j, type, properties);
                     if (d != getNeighborhoodCenter()) {
@@ -55,27 +55,24 @@ public class SchellingSegregation extends CellGridME {
     private static double fReal(CellType[][] neighbors, CellType type) {
         double countA = type == A ? 1 : 0;
         double den = 0;
-        for (int i = 0; i < neighbors.length; i++) {
+        for (CellType[] neighbor : neighbors) {
             for (int j = 0; j < neighbors[0].length; j++) {
-                if (neighbors[i][j] == A) countA++;
-                if (neighbors[i][j] != EMPTY) den++;
+                if (neighbor[j] == A) countA++;
+                if (neighbor[j] != EMPTY) den++;
             }
         }
         return type == A ? countA/den : (den - countA/den);
     }
 
-    private static double[] getValidDirections(int x, int y, CellType destType) {
-        switch(getNeighborhoodType()) {
-            case SQUARE_MOORE, SQUARE_NEUMANN, default:
-                return getValidDirectionsSquare(x, y, destType, getNeighborhoodType()==SQUARE_NEUMANN);
-            case TRIANGULAR_MOORE:
-                return getValidDirectionsTriangular(x, y, destType);
-            case TRIANGULAR_NEUMANN:
-                return getValidDirectionsTriangularNeumann(x, y, destType, (x+y)%2==0);
-        }
+    private static double[] getValidDirections(int x, int y) {
+        return switch (getNeighborhoodType()) {
+            case SQUARE_MOORE, SQUARE_NEUMANN -> getValidDirectionsSquare(x, y, getNeighborhoodType() == SQUARE_NEUMANN);
+            case TRIANGULAR_MOORE -> getValidDirectionsTriangular(x, y);
+            case TRIANGULAR_NEUMANN -> getValidDirectionsTriangularNeumann(x, y, (x + y) % 2 == 0);
+        };
     }
 
-    private static double[] getValidDirectionsSquare(int x, int y, CellType type, boolean isNeumann) {
+    private static double[] getValidDirectionsSquare(int x, int y, boolean isNeumann) {
         double[] validDirections = new double[Integer.parseInt(Game.getDefaultProperties().getString("SQUARE_NEIGHBORS_COUNT"))];
         CellType[][] neighborsType = CellGrid.getNeighbors(x, y, updatingGrid);
         for (int i = 0; i < neighborsType.length; i++) {
@@ -88,32 +85,32 @@ public class SchellingSegregation extends CellGridME {
         return validDirections;
     }
 
-    private static double[] getValidDirectionsTriangular(int x, int y, CellType type) {
+    private static double[] getValidDirectionsTriangular(int x, int y) {
         double[] validDirections = new double[Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))];
         CellType[][] neighborsType = CellGrid.getNeighbors(x, y, updatingGrid);
         for (int i = 0; i < neighborsType.length; i++) {
             for (int j = 0; j < neighborsType[0].length; j++) {
-                if (neighborsType[i][j] == type) validDirections[(i*neighborsType.length)+j] = fReal(CellGrid.getNeighbors(x-2+i, y-1+j, updatingGrid), updatingGrid[x][y].getType());
+                if (neighborsType[i][j] == CellType.EMPTY) validDirections[(i*neighborsType.length)+j] = fReal(CellGrid.getNeighbors(x-2+i, y-1+j, updatingGrid), updatingGrid[x][y].getType());
             }
         }
         return validDirections;
     }
 
-    private static double[] getValidDirectionsTriangularNeumann(int x, int y, CellType type, boolean orientDown) {
+    private static double[] getValidDirectionsTriangularNeumann(int x, int y, boolean orientDown) {
         double[] validDirections = new double[Integer.parseInt(Game.getDefaultProperties().getString("TRIANGLE_NEIGHBORS_COUNT"))];
         CellType[][] neighborsType = CellGrid.getNeighbors(x, y, updatingGrid);
-        if (neighborsType[1][1] == type) validDirections[(1*neighborsType.length)+1] = fReal(CellGrid.getNeighbors(x-2+1, y-1+1, updatingGrid), updatingGrid[x][y].getType());
-        if (neighborsType[1][3] == type) validDirections[(1*neighborsType.length)+3] = fReal(CellGrid.getNeighbors(x-2+1, y-1+3, updatingGrid), updatingGrid[x][y].getType());
-        if (orientDown && neighborsType[0][2] == type) validDirections[(0*neighborsType.length)+2] = fReal(CellGrid.getNeighbors(x-2+0, y-1+2, updatingGrid), updatingGrid[x][y].getType());
-        if (!orientDown && neighborsType[2][2] == type) validDirections[(2*neighborsType.length)+2] = fReal(CellGrid.getNeighbors(x-2+2, y-1+2, updatingGrid), updatingGrid[x][y].getType());
+        if (neighborsType[1][1] == CellType.EMPTY) validDirections[(neighborsType.length)+1] = fReal(CellGrid.getNeighbors(x-2+1, y-1+1, updatingGrid), updatingGrid[x][y].getType());
+        if (neighborsType[1][3] == CellType.EMPTY) validDirections[(neighborsType.length)+3] = fReal(CellGrid.getNeighbors(x-2+1, y-1+3, updatingGrid), updatingGrid[x][y].getType());
+        if (orientDown && neighborsType[0][2] == CellType.EMPTY) validDirections[2] = fReal(CellGrid.getNeighbors(x - 2, y-1+2, updatingGrid), updatingGrid[x][y].getType());
+        if (!orientDown && neighborsType[2][2] == CellType.EMPTY) validDirections[(2*neighborsType.length)+2] = fReal(CellGrid.getNeighbors(x-2+2, y-1+2, updatingGrid), updatingGrid[x][y].getType());
         return validDirections;
     }
 
 
     private static int bestDirection(double[] validDirections, double fReal) {
         int count = 0;
-        for (int i = 0; i < validDirections.length; i++) {
-            if (validDirections[i] > fReal) count++;
+        for (double validDirection : validDirections) {
+            if (validDirection > fReal) count++;
         }
         int random = (int)(Math.random() * count);
         for (int i = 0; i < validDirections.length; i++) {

@@ -26,11 +26,9 @@ import java.util.HashMap;
 
 public class FileReader {
 
-	private final String GAME_TYPE_ATTRIBUTE = "game";
-
 	private final DocumentBuilder BUILDER;
-	private Map<String, String> gameData;
-	private ArrayList<Cell> initialState;
+	private final Map<String, String> gameData;
+	private final ArrayList<Cell> initialState;
 	private GameType game_type;
 	private NeighborhoodType neighborhoodType;
 	private FileValidator validator;
@@ -83,6 +81,7 @@ public class FileReader {
 		}
 		setNeighborhoodType();
 		validator.checkRequiredValues(game_type, gameData);
+		System.out.println(gameData.get("Authors"));
 	}
 
 
@@ -123,8 +122,7 @@ public class FileReader {
 
 	private String parseColorAttribute(Node colorNode) {
 		NamedNodeMap attributes = colorNode.getAttributes();
-		String nodeAttributes = attributes.getNamedItem("type").getNodeValue();
-		return nodeAttributes;
+		return attributes.getNamedItem("type").getNodeValue();
 	}
 
 	public Map<String, String> getGameData() {
@@ -136,6 +134,7 @@ public class FileReader {
 	}
 
 	private void setGameType(Element root) {
+		String GAME_TYPE_ATTRIBUTE = "game";
 		String gameTypeString = root.getAttributes().getNamedItem(GAME_TYPE_ATTRIBUTE).getNodeValue();
 		game_type = GameType.valueOf(gameTypeString);
 	}

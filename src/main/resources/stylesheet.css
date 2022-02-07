@@ -1,10 +1,20 @@
-Button {
-    -fx-padding: 10;
-    -fx-background-color: rgba(47, 226, 190, 0.5);
-    -fx-font-size: 20;
+#info-button {
+    -fx-background-color: darkgreen;
 }
 
-#info-button {
-    -fx-background-color: green;
-    -fx-border-radius: 100;
+#title {
+    -fx-font-weight: bold;
+    -fx-font-family: "Algerian";
+}
+
+#selector-title {
+    -fx-text-fill: black;
+}
+
+.root{
+    -fx-font-size: 18pt;
+    -fx-font-family: "Tahoma";
+    -fx-base: rgb(39, 76, 255);
+    -fx-background: white;
+    -fx-text-background-color: white;
 }

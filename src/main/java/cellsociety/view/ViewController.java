@@ -12,7 +12,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
-import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -20,11 +19,9 @@ import javafx.stage.Stage;
 import java.io.File;
 
 public class ViewController {
-	private Button importButton;
-	private Button exportButton;
 	private final GridManager gm;
 	private static InformationPopup myInformationPopup;
-	private Controls controls;
+	private final Controls controls;
 	private BorderPane root;
 	private static Stage stage;
 	private static CellType selectedClickType;
@@ -39,13 +36,13 @@ public class ViewController {
 		stage.show();
 	}
 
-	public void updateGridPane(Cell[][] cells){
-		gm.update(cells);
+	public void updateGridPane(Cell[][] cells) {
+		GridManager.update(cells);
 		root.setCenter(gm.getGrid());
 	}
 
 	public static void openPopup() {
-		if(!myInformationPopup.getPopup().isShowing()) {
+		if (!myInformationPopup.getPopup().isShowing()) {
 			myInformationPopup.getPopup().show(stage);
 		}
 	}
@@ -58,7 +55,7 @@ public class ViewController {
 		selectedClickType = type;
 	}
 
-	private Scene makeScene (int width, int height) {
+	private Scene makeScene(int width, int height) {
 		root = new BorderPane();
 
 		root.setCenter(gm.getGrid());
@@ -66,7 +63,7 @@ public class ViewController {
 		root.setBottom(controls.makeControls());
 
 		Scene scene = new Scene(root, width, height);
-		scene.getStylesheets().add("stylesheet.css");
+		root.getStylesheets().add("stylesheet.css");
 		return scene;
 	}
 
@@ -77,30 +74,30 @@ public class ViewController {
 		HBox rightBox = new HBox();
 		FileChooser fileChooser = new FileChooser();
 
-		importButton = makeButton("Import", e -> {
+		Button importButton = makeButton(Game.getInterfaceProperties().getString("IMPORT"), e -> {
 			fileChooser.setTitle("Open Resource File");
 			File file = fileChooser.showOpenDialog(stage);
-			if(file != null) {
+			if (file != null) {
 				Game.importNewFile(file.toString());
 				root.setBottom(controls.makeControls());
 			}
 		});
-		exportButton = makeButton("Export", e -> {
+		Button exportButton = makeButton(Game.getInterfaceProperties().getString("EXPORT"), e -> {
 			fileChooser.setTitle("Save Resource File");
 			File file = fileChooser.showSaveDialog(stage);
-			if(file != null){
+			if (file != null) {
 				XMLExport exporter = new XMLExport(file);
 				exporter.saveToXML();
 			}
 		});
 
-		Text appTitle = new Text("Society of Cells");
-		appTitle.setFont(new Font("san-serif", 28));
+		Text appTitle = new Text(Game.getInterfaceProperties().getString("TITLE"));
+		appTitle.setId("title");
 
 		leftBox.getChildren().addAll(importButton, exportButton);
 		leftBox.setAlignment(Pos.CENTER);
-		HBox.setMargin(importButton,new Insets(20,10,20,0));
-		HBox.setMargin(exportButton,new Insets(20,0,20,10));
+		HBox.setMargin(importButton, new Insets(20, 10, 20, 0));
+		HBox.setMargin(exportButton, new Insets(20, 0, 20, 10));
 
 		centerBox.getChildren().add(appTitle);
 		centerBox.setAlignment(Pos.CENTER);
@@ -112,9 +109,9 @@ public class ViewController {
 		ret.add(centerBox, 1, 0);
 		ret.add(rightBox, 2, 0);
 
-		for (int i = 0 ; i < 3 ; i++) {
+		for (int i = 0; i < 3; i++) {
 			ColumnConstraints cc = new ColumnConstraints();
-			cc.setPercentWidth(100.0/3.0);
+			cc.setPercentWidth(100.0 / 3.0);
 			cc.setHgrow(Priority.ALWAYS);
 			ret.getColumnConstraints().add(cc);
 		}
@@ -126,7 +123,7 @@ public class ViewController {
 		return ret;
 	}
 
-	private Button makeButton (String label, EventHandler<ActionEvent> handler) {
+	private Button makeButton(String label, EventHandler<ActionEvent> handler) {
 		Button result = new Button();
 		result.setText(label);
 		result.setOnAction(handler);
