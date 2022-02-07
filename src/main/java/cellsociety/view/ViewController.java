@@ -18,18 +18,19 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
-import javax.swing.JFileChooser;
 
 public class ViewController {
 	private Button importButton;
 	private Button exportButton;
 	private final GridManager gm;
+	private static InformationPopup myInformationPopup;
 	private Controls controls;
 	private BorderPane root;
-	private final Stage stage;
+	private static Stage stage;
 	private static CellType selectedClickType;
 
 	public ViewController(Stage _stage) {
+		myInformationPopup = new InformationPopup();
 		gm = new GridManager();
 		controls = new Controls();
 
@@ -41,6 +42,12 @@ public class ViewController {
 	public void updateGridPane(Cell[][] cells){
 		gm.update(cells);
 		root.setCenter(gm.getGrid());
+	}
+
+	public static void openPopup() {
+		if(!myInformationPopup.getPopup().isShowing()) {
+			myInformationPopup.getPopup().show(stage);
+		}
 	}
 
 	public static CellType getSelectedClickType() {
@@ -97,6 +104,9 @@ public class ViewController {
 
 		centerBox.getChildren().add(appTitle);
 		centerBox.setAlignment(Pos.CENTER);
+
+		rightBox.getChildren().add(myInformationPopup.getButton());
+		rightBox.setAlignment(Pos.CENTER);
 
 		ret.add(leftBox, 0, 0);
 		ret.add(centerBox, 1, 0);
