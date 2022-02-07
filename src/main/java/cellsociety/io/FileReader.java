@@ -83,12 +83,14 @@ public class FileReader {
 		}
 		validator.checkRequiredValues(game_type, gameData);
 		setNeighborhoodType();
-		for(String s:authors){
-			System.out.println(s);
-		}
 	}
 
-
+	/**
+	 * gets root element of current XML file
+	 * @param xmlFile
+	 * @return root element of XML file
+	 * @throws XMLException
+	 */
 	private Element getRootElement(File xmlFile) throws XMLException {
 		try {
 			BUILDER.reset();
@@ -99,6 +101,10 @@ public class FileReader {
 		}
 	}
 
+	/**
+	 * parses child node data
+	 * @param childNodes
+	 */
 	private void parseChildNode(NodeList childNodes) {
 		for (int j = 0; j < childNodes.getLength(); j++) {
 			Node curChildNode = childNodes.item(j);

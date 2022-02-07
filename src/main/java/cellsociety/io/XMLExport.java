@@ -54,16 +54,6 @@ public class XMLExport {
 
   public void saveToXML(){
     writeGameData();
-    Cell[][] curCellGrid = CellGrid.getGrid();
-	  for (Cell[] cells : curCellGrid) {
-		  for (int j = 0; j < curCellGrid[0].length; j++) {
-			  Cell curCell = cells[j];
-			  CellType cellType = curCell.getType();
-			  if (cellType != CellType.NULL && cellType != CellType.EMPTY && cellType != CellType.DEAD) {
-				  addCell(curCell, cellType);
-			  }
-		  }
-	  }
     dom.appendChild(rootElement);
     sendToFile();
   }
@@ -87,12 +77,30 @@ public class XMLExport {
     Map<String,String> curGameData = Game.getCurrentFile().getGameData();
     for(Entry<String, String> data : curGameData.entrySet()){
       Element element = dom.createElement(data.getKey());
-      element.appendChild(dom.createTextNode(data.getValue()));
+      if(data.getKey().equals("InitialCellState")){
+        addInitialState(element);
+      }
+      else{
+        element.appendChild(dom.createTextNode(data.getValue()));
+      }
       rootElement.appendChild(element);
     }
   }
 
-  private void addCell(Cell cell, CellType celltype){
+  private void addInitialState(Element initialStateParent){
+    Cell[][] curCellGrid = CellGrid.getGrid();
+    for (Cell[] cells : curCellGrid) {
+      for (int j = 0; j < curCellGrid[0].length; j++) {
+        Cell curCell = cells[j];
+        CellType cellType = curCell.getType();
+        if (cellType != CellType.NULL && cellType != CellType.EMPTY && cellType != CellType.DEAD) {
+          addCell(curCell, cellType, initialStateParent);
+        }
+      }
+    }
+  }
+
+  private void addCell(Cell cell, CellType celltype, Element initialStateParent){
     Element element = dom.createElement("cell");
     String cellTypeString = celltype.toString();
     String cellX = String.valueOf(cell.getX());
@@ -100,7 +108,7 @@ public class XMLExport {
     element.setAttribute("type",cellTypeString);
     element.setAttribute("x", cellX);
     element.setAttribute("y", cellY);
-    rootElement.appendChild(element);
+    initialStateParent.appendChild(element);
   }
 
 
