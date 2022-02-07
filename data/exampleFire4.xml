@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<CellSociety game="FIRE">
+    <Title>Cell Society - Fire Example</Title>
+    <Authors>
+        <Author>Leo Cao</Author>
+        <Author>Nolan Gelinas</Author>
+        <Author>Zack Schrage</Author>
+    </Authors>
+    <Description>Basic initially empty Fire game. Playing the simulation will generate trees and fires.</Description>
+    <Dimentions>
+        <Width>50</Width>
+        <Height>50</Height>
+    </Dimentions>
+    <InitialCellState>
+    </InitialCellState>
+    <Parameters>
+        <Speed>5</Speed>
+        <TreeCombustProbability>0.01</TreeCombustProbability>
+        <TreeGrowthProbability>0.2</TreeGrowthProbability>
+        <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
+    </Parameters>
+    <ColorSceme>
+        <Color type="EMPTY">#000000</Color>
+        <Color type="BURNING">#ffff00</Color>
+        <Color type="TREE">#00ff33</Color>
+    </ColorSceme>
+</CellSociety>
