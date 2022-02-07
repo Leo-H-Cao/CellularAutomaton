@@ -1,30 +1,131 @@
-<?xml version="1.0"?>
-<CellSociety game="PERCOLATION">
-    <Title>Cell Society - Fire Example</Title>
-    <Authors>
-        <Author>Leo Cao</Author>
-        <Author>Nolan Gelinas</Author>
-        <Author>Zack Schrage</Author>
-    </Authors>
-    <Description>Basic initially empty Fire game. Playing the simulation will generate trees and fires.</Description>
-    <Dimentions>
-        <Width>25</Width>
-        <Height>25</Height>
-    </Dimentions>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<CellSociety>
     <InitialCellState>
-        <Cell x="5" y="5" type="WATER"/>
-        <Cell x="5" y="6" type="BLOCK"/>
-        <Cell x="5" y="7" type="BLOCK"/>
-        <Cell x="5" y="8" type="BLOCK"/>
-        <Cell x="5" y="9" type="BLOCK"/>
+        
     </InitialCellState>
+    <Speed>1</Speed>
+    <Description>Basic initially empty Fire game. Playing the simulation will generate trees and fires.</Description>
     <Parameters>
-        <Speed>1</Speed>
-        <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
+        1
+        SQUARE_NEUMANN
     </Parameters>
+    <BLOCK_COLOR>#f04836</BLOCK_COLOR>
+    <Authors>
+        Leo Cao
+        Nolan Gelinas
+        Zack Schrage
+    </Authors>
+    <Title>Cell Society - Fire Example</Title>
+    <EMPTY_COLOR>#000000</EMPTY_COLOR>
+    <WATER_COLOR>#006fdd</WATER_COLOR>
+    <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
     <ColorSceme>
-        <Color type="EMPTY">#000000</Color>
-        <Color type="WATER">#0000ff</Color>
-        <Color type="BLOCK">#59ff33</Color>
+        #000000
+        #006fdd
+        #f04836
     </ColorSceme>
+    <Author>Zack Schrage</Author>
+    <Height>20</Height>
+    <Dimentions>
+        20
+        20
+    </Dimentions>
+    <Width>20</Width>
+    <cell type="Block" x="0" y="0"/>
+    <cell type="Block" x="0" y="6"/>
+    <cell type="Block" x="1" y="1"/>
+    <cell type="Block" x="1" y="6"/>
+    <cell type="Block" x="2" y="1"/>
+    <cell type="Block" x="2" y="5"/>
+    <cell type="Block" x="2" y="14"/>
+    <cell type="Block" x="3" y="1"/>
+    <cell type="Block" x="3" y="7"/>
+    <cell type="Block" x="3" y="14"/>
+    <cell type="Block" x="4" y="1"/>
+    <cell type="Block" x="4" y="2"/>
+    <cell type="Block" x="4" y="7"/>
+    <cell type="Block" x="4" y="14"/>
+    <cell type="Block" x="5" y="2"/>
+    <cell type="Block" x="5" y="7"/>
+    <cell type="Block" x="5" y="14"/>
+    <cell type="Block" x="6" y="3"/>
+    <cell type="Block" x="6" y="4"/>
+    <cell type="Block" x="6" y="5"/>
+    <cell type="Block" x="6" y="7"/>
+    <cell type="Block" x="6" y="14"/>
+    <cell type="Block" x="7" y="7"/>
+    <cell type="Block" x="7" y="14"/>
+    <cell type="Block" x="8" y="3"/>
+    <cell type="Block" x="8" y="4"/>
+    <cell type="Block" x="8" y="5"/>
+    <cell type="Block" x="8" y="7"/>
+    <cell type="Block" x="8" y="14"/>
+    <cell type="Water" x="9" y="0"/>
+    <cell type="Block" x="9" y="3"/>
+    <cell type="Block" x="9" y="7"/>
+    <cell type="Block" x="9" y="9"/>
+    <cell type="Block" x="9" y="10"/>
+    <cell type="Block" x="9" y="11"/>
+    <cell type="Block" x="9" y="12"/>
+    <cell type="Block" x="9" y="14"/>
+    <cell type="Water" x="10" y="0"/>
+    <cell type="Water" x="10" y="1"/>
+    <cell type="Block" x="10" y="3"/>
+    <cell type="Block" x="10" y="7"/>
+    <cell type="Block" x="10" y="9"/>
+    <cell type="Block" x="10" y="14"/>
+    <cell type="Water" x="11" y="0"/>
+    <cell type="Block" x="11" y="3"/>
+    <cell type="Block" x="11" y="5"/>
+    <cell type="Block" x="11" y="9"/>
+    <cell type="Block" x="11" y="14"/>
+    <cell type="Block" x="12" y="2"/>
+    <cell type="Block" x="12" y="3"/>
+    <cell type="Block" x="12" y="6"/>
+    <cell type="Block" x="12" y="9"/>
+    <cell type="Block" x="12" y="12"/>
+    <cell type="Block" x="12" y="13"/>
+    <cell type="Block" x="12" y="14"/>
+    <cell type="Block" x="13" y="1"/>
+    <cell type="Block" x="13" y="6"/>
+    <cell type="Block" x="13" y="9"/>
+    <cell type="Block" x="13" y="14"/>
+    <cell type="Block" x="13" y="15"/>
+    <cell type="Block" x="13" y="16"/>
+    <cell type="Block" x="13" y="17"/>
+    <cell type="Block" x="13" y="18"/>
+    <cell type="Block" x="14" y="1"/>
+    <cell type="Block" x="14" y="6"/>
+    <cell type="Block" x="14" y="9"/>
+    <cell type="Block" x="14" y="10"/>
+    <cell type="Block" x="14" y="11"/>
+    <cell type="Block" x="14" y="12"/>
+    <cell type="Block" x="15" y="1"/>
+    <cell type="Block" x="15" y="14"/>
+    <cell type="Block" x="15" y="15"/>
+    <cell type="Block" x="15" y="16"/>
+    <cell type="Block" x="15" y="17"/>
+    <cell type="Block" x="15" y="18"/>
+    <cell type="Block" x="16" y="1"/>
+    <cell type="Block" x="16" y="4"/>
+    <cell type="Block" x="16" y="5"/>
+    <cell type="Block" x="16" y="6"/>
+    <cell type="Block" x="16" y="7"/>
+    <cell type="Block" x="16" y="8"/>
+    <cell type="Block" x="16" y="9"/>
+    <cell type="Block" x="16" y="10"/>
+    <cell type="Block" x="16" y="11"/>
+    <cell type="Block" x="16" y="12"/>
+    <cell type="Block" x="16" y="13"/>
+    <cell type="Block" x="16" y="14"/>
+    <cell type="Block" x="17" y="1"/>
+    <cell type="Block" x="17" y="9"/>
+    <cell type="Block" x="18" y="1"/>
+    <cell type="Block" x="18" y="2"/>
+    <cell type="Block" x="18" y="3"/>
+    <cell type="Block" x="18" y="4"/>
+    <cell type="Block" x="18" y="5"/>
+    <cell type="Block" x="18" y="6"/>
+    <cell type="Block" x="18" y="9"/>
+    <cell type="Block" x="19" y="9"/>
 </CellSociety>

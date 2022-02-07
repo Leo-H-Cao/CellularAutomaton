@@ -15,13 +15,13 @@
     </InitialCellState>
     <Parameters>
         <Speed>1</Speed>
-        <TreeCombustProbability>0.001</TreeCombustProbability>
-        <TreeGrowthProbability>0.01</TreeGrowthProbability>
+        <TreeCombustProbability>0.01</TreeCombustProbability>
+        <TreeGrowthProbability>0.1</TreeGrowthProbability>
         <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
     </Parameters>
     <ColorSceme>
         <Color type="EMPTY">#000000</Color>
         <Color type="BURNING">#ffff00</Color>
-        <Color type="TREE">#00ff33</Color>
+        <Color type="TREE">#00ff11</Color>
     </ColorSceme>
 </CellSociety>

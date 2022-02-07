@@ -16,12 +16,12 @@
     <Parameters>
         <Speed>1</Speed>
         <TreeCombustProbability>0.001</TreeCombustProbability>
-        <TreeGrowthProbability>0.01</TreeGrowthProbability>
+        <TreeGrowthProbability>0.5</TreeGrowthProbability>
         <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
     </Parameters>
     <ColorSceme>
         <Color type="EMPTY">#000000</Color>
         <Color type="BURNING">#ffff00</Color>
-        <Color type="TREE">#00ff33</Color>
+        <Color type="TREE">#10ff11</Color>
     </ColorSceme>
 </CellSociety>
