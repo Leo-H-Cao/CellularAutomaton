@@ -45,7 +45,7 @@ public class GridManager {
 	 * @param g Model representation of the displayed grid
 	 */
 	public static void update(Cell[][] g) {
-		int controlsPadding = 175;
+		int controlsPadding = 200;
 		cellWidth = ViewController.getWindowSize().width / (double) g.length - gridGap;
 		cellHeight = (ViewController.getWindowSize().height - controlsPadding) / (double) g[0].length - gridGap;
 		// reset grid

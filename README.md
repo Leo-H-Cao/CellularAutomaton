@@ -67,11 +67,11 @@ Assumes the playing space to be finite since the core data structure is a 2D Arr
 
 ### Interesting data files:
 
-exampleGameOfLife.xml
-exampleFire.xml
-exampleWaTor.xml
-exampleSegregation.xml
-examplePercolation.xml
+exampleGameOfLife1.xml
+exampleFire5.xml
+exampleWaTor1.xml
+exampleSegregation1.xml
+examplePercolation1.xml
 
 ### Known Bugs:
 
@@ -81,9 +81,17 @@ Triangular neighborhoods are currently not displayed in triangular shaped cells
 FileReader cannot parse XML files where nodes have more than one child node
 
 ### Noteworthy Features:
+* Time scaling
+* Dynamic coloring
+* Importing and Exporting files
+* Re-skin app with css files
+* Use custom neighbor detection
+* Easily add new languages
 
 
 ### Impressions:
-* The app is very stable up to 100 x 100 grids
-  * At very low sim speeds, games of up to 500
-
+* The app is very stable up to 50 x 50 grids
+  * At very low sim speeds the game can be played at grids of up to 150 x 150
+  * Game will automatically change default simulation scale depending on grid size
+* Clicking is easy but would have been nice if click and dragging worked
+* Model for simulations is very robust and seems accurate in almost all cases
