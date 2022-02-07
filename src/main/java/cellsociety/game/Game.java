@@ -90,10 +90,22 @@ public class Game {
 		currentGameSpeed = Double.parseDouble(currentFile.getGameData().get("Speed"));
 		switch(currentGameType) {
 			case GAMEOFLIFE -> cellGrid = new GameOfLife();
-			case FIRE -> cellGrid = new Fire();
-			case WATOR -> cellGrid = new WaTor();
+			case FIRE -> {
+				double treeCombustProbability = Double.parseDouble(currentFile.getGameData().get("TreeCombustProbability"));
+				double treeGrowthProbability = Double.parseDouble(currentFile.getGameData().get("TreeGrowthProbability"));
+				cellGrid = new Fire(treeCombustProbability, treeGrowthProbability);
+			}
+			case WATOR -> {
+				int reproduction = Integer.parseInt(currentFile.getGameData().get("ReproductionCounter"));
+				int energy = Integer.parseInt(currentFile.getGameData().get("EnergyCounter"));
+				cellGrid = new WaTor(reproduction, energy);
+			}
+
 			case PERCOLATION -> cellGrid = new Percolation();
-			case SCHELLSEG -> cellGrid = new SchellingSegregation();
+			case SCHELLSEG -> {
+				double fIdeal =  Double.parseDouble(currentFile.getGameData().get("fIdeal"));
+				cellGrid = new SchellingSegregation(fIdeal);
+			}
 			case default -> cellGrid = null;
 		}
 	}

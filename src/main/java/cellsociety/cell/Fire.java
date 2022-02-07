@@ -15,8 +15,13 @@ import static cellsociety.game.NeighborhoodType.*;
 public class Fire extends CellGridSE {
 
     private static Cell[][] updatingGrid;
-    private static double treeCombustProbability = 0.05;
-    private static double treeGrowthProbability = 0.3;
+    private static double treeCombustProbability;
+    private static double treeGrowthProbability;
+
+    public Fire(double combustP, double growthP){
+        treeCombustProbability = combustP;
+        treeGrowthProbability = growthP;
+    }
 
     @Override
     public void nextGeneration() {

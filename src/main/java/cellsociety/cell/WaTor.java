@@ -24,8 +24,13 @@ import static cellsociety.game.NeighborhoodType.*;
 public class WaTor extends CellGridME {
 
     private static Cell[][] updatingGrid;
-    private static int reproductionCounter = 5;
-    private static int energyCounter = 5;
+    private static int reproductionCounter;
+    private static int energyCounter;
+
+    public WaTor(int reproduction, int energy){
+        reproductionCounter = reproduction;
+        energyCounter = energy;
+    }
 
     @Override
     public void nextGeneration() {
@@ -147,7 +152,7 @@ public class WaTor extends CellGridME {
     }
 
     private static boolean checkReproduction(Map<CellProperties, Object> properties) {
-        if ((int) properties.get(REPRODUCE) > 5) {
+        if ((int) properties.get(REPRODUCE) > reproductionCounter) {
             properties.put(REPRODUCE, 0);
             return true;
         }
@@ -159,7 +164,7 @@ public class WaTor extends CellGridME {
         Map<CellProperties, Object> props = new HashMap<CellProperties, Object>();
         props.put(MOVED, false);
         props.put(REPRODUCE, 0);
-        props.put(ENERGY, 5);
+        props.put(ENERGY, energyCounter);
         return props;
     }
 
