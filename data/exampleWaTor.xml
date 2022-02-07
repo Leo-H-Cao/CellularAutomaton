@@ -37,6 +37,8 @@
     </InitialCellState>
     <Parameters>
         <Speed>1</Speed>
+        <ReproductionCounter>5</ReproductionCounter>
+        <EnergyCounter>5</EnergyCounter>
     </Parameters>
     <ColorScheme>
         <Color type="SHARK">#000000</Color>
