@@ -34,18 +34,20 @@ public class InformationPopup {
 
 	private Node makePopup() {
 		StackPane ret = new StackPane();
-		Rectangle background = new Rectangle(250,250, Color.LIGHTGRAY);
+		Rectangle background = new Rectangle(400,500, Color.LIGHTGRAY);
 		GridPane grid = new GridPane();
 		Text author = new Text();
-		author.setText(Game.getCurrentFile().getGameData().get("Author"));
+		author.setText(Game.getCurrentFile().getGameData().get("Authors"));
 
 		Rectangle close = new Rectangle(40,30, Color.RED);
 		close.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> popup.hide());
 
 		StackPane.setAlignment(close, Pos.TOP_RIGHT);
 
-		Text description = new Text();
-		description.setText("DESCRIPTION");
+		Label description = new Label();
+		description.setMaxWidth(300);
+		description.setWrapText(true);
+		description.setText(Game.getCurrentFile().getGameData().get("Description"));
 
 		grid.add(author, 0, 0);
 		grid.add(description, 0, 1);
