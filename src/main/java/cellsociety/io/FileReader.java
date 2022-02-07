@@ -32,6 +32,7 @@ public class FileReader {
 	private GameType game_type;
 	private NeighborhoodType neighborhoodType;
 	private FileValidator validator;
+	private ArrayList<String> authors;
 
 	/**
 	 * creates file reader instance
@@ -41,6 +42,7 @@ public class FileReader {
 		gameData = new HashMap<>();
 		initialState = new ArrayList<>();
 		validator = new FileValidator();
+		authors = new ArrayList<>();
 	}
 
 	/**
@@ -81,6 +83,9 @@ public class FileReader {
 		}
 		validator.checkRequiredValues(game_type, gameData);
 		setNeighborhoodType();
+		for(String s:authors){
+			System.out.println(s);
+		}
 	}
 
 
@@ -103,6 +108,9 @@ public class FileReader {
 				parseCellNode(curChildNode);
 			} else if (childNodeName.equals("Color")) {
 				childNodeName = parseColorAttribute(curChildNode) + "_COLOR";
+			}
+			else if(childNodeName.equals("Author")){
+				authors.add(childNodeText);
 			}
 			if (!(childNodeName.equals("Cell") || childNodeName.equals("#text"))) {
 				gameData.put(childNodeName, childNodeText);
@@ -151,7 +159,7 @@ public class FileReader {
 		return neighborhoodType;
 	}
 
-	public void printMap() {
-		System.out.println(gameData);
+	public ArrayList<String> getAuthors(){
+		return authors;
 	}
 }
