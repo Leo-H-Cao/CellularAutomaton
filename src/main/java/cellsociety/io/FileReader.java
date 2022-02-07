@@ -32,6 +32,7 @@ public class FileReader {
 	private GameType game_type;
 	private NeighborhoodType neighborhoodType;
 	private FileValidator validator;
+	private ArrayList<String> authors;
 
 	/**
 	 * creates file reader instance
@@ -41,6 +42,7 @@ public class FileReader {
 		gameData = new HashMap<>();
 		initialState = new ArrayList<>();
 		validator = new FileValidator();
+		authors = new ArrayList<>();
 	}
 
 	/**
@@ -79,12 +81,16 @@ public class FileReader {
 				gameData.put(nodeName, nodeText);
 			}
 		}
-		setNeighborhoodType();
 		validator.checkRequiredValues(game_type, gameData);
-		System.out.println(gameData.get("Authors"));
+		setNeighborhoodType();
 	}
 
-
+	/**
+	 * gets root element of current XML file
+	 * @param xmlFile
+	 * @return root element of XML file
+	 * @throws XMLException
+	 */
 	private Element getRootElement(File xmlFile) throws XMLException {
 		try {
 			BUILDER.reset();
@@ -95,6 +101,10 @@ public class FileReader {
 		}
 	}
 
+	/**
+	 * parses child node data
+	 * @param childNodes
+	 */
 	private void parseChildNode(NodeList childNodes) {
 		for (int j = 0; j < childNodes.getLength(); j++) {
 			Node curChildNode = childNodes.item(j);
@@ -104,6 +114,9 @@ public class FileReader {
 				parseCellNode(curChildNode);
 			} else if (childNodeName.equals("Color")) {
 				childNodeName = parseColorAttribute(curChildNode) + "_COLOR";
+			}
+			else if(childNodeName.equals("Author")){
+				authors.add(childNodeText);
 			}
 			if (!(childNodeName.equals("Cell") || childNodeName.equals("#text"))) {
 				gameData.put(childNodeName, childNodeText);
@@ -152,7 +165,7 @@ public class FileReader {
 		return neighborhoodType;
 	}
 
-	public void printMap() {
-		System.out.println(gameData);
+	public ArrayList<String> getAuthors(){
+		return authors;
 	}
 }

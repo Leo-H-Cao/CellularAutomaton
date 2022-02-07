@@ -8,8 +8,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
-import java.awt.*;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -25,20 +23,18 @@ public class Game {
 	private static ViewController viewController;
 	private static ResourceBundle myDefaultProperties;
 	private static ResourceBundle myInterfaceProperties;
-	private static Dimension DEFAULT_SIZE;
+
 
 
 	public Game(Stage stage) {
 		try {
 			myDefaultProperties = ResourceBundle.getBundle("DEFAULTS");
-			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale("en"));
+			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale(myDefaultProperties.getString("LANGUAGE_CODE")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		openFile(myDefaultProperties.getString("FILEPATH"));
-		DEFAULT_SIZE = new Dimension(Integer.parseInt(Game.getDefaultProperties().getString("WIDTH")),
-				Integer.parseInt(Game.getDefaultProperties().getString("HEIGHT")));
 		viewController = new ViewController(stage);
 
 		CellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType, currentNeighborhoodType);
@@ -49,12 +45,13 @@ public class Game {
 		timeline.setCycleCount(Animation.INDEFINITE);
 	}
 
-	public static void setLocale(String locale) {
+	public static void setLocale(String code) {
 		try {
-			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale(locale));
+			myInterfaceProperties = ResourceBundle.getBundle("config", new Locale(code));
 		} catch (Exception e) {
 			System.out.println("Locale not found");
 		}
+		ViewController.redrawUI();
 	}
 
 	public static FileReader getCurrentFile() {
@@ -67,10 +64,6 @@ public class Game {
 
 	public static ResourceBundle getInterfaceProperties() {
 		return myInterfaceProperties;
-	}
-
-	public static Dimension getDefaultSize() {
-		return DEFAULT_SIZE;
 	}
 
 	public static GameType getCurrentGameType() {
@@ -128,8 +121,8 @@ public class Game {
 
 	public static void importNewFile(String filePath) {
 		openFile(filePath);
-		cellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType, currentNeighborhoodType);
-		cellGrid.initializeCells(currentFile.getInitialState());
+		CellGrid.initializeGrid(Integer.parseInt(currentFile.getGameData().get("Width")), Integer.parseInt(currentFile.getGameData().get("Height")), currentGameType, currentNeighborhoodType);
+		CellGrid.initializeCells(currentFile.getInitialState());
 		renderGrid();
 	}
 

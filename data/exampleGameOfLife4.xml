@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<CellSociety game="GAMEOFLIFE">
+    <Title>Cell Society - Game of Life</Title>
+    <Authors>
+        <Author>Nolan Gelinas</Author>
+    </Authors>
+    <Description>A basic default configuration that loads in some interesting Game of Life Cells.</Description>
+    <Dimensions>
+        <Width>20</Width>
+        <Height>20</Height>
+    </Dimensions>
+    <InitialCellState>
+        <Cell x="5" y="5" type="ALIVE"/>
+        <Cell x="6" y="5" type="ALIVE"/>
+        <Cell x="7" y="5" type="ALIVE"/>
+        <Cell x="10" y="10" type="ALIVE"/>
+        <Cell x="12" y="9" type="ALIVE"/>
+        <Cell x="14" y="2" type="ALIVE"/>
+        <Cell x="3" y="6" type="ALIVE"/>
+        <Cell x="3" y="5" type="ALIVE"/>
+        <Cell x="6" y="4" type="ALIVE"/>
+        <Cell x="1" y="10" type="ALIVE"/>
+        <Cell x="4" y="4" type="ALIVE"/>
+        <Cell x="4" y="5" type="ALIVE"/>
+        <Cell x="4" y="3" type="ALIVE"/>
+        <Cell x="17" y="3" type="ALIVE"/>
+        <Cell x="17" y="4" type="ALIVE"/>
+        <Cell x="17" y="7" type="ALIVE"/>
+        <Cell x="18" y="17" type="ALIVE"/>
+    </InitialCellState>
+    <Parameters>
+        <NeighborhoodType>SQUARE_MOORE</NeighborhoodType>
+        <Speed>1</Speed>
+    </Parameters>
+    <ColorScheme>
+        <Color type="ALIVE">#00ffff</Color>
+        <Color type="DEAD">#000000</Color>
+    </ColorScheme>
+</CellSociety>

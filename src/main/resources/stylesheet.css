@@ -7,14 +7,15 @@
     -fx-font-family: "Algerian";
 }
 
-#selector-title {
+#type-selector-title, #language-selector-title, Label {
     -fx-text-fill: black;
+    -fx-text-alignment: center;
 }
 
 .root{
     -fx-font-size: 18pt;
     -fx-font-family: "Tahoma";
     -fx-base: rgb(39, 76, 255);
-    -fx-background: white;
+    -fx-background: #fff1d8;
     -fx-text-background-color: white;
 }

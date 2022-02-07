@@ -16,7 +16,7 @@ public class GameCellMapping {
 		MAP = new HashMap<>();
 		MAP.put(GAMEOFLIFE, new ArrayList<>(Arrays.asList(ALIVE, DEAD)));
 		MAP.put(FIRE, new ArrayList<>(Arrays.asList(BURNING, TREE, EMPTY)));
-		MAP.put(PERCOLATION, new ArrayList<>(Arrays.asList(WATER, BLOCK)));
+		MAP.put(PERCOLATION, new ArrayList<>(Arrays.asList(WATER, BLOCK, EMPTY)));
 		MAP.put(WATOR, new ArrayList<>(Arrays.asList(FISH, SHARK, EMPTY)));
 		MAP.put(SCHELLSEG, new ArrayList<>(Arrays.asList(A, B, EMPTY)));
 	}

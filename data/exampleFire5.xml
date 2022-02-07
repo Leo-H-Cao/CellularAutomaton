@@ -8,15 +8,15 @@
     </Authors>
     <Description>Basic initially empty Fire game. Playing the simulation will generate trees and fires.</Description>
     <Dimentions>
-        <Width>50</Width>
-        <Height>50</Height>
+        <Width>100</Width>
+        <Height>100</Height>
     </Dimentions>
     <InitialCellState>
     </InitialCellState>
     <Parameters>
         <Speed>1</Speed>
-        <TreeCombustProbability>0.001</TreeCombustProbability>
-        <TreeGrowthProbability>0.01</TreeGrowthProbability>
+        <TreeCombustProbability>0.05</TreeCombustProbability>
+        <TreeGrowthProbability>0.3</TreeGrowthProbability>
         <NeighborhoodType>SQUARE_NEUMANN</NeighborhoodType>
     </Parameters>
     <ColorSceme>
