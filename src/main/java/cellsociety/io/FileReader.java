@@ -81,7 +81,6 @@ public class FileReader {
 		}
 		setNeighborhoodType();
 		validator.checkRequiredValues(game_type, gameData);
-		System.out.println(gameData.get("Authors"));
 	}
 
 
