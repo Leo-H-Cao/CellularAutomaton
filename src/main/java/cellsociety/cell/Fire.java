@@ -35,8 +35,6 @@ public class Fire extends CellGridSE {
     }
 
     private static void updateState(int x, int y, CellType type) {
-        double treeGrowthProbability = 0.3;
-        double treeCombustProbability = 0.05;
         if (type == BURNING) updatingGrid[x][y].updateType(EMPTY);
         else if (type == TREE && hasBurningNeighbor(CellGrid.getNeighbors(x, y, getGrid()))) updatingGrid[x][y].updateType(BURNING);
         else if (type == TREE && (Math.random() < treeCombustProbability)) updatingGrid[x][y].updateType(BURNING);
